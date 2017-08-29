@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>微信小程序实战篇-分类页面制作 | 代码集中营</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="description" content="哈喽，大家好，又到周五啦，今天代码君要教大家分类页面的制作，废话不多说，先上效果图 这个界面布局难度不是很大，css基础好的，很快就实现了，分类界面，左边是一级目录，右边是一级目录对应的二级目录，根据这个需求，我们数据设计的结构一定是数组嵌套数组，第一个数组包含一级目录数据，嵌套的数组包含的是二级目录的数据。 ##代码的实现  classify.js  1234567891011121314151">
+<meta name="keywords" content="电商,小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序实战篇-分类页面制作">
+<meta property="og:url" content="http://yoursite.com/2017/06/23/微信小程序实战篇-分类页面制作/index.html">
+<meta property="og:site_name" content="代码集中营">
+<meta property="og:description" content="哈喽，大家好，又到周五啦，今天代码君要教大家分类页面的制作，废话不多说，先上效果图 这个界面布局难度不是很大，css基础好的，很快就实现了，分类界面，左边是一级目录，右边是一级目录对应的二级目录，根据这个需求，我们数据设计的结构一定是数组嵌套数组，第一个数组包含一级目录数据，嵌套的数组包含的是二级目录的数据。 ##代码的实现  classify.js  1234567891011121314151">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-80e483b9d419fe6b.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-08-29T07:21:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信小程序实战篇-分类页面制作">
+<meta name="twitter:description" content="哈喽，大家好，又到周五啦，今天代码君要教大家分类页面的制作，废话不多说，先上效果图 这个界面布局难度不是很大，css基础好的，很快就实现了，分类界面，左边是一级目录，右边是一级目录对应的二级目录，根据这个需求，我们数据设计的结构一定是数组嵌套数组，第一个数组包含一级目录数据，嵌套的数组包含的是二级目录的数据。 ##代码的实现  classify.js  1234567891011121314151">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-80e483b9d419fe6b.gif?imageMogr2/auto-orient/strip">
+  
+  
+    <link rel="icon" href="/img/logo.jpeg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Chrome on Android -->    
+    <link rel="icon" sizes="192x192" href="/img/logo.jpeg">
+    <!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.jpeg">    
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/img/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?10f2720e6f47d1b4a5ebc811df8dc361";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">代码集中营</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">学如逆水行舟，不进则退，心如平原驰马，易放难收</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">文章</a>
+        
+      </nav>
+      <!--
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+      -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-微信小程序实战篇-分类页面制作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/23/微信小程序实战篇-分类页面制作/" class="article-date">
+  <time datetime="2017-06-22T16:00:00.000Z" itemprop="datePublished">2017-06-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/微信小程序/">微信小程序</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微信小程序实战篇-分类页面制作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>哈喽，大家好，又到周五啦，今天代码君要教大家分类页面的制作，废话不多说，先上效果图</p>
+<p><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-80e483b9d419fe6b.gif?imageMogr2/auto-orient/strip" alt="分类页面.gif"><br></center><br>这个界面布局难度不是很大，css基础好的，很快就实现了，分类界面，左边是一级目录，右边是一级目录对应的二级目录，根据这个需求，我们数据设计的结构一定是数组嵌套数组，第一个数组包含一级目录数据，嵌套的数组包含的是二级目录的数据。</p>
+<p>##代码的实现</p>
+<ol>
+<li><p><strong>classify.js</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div></pre></td><td class="code"><pre><div class="line">Page(&#123;</div><div class="line">  data: &#123;</div><div class="line">    cateItems: [</div><div class="line">      &#123;</div><div class="line">        cate_id: 1,</div><div class="line">        cate_name: &quot;护肤&quot;,</div><div class="line">        ishaveChild: true,</div><div class="line">        children:</div><div class="line">        [</div><div class="line">          &#123;</div><div class="line">            child_id: 1,</div><div class="line">            name: &apos;洁面皂&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161208/148117972563.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 2,</div><div class="line">            name: &apos;卸妆&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161207/148110444480.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 3,</div><div class="line">            name: &apos;洁面乳&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161208/148117973270.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 4,</div><div class="line">            name: &apos;面部祛角质&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161208/148117981591.jpg&quot;</div><div class="line">          &#125;</div><div class="line">        ]</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        cate_id: 2,</div><div class="line">        cate_name: &quot;彩妆&quot;,</div><div class="line">        ishaveChild: true,</div><div class="line">        children:</div><div class="line">        [</div><div class="line">          &#123;</div><div class="line">            child_id: 1,</div><div class="line">            name: &apos;气垫bb&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161212/14815381301.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 2,</div><div class="line">            name: &apos;修容/高光&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161212/14815381411.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 3,</div><div class="line">            name: &apos;遮瑕&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161212/148153815181.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 4,</div><div class="line">            name: &apos;腮红&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161212/148153815759.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 5,</div><div class="line">            name: &apos;粉饼&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161212/148153816983.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 6,</div><div class="line">            name: &apos;粉底&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161212/148153817721.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 7,</div><div class="line">            name: &apos;蜜粉/散粉&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161212/148153819354.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 8,</div><div class="line">            name: &apos;隔离霜&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161215/148179053369.jpg&quot;</div><div class="line">          &#125;</div><div class="line">        ]</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        cate_id: 3,</div><div class="line">        cate_name: &quot;香水/香氛&quot;,</div><div class="line">        ishaveChild: true,</div><div class="line">        children:</div><div class="line">        [</div><div class="line">          &#123;</div><div class="line">            child_id: 1,</div><div class="line">            name: &apos;淡香水EDT&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161213/14815978910.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 2,</div><div class="line">            name: &apos;浓香水EDP&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161213/148159789883.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 3,</div><div class="line">            name: &apos;香体走珠&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161213/14815979307.jpg&quot;</div><div class="line">          &#125;,</div><div class="line">          &#123;</div><div class="line">            child_id: 4,</div><div class="line">            name: &apos;古龙香水男士的最爱&apos;,</div><div class="line">            image: &quot;http://mz.djmall.xmisp.cn/files/logo/20161213/148159765589.jpg&quot;</div><div class="line">          &#125;</div><div class="line">        ]</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        cate_id: 4,</div><div class="line">        cate_name: &quot;个人护理&quot;,</div><div class="line">        ishaveChild: false,</div><div class="line">        children: []</div><div class="line">      &#125;</div><div class="line">    ],</div><div class="line">    curNav: 1,</div><div class="line">    curIndex: 0</div><div class="line">  &#125;,</div><div class="line">  //事件处理函数  </div><div class="line">  switchRightTab: function (e) &#123;</div><div class="line">    // 获取item项的id，和数组的下标值  </div><div class="line">    let id = e.target.dataset.id,</div><div class="line">      index = parseInt(e.target.dataset.index);</div><div class="line">    // 把点击到的某一项，设为当前index  </div><div class="line">    this.setData(&#123;</div><div class="line">      curNav: id,</div><div class="line">      curIndex: index</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>js的代码有点长，但是宏观看一下逻辑就很清晰了</p>
+<ul>
+<li><p>cateItems 展示的数据</p>
+<ul>
+<li>curNav 控制当前那个按钮点亮</li>
+<li>curIndex 根据此参数来拿第几个分类的数据</li>
+<li>switchRightTab 分类tab事件的处理</li>
+</ul>
+<p>cateItems里的数据每一个对象都是一个品类的数据，拿第一个品类护肤来说</p>
+<ul>
+<li>cate_id 识别的id</li>
+<li>cate_name 一级分类名称</li>
+<li>ishaveChild 判断是否有子集</li>
+<li>children 二级目录的数据</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p><strong>classify.wxml</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;!--主盒子--&gt;</div><div class="line">&lt;view class=&quot;container&quot;&gt;</div><div class="line">  &lt;!--左侧栏--&gt;</div><div class="line">  &lt;view class=&quot;nav_left&quot;&gt;</div><div class="line">    &lt;block wx:for=&quot;&#123;&#123;cateItems&#125;&#125;&quot;&gt;</div><div class="line">      &lt;!--当前项的id等于item项的id，那个就是当前状态--&gt;</div><div class="line">      &lt;!--用data-index记录这个数据在数组的下标位置，使用data-id设置每个item的id值，供打开2级页面使用--&gt;</div><div class="line">      &lt;view class=&quot;nav_left_items &#123;&#123;curNav == item.cate_id ? &apos;active&apos; : &apos;&apos;&#125;&#125;&quot; bindtap=&quot;switchRightTab&quot; data-index=&quot;&#123;&#123;index&#125;&#125;&quot; data-id=&quot;&#123;&#123;item.cate_id&#125;&#125;&quot;&gt;&#123;&#123;item.cate_name&#125;&#125;&lt;/view&gt;</div><div class="line">    &lt;/block&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">  &lt;!--右侧栏--&gt;</div><div class="line">  &lt;view class=&quot;nav_right&quot;&gt;</div><div class="line">    &lt;!--如果有数据，才遍历项--&gt;</div><div class="line">    &lt;view wx:if=&quot;&#123;&#123;cateItems[curIndex].ishaveChild&#125;&#125;&quot;&gt;</div><div class="line">      &lt;block wx:for=&quot;&#123;&#123;cateItems[curIndex].children&#125;&#125;&quot;&gt;</div><div class="line">        &lt;view class=&quot;nav_right_items&quot;&gt;</div><div class="line">        &lt;!--界面跳转 --&gt;</div><div class="line">          &lt;navigator url=&quot;../../detail/detail&#125;&#125;&quot;&gt;</div><div class="line">            &lt;image src=&quot;&#123;&#123;item.image&#125;&#125;&quot;&gt;&lt;/image&gt;</div><div class="line">            &lt;text&gt;&#123;&#123;item.name&#125;&#125;&lt;/text&gt;</div><div class="line">          &lt;/navigator&gt;</div><div class="line">        &lt;/view&gt;</div><div class="line">      &lt;/block&gt;</div><div class="line">    &lt;/view&gt;</div><div class="line">    &lt;!--如果无数据，则显示数据--&gt;</div><div class="line">    &lt;view class=&quot;nodata_text&quot; wx:else&gt;该分类暂无数据&lt;/view&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里面要讲解的有</p>
+<ul>
+<li><strong>curNav == item.cate_id ? ‘active’ : ‘’</strong>在classify.js代码中已经说了curNav的作用，就是在这里实现的，根据是否和一级目录cate_id相同，来判断是否点亮文字。相同执行.nav_left_items.active样式，不相同则执行.nav_left_items样式</li>
+<li>wx:for 和wx: if的知识点,这放在下面讲，请继续往下看</li>
+</ul>
+<ol>
+<li><p><strong>classify.wxss</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">page&#123;  </div><div class="line">  background: #f5f5f5;  </div><div class="line">&#125;  </div><div class="line">/*总体主盒子*/  </div><div class="line">.container &#123;  </div><div class="line">  position: relative;  </div><div class="line">  width: 100%;  </div><div class="line">  height: 100%;  </div><div class="line">  background-color: #fff;  </div><div class="line">  color: #939393;  </div><div class="line">&#125;</div><div class="line"> /*左侧栏主盒子*/  </div><div class="line">.nav_left&#123;  </div><div class="line">  /*设置行内块级元素（没使用定位）*/  </div><div class="line">  display: inline-block;  </div><div class="line">  width: 25%;  </div><div class="line">  height: 100%;  </div><div class="line">  /*主盒子设置背景色为灰色*/  </div><div class="line">  background: #f5f5f5;  </div><div class="line">  text-align: center;  </div><div class="line">&#125;  </div><div class="line">/*左侧栏list的item*/  </div><div class="line">.nav_left .nav_left_items&#123;  </div><div class="line">  /*每个高30px*/  </div><div class="line">  height: 40px;  </div><div class="line">  /*垂直居中*/  </div><div class="line">  line-height: 40px;  </div><div class="line">  /*再设上下padding增加高度，总高42px*/  </div><div class="line">  padding: 6px 0;  </div><div class="line">  /*只设下边线*/  </div><div class="line">  border-bottom: 1px solid #dedede;  </div><div class="line">  /*文字14px*/  </div><div class="line">  font-size: 14px; </div><div class="line">&#125;  </div><div class="line">/*左侧栏list的item被选中时*/  </div><div class="line">.nav_left .nav_left_items.active&#123;  </div><div class="line">  /*背景色变成白色*/  </div><div class="line">  background: #fff;  </div><div class="line">  color: #f0145a; </div><div class="line">&#125;  </div><div class="line">/*右侧栏主盒子*/  </div><div class="line">.nav_right&#123;  </div><div class="line">  /*右侧盒子使用了绝对定位*/  </div><div class="line">  position: absolute;  </div><div class="line">  top: 0;  </div><div class="line">  right: 0;  </div><div class="line">  flex: 1;  </div><div class="line">  /*宽度75%，高度占满，并使用百分比布局*/  </div><div class="line">  width: 75%;  </div><div class="line">  height: 1000px;  </div><div class="line">  padding: 10px;  </div><div class="line">  box-sizing: border-box;  </div><div class="line">  background: #fff;  </div><div class="line">&#125;  </div><div class="line">/*右侧栏list的item*/  </div><div class="line">.nav_right .nav_right_items&#123;  </div><div class="line">  /*浮动向左*/  </div><div class="line">  float: left;  </div><div class="line">  /*每个item设置宽度是33.33%*/  </div><div class="line">  width: 33.33%;  </div><div class="line">  height: 120px;  </div><div class="line">  text-align: center;  </div><div class="line">&#125;  </div><div class="line">.nav_right .nav_right_items image&#123;  </div><div class="line">  /*被图片设置宽高*/  </div><div class="line">  width: 60px;  </div><div class="line">  height: 60px;  </div><div class="line">  margin-top: 15px;  </div><div class="line">&#125;  </div><div class="line">.nav_right .nav_right_items text&#123;  </div><div class="line">  /*给text设成块级元素*/  </div><div class="line">  display: block;  </div><div class="line">  margin-top: 15px;  </div><div class="line">  font-size: 14px;  </div><div class="line">  color: black;</div><div class="line">  /*设置文字溢出部分为...*/  </div><div class="line">  overflow: hidden;  </div><div class="line">  white-space: nowrap;  </div><div class="line">  text-overflow: ellipsis;  </div><div class="line">&#125; </div><div class="line">.nodata_text</div><div class="line">&#123;</div><div class="line">  color: black;</div><div class="line">  font-size: 14px;  </div><div class="line">  text-align: center;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里有个小技巧分享给大家</p>
+<ul>
+<li>要设置字体垂直居中要肿么办呐？<br>看我布局的样式<strong>【.nav_left .nav_left_items】</strong>把height与line-height两个属性设置成一样的就可以轻松实现字体垂直居中，但是这个有局限性，是字体要是单行的，为什么呐，因为line-height本身就是设置行高</li>
+<li>单行文字过长部分要用省略号应该如何写样式呐？ 效果是酱紫 xxxxx…<pre><code>- overflow: hidden;  
+- white-space: nowrap;  //设置单行显示
+- text-overflow: ellipsis;  
+</code></pre></li>
+</ul>
+<p>##知识小课堂</p>
+<ol>
+<li><p><strong>wx:for</strong><br>微信小程序列表的渲染，我们之前做首页的时候就有接触过用于循环数组，展示列表型数据</p>
+<ul>
+<li><p>默认数组的当前项的下标变量名默认为index，数组当前项的变量名默认为item</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;view wx:for=&quot;&#123;&#123;items&#125;&#125;&quot;&gt;</div><div class="line">  &#123;&#123;index&#125;&#125;: &#123;&#123;item.message&#125;&#125;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>也可以自定义变量表使用 wx:for-item可以指定数组当前元素的变量名<br>使用wx:for-index可以指定数组当前下标的变量名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;view wx:for=&quot;&#123;&#123;array&#125;&#125;&quot; wx:for-index=&quot;idx&quot; wx:for-item=&quot;itemName&quot;&gt;</div><div class="line">  &#123;&#123;idx&#125;&#125;: &#123;&#123;itemName.message&#125;&#125;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>wx:if</strong><br>微信小程序条件渲染，通常是在if里面写判断语句，满足条件就执行这个view控件，通常有if对应就有else，对应的不满足if条件就执行else对应的view控件</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;view wx:if=&quot;&#123;&#123;length &gt; 5&#125;&#125;&quot;&gt; 1 &lt;/view&gt;</div><div class="line">&lt;view wx:elif=&quot;&#123;&#123;length &gt; 2&#125;&#125;&quot;&gt; 2 &lt;/view&gt;</div><div class="line">&lt;view wx:else&gt; 3 &lt;/view&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>我们要把<strong>wx:if 和 hidden</strong>做对比，他们都可以实现让控件显示与隐藏，但是他们有什么区别呐，if是当满足条件的时候才会渲染view，而hidden是view一定会被渲染，只不过控制显示与隐藏罢了，那么我们要如何区分什么时机用什么方法呐？<br>一般来说，wx:if有更高的切换消耗而hidden有更高的初始渲染消耗。因此，如果需要频繁切换的情景下，用hidden更好，如果在运行时条件不大可能改变则wx:if较好。</p>
+<p>##总结</p>
+<p>好了，分类页面的制作完成了，今天新增一个知识小课堂，目的很简单，就是想把涉及到的知识要点归类整理，方便读者查阅。今天就到这，祝大家周末愉快~</p>
+<p>###上一篇：<a href="http://www.jianshu.com/p/8c98af820fea" target="_blank" rel="external">微信小程序实战篇-下拉刷新与加载更多</a></p>
+
+      
+      
+  <div class="article-statement">
+    <hr>  
+    1.如果本文帮到了您，不妨点一下右下角的 <a>分享到</a> 按钮。<br>
+    2.除非注明，本博文章均为原创，转载请以链接形式标明本文地址。<br>
+    3.本博文章只代表博主当时的观点或结论，与博主公司没有任何关系。<br>
+  </div>
+
+    </div>
+    
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2017/06/23/微信小程序实战篇-分类页面制作/" data-id="cj6x9bqmn0000y9qihs5fbhmt" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-分类页面制作">分享到</a>
+      
+
+      
+        <a href="http://yoursite.com/2017/06/23/微信小程序实战篇-分类页面制作/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电商/">电商</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/30/微信小程序实战篇-商品详情页（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          微信小程序实战篇-商品详情页（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">微信小程序实战篇-下拉刷新与加载更多</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/06/23/微信小程序实战篇-分类页面制作/" data-title="微信小程序实战篇-分类页面制作" data-url="http://yoursite.com/2017/06/23/微信小程序实战篇-分类页面制作/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">推荐文章</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        <li>
+          <a href="/2016/07/24/javascript-lesson-readme/" target="_blank">1. 《JavaScript 闯关记》</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2016/06/10/frontend-css-float-learning-note/" target="_blank">2. CSS基础知识之float</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">关于我</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        
+          <div style="text-align: center;">
+            <img src="/img/logo.jpeg" style="width: 100%; max-width: 250px;">
+          </div>
+        
+        <li>
+          <a href="https://github.com/jiangzepeng" target="_blank">1. 我的「GitHub」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://www.jianshu.com/u/b4a296d6ebee" target="_blank">2. 我的「简书」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://blog.csdn.net/u012927188?viewmode=list" target="_blank">3. 我的「CSDN」</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">微信公众号</h3>
+	<div class="widget">
+		<div style="text-align: center;">
+			<img src="http://upload-images.jianshu.io/upload_images/1750086-f45ba6f2712a8c9a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" style="width: 100%; max-width: 250px;">
+			<div style="margin-top: -15px;">「代码集中营」</div>
+		</div>
+	</div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2012 - 2017 <a href="/" target="_blank">代码君</a>.
+      &nbsp;
+      <span id="busuanzi_container_site_pv">
+        总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
+      </span>
+      <span id="busuanzi_container_site_uv">
+        <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_uv"></span></a> 人.
+      </span>
+      
+        &nbsp;
+        <span>
+          <a href="http://www.miibeian.gov.cn" >粤ICP备15013245号-2</a>.
+        </span>
+      
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">文章</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijiajie"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

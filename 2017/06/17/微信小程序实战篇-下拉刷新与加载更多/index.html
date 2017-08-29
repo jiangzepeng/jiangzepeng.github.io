@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>微信小程序实战篇-下拉刷新与加载更多 | 代码集中营</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="description" content="哈喽，大家好，看这标题是不是有点奇怪，你们期盼的微信小程序实战篇-电商（三）没出现，我是这么想的，因为电商里面的内容有很多，如何我只是以一二三那样命名的话，不方便你们查看每篇文章讲解的内容，所以我就换了一个命名的方式，把每篇要讲解的主要内容做为标题，这样就方便以后你们忘记知识点，要回顾的时候可以快速查找的到，有木有很贴心啊~，不要迷恋哥，哥只是个传说。好了不开玩笑啦，回到正题上来，请看标题，木错，">
+<meta name="keywords" content="电商,小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序实战篇-下拉刷新与加载更多">
+<meta property="og:url" content="http://yoursite.com/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/index.html">
+<meta property="og:site_name" content="代码集中营">
+<meta property="og:description" content="哈喽，大家好，看这标题是不是有点奇怪，你们期盼的微信小程序实战篇-电商（三）没出现，我是这么想的，因为电商里面的内容有很多，如何我只是以一二三那样命名的话，不方便你们查看每篇文章讲解的内容，所以我就换了一个命名的方式，把每篇要讲解的主要内容做为标题，这样就方便以后你们忘记知识点，要回顾的时候可以快速查找的到，有木有很贴心啊~，不要迷恋哥，哥只是个传说。好了不开玩笑啦，回到正题上来，请看标题，木错，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-c79ac9fe578ffea9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-a3a8482a546e6b9a.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-e976363ba7c0eb49.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-9c105def349cbca3.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-08-29T03:48:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信小程序实战篇-下拉刷新与加载更多">
+<meta name="twitter:description" content="哈喽，大家好，看这标题是不是有点奇怪，你们期盼的微信小程序实战篇-电商（三）没出现，我是这么想的，因为电商里面的内容有很多，如何我只是以一二三那样命名的话，不方便你们查看每篇文章讲解的内容，所以我就换了一个命名的方式，把每篇要讲解的主要内容做为标题，这样就方便以后你们忘记知识点，要回顾的时候可以快速查找的到，有木有很贴心啊~，不要迷恋哥，哥只是个传说。好了不开玩笑啦，回到正题上来，请看标题，木错，">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-c79ac9fe578ffea9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+  
+    <link rel="icon" href="/img/logo.jpeg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Chrome on Android -->    
+    <link rel="icon" sizes="192x192" href="/img/logo.jpeg">
+    <!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.jpeg">    
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/img/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?10f2720e6f47d1b4a5ebc811df8dc361";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">代码集中营</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">学如逆水行舟，不进则退，心如平原驰马，易放难收</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">文章</a>
+        
+      </nav>
+      <!--
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+      -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-微信小程序实战篇-下拉刷新与加载更多" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/" class="article-date">
+  <time datetime="2017-06-16T16:00:00.000Z" itemprop="datePublished">2017-06-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/微信小程序/">微信小程序</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微信小程序实战篇-下拉刷新与加载更多
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>哈喽，大家好，看这标题是不是有点奇怪，你们期盼的微信小程序实战篇-电商（三）没出现，我是这么想的，因为电商里面的内容有很多，如何我只是以一二三那样命名的话，不方便你们查看每篇文章讲解的内容，所以我就换了一个命名的方式，把每篇要讲解的主要内容做为标题，这样就方便以后你们忘记知识点，要回顾的时候可以快速查找的到，有木有很贴心啊~，不要迷恋哥，哥只是个传说。好了不开玩笑啦，回到正题上来，请看标题，木错，我们今天就要讲解一下下拉刷新与加载更多。</p>
+<p>##下拉刷新<br>实现下拉刷新目前能想到的有两种方式</p>
+<ol>
+<li>调用系统的API，系统有提供下拉刷新的API接口<br><img src="http://upload-images.jianshu.io/upload_images/1750086-c79ac9fe578ffea9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="下拉刷新API.png"></li>
+<li>监听scroll-view,自定义下拉刷新，还记得scroll-view里面有一个<strong>bindscrolltoupper</strong>属性吗？忘记请自行回顾上一篇<a href="http://www.jianshu.com/p/5d48eb86bc53" target="_blank" rel="external"> 微信小程序实战篇-电商（二）</a>当滚动到顶部/左边，会触发 scrolltoupper 事件，所以我们可以利用这个属性，来实现下拉刷新功能。</li>
+</ol>
+<p>两种方法都可以，第一种比较简单，易上手，毕竟一些逻辑系统已经给你处理好了，第二种适合那种想要自定义下拉刷新样式的小程序，我们讲解电商，就用第一种，系统提供的就好，主要是教会大家怎么用。以首页为例</p>
+<ol>
+<li><p>home.json 参数配置</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;enablePullDownRefresh&quot;: true</div></pre></td></tr></table></figure>
+<p>我们哪个页面需要下拉刷新，就在哪个页面对应的xxx.json文件配置上面属性,这个属性从字面意思也可以知道，是否允许下拉刷新，当然，如何你不想一个个配置允许下拉刷新，你可以直接在全局变量app.json的window里面配置上面这个属性，这样整个项目都允许下拉刷新了,这个一定要加的，因为系统默认是不具备下拉刷新功能的</p>
+</li>
+<li><p>home.js</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//下拉刷新</div><div class="line">onPullDownRefresh:function()</div><div class="line">&#123;</div><div class="line">  wx.showNavigationBarLoading() //在标题栏中显示加载</div><div class="line">  </div><div class="line">  //模拟加载</div><div class="line">  setTimeout(function()</div><div class="line">  &#123;</div><div class="line">    // complete</div><div class="line">    wx.hideNavigationBarLoading() //完成停止加载</div><div class="line">    wx.stopPullDownRefresh() //停止下拉刷新</div><div class="line">  &#125;,1500);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-a3a8482a546e6b9a.gif?imageMogr2/auto-orient/strip" alt="效果图-1.gif"></center><br><strong>onPullDownRefresh</strong> 下拉刷新事件监听，具体看一下里面的代码，wx.showNavigationBarLoading() 与wx.hideNavigationBarLoading() 这两句话是用来控制小菊花的显示和隐藏，由于我们现在还没有讲解网络请求，所以我就模拟了一下网络加载，通过setTimeout方法，写一个时间延迟的方法，这个方法可以模拟网络加载所消耗的时间，还有就是当网络加载完成我们要停止下拉刷新wx.stopPullDownRefresh() 。<br><br>这个到目前为止下拉刷新的功能已经完成了，但是还不够完美，还是有点怪怪的，就是下拉刷新没有动画，有木有~我那时也感到奇怪，微信封装的下拉刷新怎么可能这样呐，后来我参考别人写的代码，发现一个小坑，先看一下我填完坑的效果吧<br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-e976363ba7c0eb49.gif?imageMogr2/auto-orient/strip" alt="效果图-2.gif"></center><br>怎么样，是不是顺眼多了，想知道我是怎么加入这个动画的嘛，让我来给你揭晓，其实很简单，只需要一句话代码在app.json中window里配置下面属性，这个是配置整个系统的背景颜色，为什么我配置系统颜色就会出现下拉刷新了呐，原因就在下拉刷新的动画本身就有，只不过当我们没配置背景颜色，系统默认就为白色，动画也是白色，所以我们就看不到动画效果，是不是有点坑，哈哈~~<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;backgroundColor&quot;: &quot;#f0145a&quot;</div></pre></td></tr></table></figure><br><br>##加载更多<br>实现加载更多也同理有两种方式<br><br>  1. 调用系统的API<br>  2.  监听scroll-view，<strong>bindscrolltolower</strong>滑动到底部的监听<br><br>我还是拿第一种实现方式讲解，处理方式和下拉刷新略有不同，不过也大同小异吧，还是以首页为例<br><br>  1. home.js<br><br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">//加载更多</div><div class="line">onReachBottom: function () &#123;</div><div class="line">  console.log(&apos;加载更多&apos;)</div><div class="line">  setTimeout(() =&gt; &#123;</div><div class="line">    this.setData(&#123;</div><div class="line">      isHideLoadMore: true,</div><div class="line">      recommends: [</div><div class="line">        &#123;</div><div class="line">          goodId: 7,</div><div class="line">          name: &apos;OLAY玉兰油精油沐浴露玫瑰滋养二合一450ml&apos;,</div><div class="line">          url: &apos;bill&apos;,</div><div class="line">          imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161213/148162245074.jpg&apos;,</div><div class="line">          newprice: &quot;￥36.60&quot;,</div><div class="line">          oldprice: &quot;￥40.00&quot;,</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          goodId: 10,</div><div class="line">          name: &apos;兰蔻玫瑰清滢保湿柔肤水嫩肤水化妆水400ml补水保湿温和不刺激&apos;,</div><div class="line">          url: &apos;bill&apos;,</div><div class="line">          imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148057937593.jpg&apos;,</div><div class="line">          newprice: &quot;￥30.00&quot;,</div><div class="line">          oldprice: &quot;￥80.00&quot;,</div><div class="line">        &#125;, &#123;</div><div class="line">          goodId: 11,</div><div class="line">          name: &apos;Lancome/兰蔻清莹柔肤爽肤水/粉水400ml补水保湿玫瑰水化妆水&apos;,</div><div class="line">          url: &apos;bill&apos;,</div><div class="line">          imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148057953326.jpg&apos;,</div><div class="line">          newprice: &quot;￥30.00&quot;,</div><div class="line">          oldprice: &quot;￥80.00&quot;,</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          goodId: 12,</div><div class="line">          name: &apos;美国CLINIQUE倩碧黄油无油/特效润肤露125ml&apos;,</div><div class="line">          url: &apos;bill&apos;,</div><div class="line">          imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/14805828016.jpg&apos;,</div><div class="line">          newprice: &quot;￥239.00&quot;,</div><div class="line">          oldprice: &quot;￥320.00&quot;,</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          goodId: 13,</div><div class="line">          name: &apos;法国LANCOME兰蔻柔皙轻透隔离防晒乳霜50ML2017年3月到期&apos;,</div><div class="line">          url: &apos;bill&apos;,</div><div class="line">          imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148058014894.jpg&apos;,</div><div class="line">          newprice: &quot;￥130.00&quot;,</div><div class="line">          oldprice: &quot;￥180.00&quot;,</div><div class="line">        &#125;,</div><div class="line">      ],</div><div class="line">    &#125;)</div><div class="line">  &#125;, 1000)</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><strong>onReachBottom</strong>系统提供的触底事件的监听，和下拉刷新一样，我们也是模拟一些数据，加了一个时间延迟的事件，isHideLoadMore，一个自定义的值，用来控制显示和隐藏加载控件<br>  2. home.wxml<br><br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;view class=&quot;weui-loadmore&quot; hidden=&quot;&#123;&#123;isHideLoadMore&#125;&#125;&quot;&gt;</div><div class="line">   &lt;view class=&quot;weui-loading&quot;&gt;&lt;/view&gt;</div><div class="line">   &lt;view class=&quot;weui-loadmore__tips&quot;&gt;正在加载&lt;/view&gt;</div><div class="line"> &lt;/view&gt;</div></pre></td></tr></table></figure><br><br>在home.wxml底部加入上面的代码，这是加载更多的控件，加载更多待遇就没下拉刷新待遇好，系统并没有提供加载更多的控件动画，所以我们需要自己制作<br>  3. home.wxss<br><br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/*  加载更多   */</div><div class="line">.weui-loading &#123;</div><div class="line">  margin: 0 5px;</div><div class="line">  width: 20px;</div><div class="line">  height: 20px;</div><div class="line">  display: inline-block;</div><div class="line">  vertical-align: middle;</div><div class="line">  -webkit-animation: weuiLoading 1s steps(12, end) infinite;</div><div class="line">  animation: weuiLoading 1s steps(12, end) infinite;</div><div class="line">  background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgxMDB2MTAwSDB6Ii8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRTlFOUU5IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTMwKSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iIzk4OTY5NyIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgzMCAxMDUuOTggNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjOUI5OTlBIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDYwIDc1Ljk4IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0EzQTFBMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA2NSA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNBQkE5QUEiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoMTIwIDU4LjY2IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0IyQjJCMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgxNTAgNTQuMDIgNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjQkFCOEI5IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDE4MCA1MCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNDMkMwQzEiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTE1MCA0NS45OCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNDQkNCQ0IiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyMCA0MS4zNCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNEMkQyRDIiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDM1IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0RBREFEQSIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtNjAgMjQuMDIgNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRTJFMkUyIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC0zMCAtNS45OCA2NSkiLz48L3N2Zz4=) no-repeat;</div><div class="line">  background-size: 100%;</div><div class="line">&#125;</div><div class="line">.weui-loadmore &#123;</div><div class="line">  width: 65%;</div><div class="line">  margin: 1.5em auto;</div><div class="line">  line-height: 1.6em;</div><div class="line">  font-size: 14px;</div><div class="line">  text-align: center;</div><div class="line">&#125;</div><div class="line">.weui-loadmore__tips &#123;</div><div class="line">  display: inline-block;</div><div class="line">  vertical-align: middle;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>这个是我们自定义的样式，样式很简单，就是一个简单的加载小菊花，这里我要讲解的是 weui-loading 样式里设置 background，<strong>data:image/svg+xml;base64</strong>这个是什么意思呐，我们之前一般设置背景直接加入颜色，这个是background的另一种用法，加入图片，这个图片还有点特别是base64格式，并用svg绘制的，当然你还可以直接把url里面写入图片路径也是可以的，好，下面我们一起看一下效果吧！<br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-9c105def349cbca3.gif?imageMogr2/auto-orient/strip" alt="效果图-3.gif"></center>
+
+<p>##总结<br>今天就讲到这里，下拉刷新和加载更多都是前端程序必备的知识，几乎所有APP里都有下拉刷新和加载更多，所以大家一定要掌握，这里主要讲解的是小程序自带的下拉刷新与加载更多API，大家可以试着挑战一下用第二种方式，实现一下~</p>
+<p>###上一篇：<a href="http://www.jianshu.com/p/5d48eb86bc53" target="_blank" rel="external">微信小程序实战篇-电商（二）</a></p>
+<p>###下一篇：<a href="http://www.jianshu.com/p/596f785325fb" target="_blank" rel="external">微信小程序实战篇-分类页面制作</a></p>
+
+      
+      
+  <div class="article-statement">
+    <hr>  
+    1.如果本文帮到了您，不妨点一下右下角的 <a>分享到</a> 按钮。<br>
+    2.除非注明，本博文章均为原创，转载请以链接形式标明本文地址。<br>
+    3.本博文章只代表博主当时的观点或结论，与博主公司没有任何关系。<br>
+  </div>
+
+    </div>
+    
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/" data-id="cj6x8tfu30001tpqiz4txud0l" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-下拉刷新与加载更多">分享到</a>
+      
+
+      
+        <a href="http://yoursite.com/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电商/">电商</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/23/微信小程序实战篇-分类页面制作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          微信小程序实战篇-分类页面制作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/09/微信小程序实战篇-电商（二）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">微信小程序实战篇-电商（二）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/06/17/微信小程序实战篇-下拉刷新与加载更多/" data-title="微信小程序实战篇-下拉刷新与加载更多" data-url="http://yoursite.com/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">推荐文章</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        <li>
+          <a href="/2016/07/24/javascript-lesson-readme/" target="_blank">1. 《JavaScript 闯关记》</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2016/06/10/frontend-css-float-learning-note/" target="_blank">2. CSS基础知识之float</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">关于我</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        
+          <div style="text-align: center;">
+            <img src="/img/logo.jpeg" style="width: 100%; max-width: 250px;">
+          </div>
+        
+        <li>
+          <a href="https://github.com/jiangzepeng" target="_blank">1. 我的「GitHub」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://www.jianshu.com/u/b4a296d6ebee" target="_blank">2. 我的「简书」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://blog.csdn.net/u012927188?viewmode=list" target="_blank">3. 我的「CSDN」</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">微信公众号</h3>
+	<div class="widget">
+		<div style="text-align: center;">
+			<img src="http://upload-images.jianshu.io/upload_images/1750086-f45ba6f2712a8c9a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" style="width: 100%; max-width: 250px;">
+			<div style="margin-top: -15px;">「代码集中营」</div>
+		</div>
+	</div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2012 - 2017 <a href="/" target="_blank">代码君</a>.
+      &nbsp;
+      <span id="busuanzi_container_site_pv">
+        总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
+      </span>
+      <span id="busuanzi_container_site_uv">
+        <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_uv"></span></a> 人.
+      </span>
+      
+        &nbsp;
+        <span>
+          <a href="http://www.miibeian.gov.cn" >粤ICP备15013245号-2</a>.
+        </span>
+      
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">文章</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijiajie"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

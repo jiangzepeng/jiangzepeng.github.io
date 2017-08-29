@@ -11,13 +11,13 @@
   <meta name="renderer" content="webkit">
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <meta name="description" content="小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！ ##准备工作  下载开发工具：微信小程序开发工具  ##创建项目  添加项目  如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建">
+  <meta name="description" content="小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！ ##准备工作  下载开发工具：微信小程序开发工具  ##创建项目  添加项目 如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建整">
 <meta name="keywords" content="电商,小程序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信小程序入门篇（一）">
 <meta property="og:url" content="http://yoursite.com/2017/05/22/微信小程序入门篇（一）/index.html">
 <meta property="og:site_name" content="代码集中营">
-<meta property="og:description" content="小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！ ##准备工作  下载开发工具：微信小程序开发工具  ##创建项目  添加项目  如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建">
+<meta property="og:description" content="小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！ ##准备工作  下载开发工具：微信小程序开发工具  ##创建项目  添加项目 如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建整">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-ea1c62b474a76c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-83c53a8be011813b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -27,10 +27,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-95c639265f0c14b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-421c14c170e2b8bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-4a259a494ff7d5ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-08-28T03:30:21.000Z">
+<meta property="og:updated_time" content="2017-08-29T03:46:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信小程序入门篇（一）">
-<meta name="twitter:description" content="小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！ ##准备工作  下载开发工具：微信小程序开发工具  ##创建项目  添加项目  如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建">
+<meta name="twitter:description" content="小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！ ##准备工作  下载开发工具：微信小程序开发工具  ##创建项目  添加项目 如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建整">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-ea1c62b474a76c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
   
@@ -139,52 +139,47 @@ var _hmt = _hmt || [];
 </ol>
 <p>##创建项目</p>
 <ol>
-<li><p>添加项目<br><img src="http://upload-images.jianshu.io/upload_images/1750086-ea1c62b474a76c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目1-1.png"></p>
-</li>
-<li><p>如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建整个项目架构，记得勾选<strong>quick start</strong>项目<br><img src="http://upload-images.jianshu.io/upload_images/1750086-83c53a8be011813b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目1-2.png"></p>
-</li>
+<li>添加项目<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-ea1c62b474a76c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目1-1.png"><br></center></li>
+<li>如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建整个项目架构，记得勾选<strong>quick start</strong>项目</li>
 </ol>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-83c53a8be011813b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目1-2.png"><br></center>
+
 <p>##项目架构分析</p>
 <ol>
-<li>整体架构:自动创建的项目就会以下架构目录<ul>
+<li><p>整体架构:自动创建的项目就会以下架构目录</p>
+<ul>
 <li>红框1 ：菜单栏</li>
 <li>红框2：界面效果显示</li>
 <li>红框3 ：代码架构目录</li>
-<li>红框4 ：代码栏<br><img src="http://upload-images.jianshu.io/upload_images/1750086-6d9f52a544d249cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构1-1.png"></li>
+<li>红框4 ：代码栏</li>
 </ul>
-</li>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-6d9f52a544d249cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构1-1.png"><br></center></li>
 <li>着重对代码架构目录做介绍：<strong>app.js、app.json、app.wxss</strong>，这三个中前两个是必看的，前两个相当于目录，就好比你读一本书，都要先看一下目录，所以以后看别人项目的时候，首先先看app.js和app.json<ul>
 <li>app.js是小程序的脚本代码。我们可以在这个文件中监听并处理小程序的生命周期函数、声明全局变量。调用框架提供的丰富的 API，如本例的同步存储及同步读取本地数据。</li>
 <li>​ app.json 是对整个小程序的全局配置。我们可以在这个文件中配置小程序是由哪些页面组成，配置小程序的窗口背景色，配置导航条样式，配置默认标题。注意该文件不可添加任何注释。</li>
 <li>app.wxss 是整个小程序的公共样式表。我们可以在页面组件的 class 属性上直接使用 app.wxss 中声明的样式规则。</li>
 </ul>
 </li>
-<li><p>app.json解析：首先既然是.json所以一定是json格式，这里面包含两部分<strong>pages</strong>和<strong>window</strong>，固定字段，<strong>pages</strong>就是整个小程序包含的页面，可以根据路径查找到对应的页面，<strong>window</strong>就是设置一些窗口样式，依次是配置小程序的窗口  背景字体样式，配置导航条背景样式，配置默认标题，及颜色<br><img src="http://upload-images.jianshu.io/upload_images/1750086-b0f2fab48bf97349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构3-1.png"><br><strong>现学现用</strong></p>
+<li><p>app.json解析：首先既然是.json所以一定是json格式，这里面包含两部分<strong>pages</strong>和<strong>window</strong>，固定字段，<strong>pages</strong>就是整个小程序包含的页面，可以根据路径查找到对应的页面，<strong>window</strong>就是设置一些窗口样式，依次是配置小程序的窗口  背景字体样式，配置导航条背景样式，配置默认标题，及颜色<br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-b0f2fab48bf97349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构3-1.png"><br></center><br>###<strong>现学现用</strong></p>
 <ul>
 <li><p><strong>我要设置导航栏的标题为商城，字体为白色，背景为黑色要怎么做呐？</strong> 很简单吧，找到app.json把下面的代码替换到window里面就可以啦，要解释一下navigationBarBackgroundColor和navigationBarTextStyle都是支持rgb的，也就是说设置字体颜色navigationBarTextStyle为白色填入white其实也可以填入#fff，都是一样的效果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">"window"</span>:&#123;</div><div class="line">  <span class="string">"backgroundTextStyle"</span>:<span class="string">"light"</span>,</div><div class="line">  <span class="string">"navigationBarBackgroundColor"</span>: <span class="string">"#000"</span>,</div><div class="line">  <span class="string">"navigationBarTitleText"</span>: <span class="string">"商城"</span>,</div><div class="line">  <span class="string">"navigationBarTextStyle"</span>:<span class="string">"white"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">"window"</span>:&#123;</div><div class="line">  <span class="string">"backgroundTextStyle"</span>:<span class="string">"light"</span>,</div><div class="line">  <span class="string">"navigationBarBackgroundColor"</span>: <span class="string">"#000"</span>,</div><div class="line">  <span class="string">"navigationBarTitleText"</span>: <span class="string">"商城"</span>,</div><div class="line">  <span class="string">"navigationBarTextStyle"</span>:<span class="string">"white"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p><strong>我要增加一个界面怎么办呐？</strong>   同理只需在app.json里的pages属性加入你要的路径pages/addPage/addPage，你写好路径后系统会自动给你建好文件的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="string">"pages"</span>:[</div><div class="line">    <span class="string">"pages/index/index"</span>,</div><div class="line">    <span class="string">"pages/logs/logs"</span>,</div><div class="line">    <span class="string">"pages/addPage/addPage"</span></div><div class="line">  ]</div></pre></td></tr></table></figure>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="string">"pages"</span>:[</div><div class="line">    <span class="string">"pages/index/index"</span>,</div><div class="line">    <span class="string">"pages/logs/logs"</span>,</div><div class="line">    <span class="string">"pages/addPage/addPage"</span></div><div class="line">  ]</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ol>
-<p>下图是解决以上两个问题的效果图，app.json就暂时解析到这里，记着我们在这里面有新添加一个界面addPage，后面会详细介绍这个界面的，篇幅限制，这个先搁置一下<br><img src="http://upload-images.jianshu.io/upload_images/1750086-fa4ac946bd96d641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构3-2.png"></p>
-<ol>
-<li>app.js解析:看后缀名.js就知道是JavaScript的代码，首先看一下App里面包含的几个方法<strong>onLaunch、getUserInfo、getUserInfo</strong><br><img src="http://upload-images.jianshu.io/upload_images/1750086-95c639265f0c14b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构4-1.png"><ul>
-<li><strong>onLaunch</strong>方法是小程序启动的时候执行的方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var logs = wx.getStorageSync(&apos;logs&apos;) || [] </div><div class="line">logs.unshift(Date.now())</div><div class="line">wx.setStorageSync(&apos;logs&apos;, logs)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<p>看一下里面的代码，<strong>wx.</strong>以这个开头的都是系统封装好的方法，我们都可以直接调用，输入<strong>wx.</strong>,系统会自动提示出自带的方法，查询更多系统定义的方法请看<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/api/" target="_blank" rel="external">微信API文档</a>，这里篇幅限制不能全部介绍<br><img src="http://upload-images.jianshu.io/upload_images/1750086-421c14c170e2b8bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构4-2.png"><br>好，回归正题，看着三句话代码，wx.getStorageSync是获取本地缓存的logs字段，logs.unshift代码是什么意思呐？<strong>unshift</strong>是js的知识，unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。所以大概能理解这三句话代码啦，大致是取本地缓存数据logs字段，插入最新时间，然后存储再次存入到缓存中的logs字段里，说了这么多，那Storage存储的数据在哪里呐，请看下图，会更好理解，找到菜单栏里的调试-&gt;Storage下就可以看到本地缓存的logs字段及数据，你也可以自行添加数据，然后调用wx.getStorageSync(‘key值’) ，就可以获取数据啦<br><img src="http://upload-images.jianshu.io/upload_images/1750086-4a259a494ff7d5ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构4-3.png"></p>
+<p>下图是解决以上两个问题的效果图，app.json就暂时解析到这里，记着我们在这里面有新添加一个界面addPage，后面会详细介绍这个界面的，篇幅限制，这个先搁置一下</p>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-fa4ac946bd96d641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构3-2.png"><br></center><br>4. app.js解析:看后缀名.js就知道是JavaScript的代码，首先看一下App里面包含的几个方法<strong>onLaunch、getUserInfo、getUserInfo</strong><br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-95c639265f0c14b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构4-1.png"><br></center><br> - <strong>onLaunch</strong>方法是小程序启动的时候执行的方法<br><br>        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var logs = wx.getStorageSync(&apos;logs&apos;) || [] </div><div class="line">logs.unshift(Date.now())</div><div class="line">wx.setStorageSync(&apos;logs&apos;, logs)</div></pre></td></tr></table></figure><br><br>看一下里面的代码，<strong>wx.</strong>以这个开头的都是系统封装好的方法，我们都可以直接调用，输入<strong>wx.</strong>,系统会自动提示出自带的方法，查询更多系统定义的方法请看<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/api/" target="_blank" rel="external">微信API文档</a>，这里篇幅限制不能全部介绍<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-421c14c170e2b8bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构4-2.png"></center><br>好，回归正题，看着三句话代码，wx.getStorageSync是获取本地缓存的logs字段，logs.unshift代码是什么意思呐？<strong>unshift</strong>是js的知识，unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。所以大概能理解这三句话代码啦，大致是取本地缓存数据logs字段，插入最新时间，然后存储再次存入到缓存中的logs字段里，说了这么多，那Storage存储的数据在哪里呐，请看下图，会更好理解，找到菜单栏里的调试-&gt;Storage下就可以看到本地缓存的logs字段及数据，你也可以自行添加数据，然后调用wx.getStorageSync(‘key值’) ，就可以获取数据啦<br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-4a259a494ff7d5ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构4-3.png"><br></center>
+
 <ul>
 <li><strong>globalData</strong>全局变量数据，</li>
-<li><strong>getUserInfo</strong>自定义的方法用于获取用户信息，整体的代码意思就是如果用户信息为空就去调用微信的登录接口，登录成功后存储在全局变量<strong>globalData</strong>里，分析两处代码第一处<strong>var that = this</strong>，that=this,这个是js语法属性，this应该是引用本实例的一个值，它将它赋值给that的原因从下面的代码中可以判断出来js的一些特性。每一个方法是一个封闭函数，它的上一层实例即为this，所以如果一个方法A包含另一个方法B，在A中使用this指的是A的实例，在B中使用this应该是B的实例，即拥有B的A，所以在这里我们为了拿到A中的实例this，必须要赋一个值给that，让B能使用A的实例。在此demo中，上面的this指的是app这个实例，为了在下面的方法中可以使用app的实例，所以赋了that给this。还不明白that=this可以参考<a href="https://zhidao.baidu.com/question/271694212.html" target="_blank" rel="external">此文献</a>，第二处是<strong>typeof cb == “function” &amp;&amp; cb(this.globalData.userInfo)</strong>，代码中两次调用此代码所以要剖析一下，cb是callback的缩写，翻译代码意思就是cb==function，要求cb为方法，并且回调cb方法，剩下的<strong>wx.login</strong>猜都能猜出来是微信封装好的登录方法啦<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">getUserInfo:<span class="keyword">function</span>(cb)&#123;</div><div class="line">    var that = this</div><div class="line">    <span class="keyword">if</span>(this.globalData.userInfo)&#123;</div><div class="line">      typeof cb == <span class="string">"function"</span> &amp;&amp; cb(this.globalData.userInfo)</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      //调用登录接口</div><div class="line">      wx.login(&#123;</div><div class="line">        success: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">          wx.getUserInfo(&#123;</div><div class="line">            success: <span class="keyword">function</span> (res) &#123;</div><div class="line">              that.globalData.userInfo = res.userInfo</div><div class="line">              typeof cb == <span class="string">"function"</span> &amp;&amp; cb(that.globalData.userInfo)</div><div class="line">            &#125;</div><div class="line">          &#125;)</div><div class="line">        &#125;</div><div class="line">      &#125;)</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  globalData:&#123;</div><div class="line">    userInfo:null</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-</li>
+<li><strong>getUserInfo</strong>自定义的方法用于获取用户信息，整体的代码意思就是如果用户信息为空就去调用微信的登录接口，登录成功后存储在全局变量<strong>globalData</strong>里，分析两处代码第一处<strong>var that = this</strong>，that=this,这个是js语法属性，this应该是引用本实例的一个值，它将它赋值给that的原因从下面的代码中可以判断出来js的一些特性。每一个方法是一个封闭函数，它的上一层实例即为this，所以如果一个方法A包含另一个方法B，在A中使用this指的是A的实例，在B中使用this应该是B的实例，即拥有B的A，所以在这里我们为了拿到A中的实例this，必须要赋一个值给that，让B能使用A的实例。在此demo中，上面的this指的是app这个实例，为了在下面的方法中可以使用app的实例，所以赋了that给this。还不明白that=this可以参考<a href="https://zhidao.baidu.com/question/271694212.html" target="_blank" rel="external">此文献</a>，第二处是<strong>typeof cb == “function” &amp;&amp; cb(this.globalData.userInfo)</strong>，代码中两次调用此代码所以要剖析一下，cb是callback的缩写，翻译代码意思就是cb==function，要求cb为方法，并且回调cb方法，剩下的<strong>wx.login</strong>猜都能猜出来是微信封装好的登录方法啦</li>
 </ul>
-<ol>
+<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">getUserInfo:<span class="keyword">function</span>(cb)&#123;</div><div class="line">    var that = this</div><div class="line">    <span class="keyword">if</span>(this.globalData.userInfo)&#123;</div><div class="line">      typeof cb == <span class="string">"function"</span> &amp;&amp; cb(this.globalData.userInfo)</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      //调用登录接口</div><div class="line">      wx.login(&#123;</div><div class="line">        success: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">          wx.getUserInfo(&#123;</div><div class="line">            success: <span class="keyword">function</span> (res) &#123;</div><div class="line">              that.globalData.userInfo = res.userInfo</div><div class="line">              typeof cb == <span class="string">"function"</span> &amp;&amp; cb(that.globalData.userInfo)</div><div class="line">            &#125;</div><div class="line">          &#125;)</div><div class="line">        &#125;</div><div class="line">      &#125;)</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  globalData:&#123;</div><div class="line">    userInfo:null</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</code></pre><ol>
 <li>app.wxss 我打算放在下一节和addPage页一起讲</li>
 </ol>
 <p>#总结</p>
@@ -213,7 +208,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/05/22/微信小程序入门篇（一）/" data-id="cj6vlob3j00014gqinzck6how" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（一）">分享到</a>
+        <a data-url="http://yoursite.com/2017/05/22/微信小程序入门篇（一）/" data-id="cj6x8ssyf0001tgqiizu7aghe" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（一）">分享到</a>
       
 
       
@@ -228,6 +223,15 @@ var _hmt = _hmt || [];
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/05/23/微信小程序入门篇（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          微信小程序入门篇（二）
+        
+      </div>
+    </a>
   
   
     <a href="/2017/01/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
@@ -272,7 +276,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/小程序/" style="font-size: 10px;">小程序</a> <a href="/tags/电商/" style="font-size: 10px;">电商</a>
+      <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
     </div>
   </div>
 
@@ -281,7 +285,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li></ul>
     </div>
   </div>
 
@@ -295,7 +299,7 @@ var _hmt = _hmt || [];
         
         
           <div style="text-align: center;">
-            <img src="https://github.com/jiangzepeng" style="width: 100%; max-width: 250px;">
+            <img src="/img/logo.jpeg" style="width: 100%; max-width: 250px;">
           </div>
         
         <li>
@@ -332,7 +336,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
