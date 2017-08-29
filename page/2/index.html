@@ -124,7 +124,7 @@ var _hmt = _hmt || [];
         <!-- Table of Contents -->
         
         <p>上篇<a href="http://www.jianshu.com/p/e63be70e3ab9" target="_blank" rel="external"> 微信小程序入门篇（一）</a>我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈</p>
-<p>##页面的构成</p>
+<h2 id="页面的构成"><a href="#页面的构成" class="headerlink" title="页面的构成"></a>页面的构成</h2><hr>
 <ol>
 <li>还记得我们在上篇文章中讲解如何加入一个界面吗？在app.json中的pages加入要加的文件路径就可以啦，文件路径可以随便起，系统会自动创建出来的，那么我就接着之前的讲，我们之前创建了一个页面叫addPage，addPage里面包含四个文件<strong>addPage.js、addPage.json、addPage.wxml、addPage.wxss</strong>这四个对应的作用是什么呐？<ul>
 <li><strong>addPage.js</strong> 页面数据的存储，网络请求的加载都是在这里</li>
@@ -136,7 +136,7 @@ var _hmt = _hmt || [];
 </ol>
 <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-f4a28e737f424802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1.png"><br></center>
 
-<p>##页面的解析</p>
+<h2 id="页面的解析"><a href="#页面的解析" class="headerlink" title="页面的解析"></a>页面的解析</h2><hr>
 <ol>
 <li><p>addPage.js解析</p>
  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">// pages/addPage/addPage.js</div><div class="line">Page(&#123;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面的初始数据</div><div class="line">   */</div><div class="line">  data: &#123;</div><div class="line">  </div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面加载</div><div class="line">   */</div><div class="line">  onLoad: <span class="keyword">function</span> (options) &#123;</div><div class="line">    console.debug(<span class="string">"onLoad--监听页面加载"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面初次渲染完成</div><div class="line">   */</div><div class="line">  onReady: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onReady--监听页面初次渲染完成"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面显示</div><div class="line">   */</div><div class="line">  onShow: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onShow--监听页面显示"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面隐藏</div><div class="line">   */</div><div class="line">  onHide: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onHide--监听页面隐藏"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面卸载</div><div class="line">   */</div><div class="line">  onUnload: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onUnload--监听页面卸载"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面相关事件处理函数--监听用户下拉动作</div><div class="line">   */</div><div class="line">  onPullDownRefresh: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onPullDownRefresh--监听用户下拉动作"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面上拉触底事件的处理函数</div><div class="line">   */</div><div class="line">  onReachBottom: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onReachBottom--页面上拉触底事件的处理函数"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 用户点击右上角分享</div><div class="line">   */</div><div class="line">  onShareAppMessage: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onShareAppMessage--用户点击右上角分享"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
@@ -167,7 +167,8 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <p><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-13a7439527e75866.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-3.png"><br></center><br>结合效果图一起看样式代码，看到”userinfo”和”container”是不是眼熟，就是之前在index.wxml中class的样式，我们在wxss定义好样式，就是通过这些字段把index.wxml和index.wxss关联起来，才有的上面的界面效果</p>
-<p>###wxss样式积累<br>wxss样式里代码看不懂可以查阅这里，如果没找到对应样式，请自行百度喽，这些也是代码君问的度娘</p>
+<h3 id="wxss样式积累"><a href="#wxss样式积累" class="headerlink" title="wxss样式积累"></a>wxss样式积累</h3><hr>
+<p>wxss样式里代码看不懂可以查阅这里，如果没找到对应样式，请自行百度喽，这些也是代码君问的度娘</p>
 <ol>
 <li>display属性<ul>
 <li>none:此元素不会被显示</li>
@@ -176,39 +177,45 @@ var _hmt = _hmt || [];
 <li>inherit：继承父类</li>
 <li>flex：多栏多列</li>
 </ul>
-</li>
-</ol>
 <ol>
-<li>flex-direction:<ul>
+<li>flex-direction:</li>
+</ol>
+<ul>
 <li>column 垂直分布</li>
 <li>row 水平分布</li>
 </ul>
-</li>
-<li>flex-wrap：<ul>
+<ol>
+<li>flex-wrap：</li>
+</ol>
+<ul>
 <li>nowrap item溢出不换行</li>
 <li>wrap 超出的item跳到下一行</li>
 </ul>
-</li>
-<li>justify-content属性<ul>
+<ol>
+<li>justify-content属性</li>
+</ol>
+<ul>
 <li>flex-start：左对齐</li>
 <li>flex-end：右对齐</li>
 <li>center：居中</li>
 <li>space-between ：item中间留出等间距</li>
 <li>space-around：环绕item流程等间距</li>
 </ul>
+<ol>
+<li>align-items item 边界线对齐方式  </li>
+</ol>
 </li>
-<li>align-items item 边界线对齐方式  <ul>
-<li>flex-start | flex-end | center | baseline | stretch </li>
-</ul>
+</ol>
+<ul>
+<li>flex-start | flex-end | center | baseline | stretch <ol>
+<li>border-bottom 边界线</li>
+</ol>
 </li>
-<li>border-bottom 边界线<ul>
-<li>举个栗子 1px solid #ccc;</li>
-</ul>
+<li>举个栗子 1px solid #ccc;<ol>
+<li>align-items item 边界线对齐方式  </li>
+</ol>
 </li>
-<li>align-items item 边界线对齐方式  <ul>
-<li>flex-start | flex-end | center | baseline | stretch </li>
-</ul>
-</li>
+<li>flex-start | flex-end | center | baseline | stretch <ol>
 <li>overflow-x   内容超过边框处理方式<ul>
 <li>visible 显示超出的内容</li>
 <li>hidden 隐藏超出的内容</li>
@@ -216,9 +223,10 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ol>
-<p>##总结<br>今天我们讲解了页面的所有内容，知识点很多，尤其是wxss的样式，其实wxss样式和css样式的属性是差不多的，所以可以多去参考css样式属性，今天就说这么多，两篇的小程序入门文章，应该可以帮助大家跨进小程序的大门啦，接下来，我们将进入实战篇《电商》，很多朋友都问怎么做一个电商小程序，所以我将在后面的文章中，一步步教大家开发一个电商小程序，敬请期待！原创不易，觉得不错就点个赞吧！</p>
-<p>###上一篇：<a href="http://www.jianshu.com/p/e63be70e3ab9" target="_blank" rel="external">微信小程序入门篇（一）</a></p>
-<p>###下一篇：<a href="http://www.jianshu.com/p/0f567cc56011" target="_blank" rel="external">微信小程序实战篇-电商（一）</a></p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<p>今天我们讲解了页面的所有内容，知识点很多，尤其是wxss的样式，其实wxss样式和css样式的属性是差不多的，所以可以多去参考css样式属性，今天就说这么多，两篇的小程序入门文章，应该可以帮助大家跨进小程序的大门啦，接下来，我们将进入实战篇《电商》，很多朋友都问怎么做一个电商小程序，所以我将在后面的文章中，一步步教大家开发一个电商小程序，敬请期待！原创不易，觉得不错就点个赞吧！</p>
 
       
       
@@ -226,7 +234,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/05/23/微信小程序入门篇（二）/" data-id="cj6x8ssyk0003tgqimid0ihjn" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（二）">分享到</a>
+        <a data-url="http://yoursite.com/2017/05/23/微信小程序入门篇（二）/" data-id="cj6x9odkr00064cqig01nfpz2" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（二）">分享到</a>
       
 
       
@@ -272,18 +280,18 @@ var _hmt = _hmt || [];
         <!-- Table of Contents -->
         
         <p>小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！</p>
-<p>##准备工作</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><hr>
 <ol>
 <li>下载开发工具：<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html" target="_blank" rel="external">微信小程序开发工具</a></li>
 </ol>
-<p>##创建项目</p>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><hr>
 <ol>
 <li>添加项目<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-ea1c62b474a76c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目1-1.png"><br></center></li>
 <li>如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建整个项目架构，记得勾选<strong>quick start</strong>项目</li>
 </ol>
 <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-83c53a8be011813b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目1-2.png"><br></center>
 
-<p>##项目架构分析</p>
+<h2 id="项目架构分析"><a href="#项目架构分析" class="headerlink" title="项目架构分析"></a>项目架构分析</h2><hr>
 <ol>
 <li><p>整体架构:自动创建的项目就会以下架构目录</p>
 <ul>
@@ -299,8 +307,8 @@ var _hmt = _hmt || [];
 <li>app.wxss 是整个小程序的公共样式表。我们可以在页面组件的 class 属性上直接使用 app.wxss 中声明的样式规则。</li>
 </ul>
 </li>
-<li><p>app.json解析：首先既然是.json所以一定是json格式，这里面包含两部分<strong>pages</strong>和<strong>window</strong>，固定字段，<strong>pages</strong>就是整个小程序包含的页面，可以根据路径查找到对应的页面，<strong>window</strong>就是设置一些窗口样式，依次是配置小程序的窗口  背景字体样式，配置导航条背景样式，配置默认标题，及颜色<br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-b0f2fab48bf97349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构3-1.png"><br></center><br>###<strong>现学现用</strong></p>
-<ul>
+<li><p>app.json解析：首先既然是.json所以一定是json格式，这里面包含两部分<strong>pages</strong>和<strong>window</strong>，固定字段，<strong>pages</strong>就是整个小程序包含的页面，可以根据路径查找到对应的页面，<strong>window</strong>就是设置一些窗口样式，依次是配置小程序的窗口  背景字体样式，配置导航条背景样式，配置默认标题，及颜色<br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-b0f2fab48bf97349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构3-1.png"><br></center></p>
+<h3 id="现学现用"><a href="#现学现用" class="headerlink" title="现学现用"></a><strong>现学现用</strong></h3><ul>
 <li><p><strong>我要设置导航栏的标题为商城，字体为白色，背景为黑色要怎么做呐？</strong> 很简单吧，找到app.json把下面的代码替换到window里面就可以啦，要解释一下navigationBarBackgroundColor和navigationBarTextStyle都是支持rgb的，也就是说设置字体颜色navigationBarTextStyle为白色填入white其实也可以填入#fff，都是一样的效果</p>
    <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">"window"</span>:&#123;</div><div class="line">  <span class="string">"backgroundTextStyle"</span>:<span class="string">"light"</span>,</div><div class="line">  <span class="string">"navigationBarBackgroundColor"</span>: <span class="string">"#000"</span>,</div><div class="line">  <span class="string">"navigationBarTitleText"</span>: <span class="string">"商城"</span>,</div><div class="line">  <span class="string">"navigationBarTextStyle"</span>:<span class="string">"white"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
@@ -321,7 +329,7 @@ var _hmt = _hmt || [];
 </code></pre><ol>
 <li>app.wxss 我打算放在下一节和addPage页一起讲</li>
 </ol>
-<p>#总结</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><hr>
 <ol>
 <li>通过这个篇幅的介绍，我们了解了小程序的整体架构，学习了如何创建小程序，以及对小程序目录app.js、app.json详细的分析，下一篇将会详细讲解addPage的编写，敬请期待！</li>
 <li>温故而知新，看文上面的文章，不能一带而过，要学会举一反三，下面我提几个问题，看看读者吸收的怎么样。能回答以下问题说明你读懂这篇文章啦，读不懂请查看上面的内容自行找答案<ul>
@@ -340,7 +348,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/05/22/微信小程序入门篇（一）/" data-id="cj6x8ssyf0001tgqiizu7aghe" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（一）">分享到</a>
+        <a data-url="http://yoursite.com/2017/05/22/微信小程序入门篇（一）/" data-id="cj6x9odkn00054cqiwlz44qbo" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（一）">分享到</a>
       
 
       
@@ -359,8 +367,8 @@ var _hmt = _hmt || [];
   
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/01/01/hello-world/" class="article-date">
-  <time datetime="2016-12-31T16:00:00.000Z" itemprop="datePublished">2017-01-01</time>
+    <a href="/2017/03/01/hello-world/" class="article-date">
+  <time datetime="2017-02-28T16:00:00.000Z" itemprop="datePublished">2017-03-01</time>
 </a>
     
   <div class="article-category">
@@ -375,7 +383,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/01/hello-world/">Hello World</a>
+      <a class="article-title" href="/2017/03/01/hello-world/">Hexo Start</a>
     </h1>
   
 
@@ -401,11 +409,11 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/01/01/hello-world/" data-id="cj6x85x1b00059pqi5e0dst8h" class="article-share-link" data-share="baidu" data-title="Hello World">分享到</a>
+        <a data-url="http://yoursite.com/2017/03/01/hello-world/" data-id="cj6x9odk200004cqi8kazg3rp" class="article-share-link" data-share="baidu" data-title="Hexo Start">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2017/01/01/hello-world/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://yoursite.com/2017/03/01/hello-world/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -435,12 +443,12 @@ var _hmt = _hmt || [];
       
         
         <li>
-          <a href="/2016/07/24/javascript-lesson-readme/" target="_blank">1. 《JavaScript 闯关记》</a>
+          <a href="/2017/08/21/开源项目汇总/" target="_blank">1. Github开源项目汇总</a>
         </li>
       
         
         <li>
-          <a href="/2016/06/10/frontend-css-float-learning-note/" target="_blank">2. CSS基础知识之float</a>
+          <a href="/2017/08/24/基于Android系统的动画总结/" target="_blank">2. 基于Android系统的动画总结</a>
         </li>
       
     </ul>
@@ -511,7 +519,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

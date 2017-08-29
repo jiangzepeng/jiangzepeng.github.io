@@ -11,21 +11,21 @@
   <meta name="renderer" content="webkit">
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <meta name="description" content="##Share Element由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里   ###实现原理利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码  java代码  123456//第一个界面跳转的时候执行Intent shareIntent = new Intent(MainActi">
+  <meta name="description" content="Share Element 由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里   实现原理利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码  java代码  123456//第一个界面跳转的时候执行Intent shareIntent = new Intent(MainActivity">
 <meta name="keywords" content="动画">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于Android系统的动画总结">
 <meta property="og:url" content="http://yoursite.com/2017/08/24/基于Android系统的动画总结/index.html">
 <meta property="og:site_name" content="代码集中营">
-<meta property="og:description" content="##Share Element由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里   ###实现原理利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码  java代码  123456//第一个界面跳转的时候执行Intent shareIntent = new Intent(MainActi">
+<meta property="og:description" content="Share Element 由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里   实现原理利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码  java代码  123456//第一个界面跳转的时候执行Intent shareIntent = new Intent(MainActivity">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-6174a1f75902a802.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-706fd47f5f53cda8.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-09a84314d5b373ea.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-08-29T03:59:28.000Z">
+<meta property="og:updated_time" content="2017-08-29T10:35:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Android系统的动画总结">
-<meta name="twitter:description" content="##Share Element由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里   ###实现原理利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码  java代码  123456//第一个界面跳转的时候执行Intent shareIntent = new Intent(MainActi">
+<meta name="twitter:description" content="Share Element 由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里   实现原理利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码  java代码  123456//第一个界面跳转的时候执行Intent shareIntent = new Intent(MainActivity">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-6174a1f75902a802.gif?imageMogr2/auto-orient/strip">
   
   
@@ -127,29 +127,28 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <h2 id="Share-Element"><a href="#Share-Element" class="headerlink" title="##Share Element"></a>##Share Element</h2><p>由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里</p>
+        <h2 id="Share-Element"><a href="#Share-Element" class="headerlink" title="Share Element"></a>Share Element</h2><hr>
+<p>由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里</p>
 <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-6174a1f75902a802.gif?imageMogr2/auto-orient/strip" alt="share.gif"><br></center>
 
-<p>###实现原理<br>利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码</p>
 <ol>
 <li><p><strong>java代码</strong></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//第一个界面跳转的时候执行</div><div class="line">Intent shareIntent = new Intent(MainActivity.this, ShareElementActivity.class);</div><div class="line">                                String transitionName = getString(R.string.share_tag);</div><div class="line">                                ActivityOptionsCompat transitionActivityOptions</div><div class="line">                                        = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, holder.item_image, transitionName);</div><div class="line">                                startActivity(shareIntent, transitionActivityOptions.toBundle());</div></pre></td></tr></table></figure>
+<p> <strong>makeSceneTransitionAnimation(Activity activity,View sharedElement, String sharedElementName)</strong>makeSceneTransitionAnimation中参数sharedElement就是传入第一个界面要与第二个界面共有的view元素，sharedElementName这个参数可以随便起名，他相当于tag，系统就是根据这个tag来定位两个界面元素的位置，然后进行动画渲染的</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//第二个界面动画完成回调监听，控制进出动画效果</div><div class="line">setEnterSharedElementCallback(ImageTransitionUtil.DEFAULT_SHARED_ELEMENT_CALLBACK);</div></pre></td></tr></table></figure>
+<p> 在 <strong>setEnterSharedElementCallback</strong> 里面可以实现自己想要的动画效果</p>
 </li>
-</ol>
-<p><strong>makeSceneTransitionAnimation(Activity activity,View sharedElement, String sharedElementName)</strong><br>makeSceneTransitionAnimation中参数sharedElement就是传入第一个界面要与第二个界面共有的view元素，sharedElementName这个参数可以随便起名，他相当于tag，系统就是根据这个tag来定位两个界面元素的位置，然后进行动画渲染的</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//第二个界面动画完成回调监听，控制进出动画效果</div><div class="line">setEnterSharedElementCallback(ImageTransitionUtil.DEFAULT_SHARED_ELEMENT_CALLBACK);</div></pre></td></tr></table></figure>
-</code></pre><p>在 <strong>setEnterSharedElementCallback</strong> 里面可以实现自己想要的动画效果</p>
-<ol>
 <li><p><strong>布局文件代码</strong><br>这里用系统自带的ImageView就可以，记住，两个界面跳转activity中的共享元素ImageView，一定要设置这个属性 <strong>transitionName</strong> 上文说过，这个就是相当于tag，系统是根据这个来定位的，所以一定要设置。</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;ImageView</div><div class="line">         android:id=&quot;@+id/image&quot;</div><div class="line">         android:layout_width=&quot;match_parent&quot;</div><div class="line">         android:layout_height=&quot;300dp&quot;</div><div class="line">         android:src=&quot;@drawable/sample&quot;</div><div class="line">         android:transitionName=&quot;@string/share_tag&quot;</div><div class="line">         /&gt;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p><br></p>
-<h2 id="CollapsingToolbarLayout"><a href="#CollapsingToolbarLayout" class="headerlink" title="##CollapsingToolbarLayout"></a>##CollapsingToolbarLayout</h2><p>折叠式的标题栏，这个是系统提供的动画效果，引用系统控件就好了</p>
+<h2 id="CollapsingToolbarLayout"><a href="#CollapsingToolbarLayout" class="headerlink" title="CollapsingToolbarLayout"></a>CollapsingToolbarLayout</h2><hr>
+<p>折叠式的标题栏，这个是系统提供的动画效果，引用系统控件就好了</p>
 <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-706fd47f5f53cda8.gif?imageMogr2/auto-orient/strip" alt="fold.gif"><br></center>
 
-<p>###代码实现</p>
-<ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><ol>
 <li><p><strong>gradle里的引用</strong></p>
 <blockquote>
 <p>   bash compile ‘com.android.support:design:22.2.1’</p>
@@ -184,15 +183,15 @@ var _hmt = _hmt || [];
 </li>
 </ol>
 <p><br></p>
-<h2 id="Reveal-Animation"><a href="#Reveal-Animation" class="headerlink" title="##Reveal Animation"></a>##Reveal Animation</h2><p>google爸爸自从5.0之后对动画效果特别注重，这里给大家介绍一个波纹效果，也是系统提供的</p>
+<h2 id="Reveal-Animation"><a href="#Reveal-Animation" class="headerlink" title="Reveal Animation"></a>Reveal Animation</h2><hr>
+<p>google爸爸自从5.0之后对动画效果特别注重，这里给大家介绍一个波纹效果，也是系统提供的</p>
 <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-09a84314d5b373ea.gif?imageMogr2/auto-orient/strip" alt="reveal.gif"><br></center>
 
 <p>实现原理</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)</div><div class="line">  private Animator animateRevealColorFromCoordinates(ViewGroup viewRoot, @ColorRes int color, int pointx, int pointY) &#123;</div><div class="line">      float finalRadius = (float) Math.hypot(viewRoot.getWidth(), viewRoot.getHeight());</div><div class="line">      //由于toolbar是自己绘制的所以要减去这个高度</div><div class="line">      pointY = pointY - toolbarHeight;</div><div class="line">      Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, pointx, pointY, 0, finalRadius);</div><div class="line">      viewRoot.setBackgroundColor(ContextCompat.getColor(this, color));</div><div class="line">      anim.setDuration(500);</div><div class="line">      anim.setInterpolator(new AccelerateDecelerateInterpolator());</div><div class="line">      anim.start();</div><div class="line">      return anim;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>#####ViewAnimationUtils.createCircularReveal(View view, int centerX,  int centerY, float startRadius, float endRadius)<br>重点是这个方法，设置在哪个View里绘制波纹，起始点及半径就可以实现了，很多开源的button波纹效果都是基于这个实现再次封装的</p>
+<h5 id="ViewAnimationUtils-createCircularReveal-View-view-int-centerX-int-centerY-float-startRadius-float-endRadius"><a href="#ViewAnimationUtils-createCircularReveal-View-view-int-centerX-int-centerY-float-startRadius-float-endRadius" class="headerlink" title="ViewAnimationUtils.createCircularReveal(View view, int centerX,  int centerY, float startRadius, float endRadius)"></a>ViewAnimationUtils.createCircularReveal(View view, int centerX,  int centerY, float startRadius, float endRadius)</h5><p>重点是这个方法，设置在哪个View里绘制波纹，起始点及半径就可以实现了，很多开源的button波纹效果都是基于这个实现再次封装的</p>
 <p>源码在下面，如果觉得不错，随手帮忙Star、Fork一下，算是对作者最大的支持啦~</p>
-<p>###Github项目地址：<a href="https://github.com/jiangzepeng/MaterialAnim" target="_blank" rel="external">MaterialAnim</a></p>
-
+<h3 id="Github项目地址：MaterialAnim"><a href="#Github项目地址：MaterialAnim" class="headerlink" title="Github项目地址：MaterialAnim"></a>Github项目地址：<a href="https://github.com/jiangzepeng/MaterialAnim" target="_blank" rel="external">MaterialAnim</a></h3>
       
       
   <div class="article-statement">
@@ -206,7 +205,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/08/24/基于Android系统的动画总结/" data-id="cj6x8ssy60000tgqi5bciib8w" class="article-share-link" data-share="baidu" data-title="基于Android系统的动画总结">分享到</a>
+        <a data-url="http://yoursite.com/2017/08/24/基于Android系统的动画总结/" data-id="cj6x9odkj00044cqix1oxrqwl" class="article-share-link" data-share="baidu" data-title="基于Android系统的动画总结">分享到</a>
       
 
       
@@ -249,12 +248,12 @@ var _hmt = _hmt || [];
       
         
         <li>
-          <a href="/2016/07/24/javascript-lesson-readme/" target="_blank">1. 《JavaScript 闯关记》</a>
+          <a href="/2017/08/21/开源项目汇总/" target="_blank">1. Github开源项目汇总</a>
         </li>
       
         
         <li>
-          <a href="/2016/06/10/frontend-css-float-learning-note/" target="_blank">2. CSS基础知识之float</a>
+          <a href="/2017/08/24/基于Android系统的动画总结/" target="_blank">2. 基于Android系统的动画总结</a>
         </li>
       
     </ul>
@@ -325,7 +324,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

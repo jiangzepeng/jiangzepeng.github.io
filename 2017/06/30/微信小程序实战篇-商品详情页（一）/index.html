@@ -11,19 +11,19 @@
   <meta name="renderer" content="webkit">
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <meta name="description" content="哈喽，大家好，今天要进入新篇章啦，商品详情页，这个可是个大模块，要分好几次才能讲解清楚，现在我们先进行第一讲，老规矩，先上效果图 有木有很酷炫啊，下面由代码君教你如何实现。 ##详情页布局看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过  detail.wxml  12">
+  <meta name="description" content="哈喽，大家好，今天要进入新篇章啦，商品详情页，这个可是个大模块，要分好几次才能讲解清楚，现在我们先进行第一讲，老规矩，先上效果图 有木有很酷炫啊，下面由代码君教你如何实现。 详情页布局 看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过  detail.wxml  123">
 <meta name="keywords" content="电商,小程序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信小程序实战篇-商品详情页（一）">
 <meta property="og:url" content="http://yoursite.com/2017/06/30/微信小程序实战篇-商品详情页（一）/index.html">
 <meta property="og:site_name" content="代码集中营">
-<meta property="og:description" content="哈喽，大家好，今天要进入新篇章啦，商品详情页，这个可是个大模块，要分好几次才能讲解清楚，现在我们先进行第一讲，老规矩，先上效果图 有木有很酷炫啊，下面由代码君教你如何实现。 ##详情页布局看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过  detail.wxml  12">
+<meta property="og:description" content="哈喽，大家好，今天要进入新篇章啦，商品详情页，这个可是个大模块，要分好几次才能讲解清楚，现在我们先进行第一讲，老规矩，先上效果图 有木有很酷炫啊，下面由代码君教你如何实现。 详情页布局 看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过  detail.wxml  123">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-8483b91cbc858b97.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-08-29T03:47:55.000Z">
+<meta property="og:updated_time" content="2017-08-29T11:38:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信小程序实战篇-商品详情页（一）">
-<meta name="twitter:description" content="哈喽，大家好，今天要进入新篇章啦，商品详情页，这个可是个大模块，要分好几次才能讲解清楚，现在我们先进行第一讲，老规矩，先上效果图 有木有很酷炫啊，下面由代码君教你如何实现。 ##详情页布局看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过  detail.wxml  12">
+<meta name="twitter:description" content="哈喽，大家好，今天要进入新篇章啦，商品详情页，这个可是个大模块，要分好几次才能讲解清楚，现在我们先进行第一讲，老规矩，先上效果图 有木有很酷炫啊，下面由代码君教你如何实现。 详情页布局 看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过  detail.wxml  123">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-8483b91cbc858b97.gif?imageMogr2/auto-orient/strip">
   
   
@@ -127,39 +127,38 @@ var _hmt = _hmt || [];
         
         <p>哈喽，大家好，今天要进入新篇章啦，商品详情页，这个可是个大模块，要分好几次才能讲解清楚，现在我们先进行第一讲，老规矩，先上效果图</p>
 <p><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-8483b91cbc858b97.gif?imageMogr2/auto-orient/strip" alt="商品详情页.gif"><br></center><br>有木有很酷炫啊，下面由代码君教你如何实现。</p>
-<p>##详情页布局<br>看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过</p>
+<h2 id="详情页布局"><a href="#详情页布局" class="headerlink" title="详情页布局"></a>详情页布局</h2><hr>
+<p>看效果图，可以知道详情页包含以下几个模块，banner、标题栏、选择购买栏、商品评价、商品详情、还有一个底部悬浮栏，这里比较难的是底部悬浮栏，剩下的我们之前模块我们之前就有布局过</p>
 <ol>
 <li><p><strong>detail.wxml</strong></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;!-- banner --&gt;</div><div class="line">&lt;swiper indicator-dots=&quot;&#123;&#123;indicatorDots&#125;&#125;&quot; autoplay=&quot;&#123;&#123;autoplay&#125;&#125;&quot; interval=&quot;&#123;&#123;interval&#125;&#125;&quot; duration=&quot;&#123;&#123;duration&#125;&#125;&quot;&gt;</div><div class="line">  &lt;block wx:for=&quot;&#123;&#123;imgUrls&#125;&#125;&quot;&gt;</div><div class="line">    &lt;swiper-item&gt;</div><div class="line">      &lt;image src=&quot;&#123;&#123;item&#125;&#125;&quot; data-src=&quot;&#123;&#123;item&#125;&#125;&quot; bindtap=&quot;previewImage&quot;&gt;&lt;/image&gt;</div><div class="line">    &lt;/swiper-item&gt;</div><div class="line">  &lt;/block&gt;</div><div class="line">&lt;/swiper&gt;</div><div class="line">&lt;scroll-view scroll-y=&quot;true&quot;&gt;</div><div class="line">  &lt;view class=&quot;detail&quot;&gt;</div><div class="line">    &lt;text class=&quot;title&quot;&gt;LANCOME兰蔻小黑瓶精华肌底液&lt;/text&gt;</div><div class="line">    &lt;text class=&quot;price&quot;&gt;￥500&lt;/text&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">  &lt;view class=&quot;separate&quot;&gt;&lt;/view&gt;</div><div class="line">  &lt;!-- sku选择 --&gt;</div><div class="line">  &lt;text bindtap=&quot;toggleDialog&quot;&gt;请选择购买数量&lt;/text&gt;</div><div class="line">  &lt;view class=&quot;separate&quot;&gt;&lt;/view&gt;</div><div class="line">  &lt;text&gt;商品评价&lt;/text&gt;</div><div class="line">  &lt;text class=&quot;text-remark&quot;&gt;东西还可以，好评~&lt;/text&gt;</div><div class="line">  &lt;view class=&quot;separate&quot;&gt;&lt;/view&gt;</div><div class="line">  &lt;text&gt;商品详情&lt;/text&gt;</div><div class="line">  &lt;block wx:for-items=&quot;&#123;&#123;detailImg&#125;&#125;&quot; wx:key=&quot;name&quot;&gt;</div><div class="line">    &lt;image class=&quot;image_detail&quot; src=&quot;&#123;&#123;item&#125;&#125;&quot; /&gt;</div><div class="line">  &lt;/block&gt;</div><div class="line">  &lt;view class=&quot;temp&quot;&gt;&lt;/view&gt;</div><div class="line">&lt;/scroll-view&gt;</div><div class="line">&lt;!-- 底部悬浮栏 --&gt;</div><div class="line">&lt;view class=&quot;detail-nav&quot;&gt;</div><div class="line">  &lt;image bindtap=&quot;toCar&quot; src=&quot;../../images/detail/detail_btn_cart.png&quot; /&gt;</div><div class="line">  &lt;view class=&quot;line_nav&quot;&gt;&lt;/view&gt;</div><div class="line">  &lt;image bindtap=&quot;addLike&quot; src=&quot;&#123;&#123;isLike?&apos;../../images/detail/detail_btn_mark_selected.png&apos;:&apos;../../images/detail/detail_btn_mark_normal.png&apos;&#125;&#125;&quot; /&gt;</div><div class="line">  &lt;button class=&quot;button-green&quot; bindtap=&quot;addCar&quot; formType=&quot;submit&quot;&gt;加入购物车&lt;/button&gt;</div><div class="line">  &lt;button class=&quot;button-red&quot; bindtap=&quot;immeBuy&quot; formType=&quot;submit&quot;&gt;立即购买&lt;/button&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这里面要讲解的有</p>
+<p> 这里面要讲解的有</p>
 <ul>
 <li>banner里面新加入一个东西bindtap=”previewImage”，图片预览功能，就是查看大图，至于事件是如何处理的，请查看detail.js 里的previewImage事件</li>
 <li>底部悬浮栏里面的那个收藏按钮，我们要如何做用户点击一下就更换收藏图标呐，本文是通过<strong>isLike</strong>这个Boolean值来做判断的，用户每触发一次addLike事件，就更换一次Boolean值，按钮的更换效果就实现了</li>
 </ul>
-<ol>
+</li>
 <li><p><strong>detail.wxss</strong></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line">page &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  height: 100%;</div><div class="line">&#125;</div><div class="line">/* 直接设置swiper属性 */</div><div class="line">swiper &#123;</div><div class="line">  height: 500rpx;</div><div class="line">&#125;</div><div class="line">swiper-item image &#123;</div><div class="line">  width: 100%;</div><div class="line">  height: 100%;</div><div class="line">&#125;</div><div class="line">.detail &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  margin-top: 15rpx;</div><div class="line">  margin-bottom: 0rpx;</div><div class="line">&#125;</div><div class="line">.detail .title &#123;</div><div class="line">  font-size: 40rpx;</div><div class="line">  margin: 10rpx;</div><div class="line">  color: black;</div><div class="line">  text-align: justify;</div><div class="line">&#125;</div><div class="line">.detail .price &#123;</div><div class="line">  color: red;</div><div class="line">  font-size: 40rpx;</div><div class="line">  margin: 10rpx;</div><div class="line">&#125;</div><div class="line">.line_flag &#123;</div><div class="line">  width: 80rpx;</div><div class="line">  height: 1rpx;</div><div class="line">  display: inline-block;</div><div class="line">  margin: 20rpx auto;</div><div class="line">  background-color: gainsboro;</div><div class="line">  text-align: center;</div><div class="line">&#125;</div><div class="line">.line &#123;</div><div class="line">  width: 100%;</div><div class="line">  height: 2rpx;</div><div class="line">  display: inline-block;</div><div class="line">  margin: 20rpx 0rpx;</div><div class="line">  background-color: gainsboro;</div><div class="line">  text-align: center;</div><div class="line">&#125;</div><div class="line">.detail-nav &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: row;</div><div class="line">  align-items: center;</div><div class="line">  float: left;</div><div class="line">  background-color: #fff;</div><div class="line">  position: fixed;</div><div class="line">  bottom: 0;</div><div class="line">  right: 0;</div><div class="line">  z-index: 1;</div><div class="line">  width: 100%;</div><div class="line">  height: 100rpx;</div><div class="line">&#125;</div><div class="line">.button-green &#123;</div><div class="line">  background-color: #4caf50; /* Green */</div><div class="line">&#125;</div><div class="line">.button-red &#123;</div><div class="line">  background-color: #f44336; /* 红色 */</div><div class="line">&#125;</div><div class="line">.image_detail &#123;</div><div class="line">  width: 100%;</div><div class="line">&#125;</div><div class="line">button &#123;</div><div class="line">  color: white;</div><div class="line">  text-align: center;</div><div class="line">  text-decoration: none;</div><div class="line">  display: inline-block;</div><div class="line">  font-size: 30rpx;</div><div class="line">  border-radius: 0rpx;</div><div class="line">  width: 50%;</div><div class="line">  height: 100%;</div><div class="line">  line-height: 100rpx;</div><div class="line">&#125;</div><div class="line">.detail-nav image &#123;</div><div class="line">  width: 70rpx;</div><div class="line">  height: 50rpx;</div><div class="line">  margin: 20rpx 40rpx;</div><div class="line">&#125;</div><div class="line">.line_nav &#123;</div><div class="line">  width: 5rpx;</div><div class="line">  height: 100%;</div><div class="line">  background-color: gainsboro;</div><div class="line">&#125;</div><div class="line">/* 占位 */</div><div class="line">.temp &#123;</div><div class="line">  height: 100rpx;</div><div class="line">&#125;</div><div class="line">text &#123;</div><div class="line">  display: block;</div><div class="line">  height: 60rpx;</div><div class="line">  line-height: 60rpx;</div><div class="line">  font-size: 30rpx;</div><div class="line">  margin: 10rpx;</div><div class="line">&#125;</div><div class="line">.text-remark &#123;</div><div class="line">  display: block;</div><div class="line">  font-size: 25rpx;</div><div class="line">  margin: 10rpx;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>css 样式属性</p>
+<p> css 样式属性</p>
 <ul>
 <li><strong>border-radius</strong> 设置边界圆角，设置的大小就是边角的弧度，该属性可以应该在按钮活图片上，由于加入购物车和立即购买是放在底部所以最好是直角，所以把border-radius设置为0</li>
 <li><strong>display</strong> inline-block值代表混合块和内联特性。<br>盒子的外部被视为内联元素。因此，不会为元素创建新行。<br>框的内部被视为块元素，并应用诸如宽度，高度和边距的属性。</li>
 <li><strong>align-items</strong> 设置了flex容器的对齐方式。一般设置为center居中</li>
 <li><strong>z-index</strong> 属性指定一个元素的堆叠顺序。如果值设置为正数，越大这对应的view也会越在上面一层，负数就是在底层，当前页面z-index 为0，所以要底部导航栏要浮在上面就把z-index 设置大于0就好</li>
 </ul>
-<ol>
+</li>
 <li><p><strong>detail.js</strong></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">Page(&#123;</div><div class="line">  data: &#123;</div><div class="line">    isLike: true,</div><div class="line">    // banner</div><div class="line">    imgUrls: [</div><div class="line">      &quot;http://mz.djmall.xmisp.cn/files/product/20161201/148057921620_middle.jpg&quot;,</div><div class="line">      &quot;http://mz.djmall.xmisp.cn/files/product/20161201/148057922659_middle.jpg&quot;,</div><div class="line">      &quot;http://mz.djmall.xmisp.cn/files/product/20161201/148057923813_middle.jpg&quot;,</div><div class="line">      &quot;http://mz.djmall.xmisp.cn/files/product/20161201/148057924965_middle.jpg&quot;,</div><div class="line">      &quot;http://mz.djmall.xmisp.cn/files/product/20161201/148057925958_middle.jpg&quot;</div><div class="line">    ],</div><div class="line">    indicatorDots: true, //是否显示面板指示点</div><div class="line">    autoplay: true, //是否自动切换</div><div class="line">    interval: 3000, //自动切换时间间隔,3s</div><div class="line">    duration: 1000, //	滑动动画时长1s</div><div class="line"></div><div class="line">    // 商品详情介绍</div><div class="line">    detailImg: [</div><div class="line">      &quot;http://7xnmrr.com1.z0.glb.clouddn.com/detail_1.jpg&quot;,</div><div class="line">      &quot;http://7xnmrr.com1.z0.glb.clouddn.com/detail_2.jpg&quot;,</div><div class="line">      &quot;http://7xnmrr.com1.z0.glb.clouddn.com/detail_3.jpg&quot;,</div><div class="line">      &quot;http://7xnmrr.com1.z0.glb.clouddn.com/detail_4.jpg&quot;,</div><div class="line">      &quot;http://7xnmrr.com1.z0.glb.clouddn.com/detail_5.jpg&quot;,</div><div class="line">      &quot;http://7xnmrr.com1.z0.glb.clouddn.com/detail_6.jpg&quot;,</div><div class="line">    ],</div><div class="line">  &#125;,</div><div class="line">  //预览图片</div><div class="line">  previewImage: function (e) &#123;</div><div class="line">    var current = e.target.dataset.src;</div><div class="line"></div><div class="line">    wx.previewImage(&#123;</div><div class="line">      current: current, // 当前显示图片的http链接  </div><div class="line">      urls: this.data.imgUrls // 需要预览的图片http链接列表  </div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  // 收藏</div><div class="line">  addLike() &#123;</div><div class="line">    this.setData(&#123;</div><div class="line">      isLike: !this.data.isLike</div><div class="line">    &#125;);</div><div class="line">  &#125;,</div><div class="line">  // 跳到购物车</div><div class="line">  toCar() &#123;</div><div class="line">    wx.switchTab(&#123;</div><div class="line">      url: &apos;/pages/cart/cart&apos;</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  // 立即购买</div><div class="line">  immeBuy() &#123;</div><div class="line">    wx.showToast(&#123;</div><div class="line">      title: &apos;购买成功&apos;,</div><div class="line">      icon: &apos;success&apos;,</div><div class="line">      duration: 2000</div><div class="line">    &#125;);</div><div class="line">  &#125;,</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>介绍几个系统API的接口</p>
 <ul>
-<li><strong>wx.previewImage</strong> 图片预览功能<pre><code>- current 传入当前图片路径
-- urls  图片数组urls
-</code></pre><ul>
+<li><strong>wx.previewImage</strong> 图片预览功能<ul>
+<li>current 传入当前图片路径</li>
+<li>urls  图片数组urls</li>
+</ul>
+</li>
 <li><strong>wx.showToast</strong><br>Toast 吐司，做前端都知道，这个是一定会用到的，就是弹出半透明框，和用户进行交互，wx.showToast调用很简单，<ul>
 <li>title 就是你要提示用户的内容，</li>
 <li>icon，目前只支持”success”、”loading”两个属性，</li>
@@ -169,9 +168,7 @@ var _hmt = _hmt || [];
 </li>
 <li><strong>wx.switchTab</strong> 跳转到购物车界面，详解请看下面的知识小课堂</li>
 </ul>
-</li>
-</ul>
-<p>##知识小课堂</p>
+<h2 id="知识小课堂"><a href="#知识小课堂" class="headerlink" title="知识小课堂"></a>知识小课堂</h2><hr>
 <ol>
 <li><p>css样式的复用：<strong>@import “tab/tab.wxss”;</strong></p>
 <p> 最近遇到一个问题，就是同一个页面有用到别的页面的样式，这时候最笨的方式是，把别的页面的样式拷贝过来，但是这样会导致代码冗余量太大，还有一个是写在app.wxss里面，这个大家都可以共用，但是这个也不太好就是，所有有用到复用的就全写在app.wxss,这样会导致该样式过于臃肿，不利于代码的阅读，这时候@import，就派上用场了，只需要在xxx.wxss页面加入@import “tab/tab.wxss”;这样你就可以引用tab.wxss里面类的属性了</p>
@@ -185,9 +182,8 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ol>
-<p>##总结<br>今天讲解的内容有点多，大家回去好好消化吧，反正我要说的是，详情页的知识点是个大头，丝毫不逊色与首页的内容，提前穿插一些知识点，方便下一节的深入讲解，好了，今天就到这，祝大家周末愉快~</p>
-<p>###上一篇：<a href="http://www.jianshu.com/p/596f785325fb" target="_blank" rel="external">微信小程序实战篇-分类页面制作</a></p>
-<p>###下一篇：<a href="http://www.jianshu.com/p/64e3c896bead" target="_blank" rel="external">微信小程序实战篇-商品详情页（二）</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<p>今天讲解的内容有点多，大家回去好好消化吧，反正我要说的是，详情页的知识点是个大头，丝毫不逊色与首页的内容，提前穿插一些知识点，方便下一节的深入讲解，好了，今天就到这，祝大家周末愉快~</p>
 
       
       
@@ -202,7 +198,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/06/30/微信小程序实战篇-商品详情页（一）/" data-id="cj6x8tfu90003tpqivwq5hnx5" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（一）">分享到</a>
+        <a data-url="http://yoursite.com/2017/06/30/微信小程序实战篇-商品详情页（一）/" data-id="cj6x9odl7000g4cqivney9kvv" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（一）">分享到</a>
       
 
       
@@ -254,12 +250,12 @@ var _hmt = _hmt || [];
       
         
         <li>
-          <a href="/2016/07/24/javascript-lesson-readme/" target="_blank">1. 《JavaScript 闯关记》</a>
+          <a href="/2017/08/21/开源项目汇总/" target="_blank">1. Github开源项目汇总</a>
         </li>
       
         
         <li>
-          <a href="/2016/06/10/frontend-css-float-learning-note/" target="_blank">2. CSS基础知识之float</a>
+          <a href="/2017/08/24/基于Android系统的动画总结/" target="_blank">2. 基于Android系统的动画总结</a>
         </li>
       
     </ul>
@@ -330,7 +326,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

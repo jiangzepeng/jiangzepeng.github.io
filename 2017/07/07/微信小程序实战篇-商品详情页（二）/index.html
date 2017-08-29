@@ -11,19 +11,19 @@
   <meta name="renderer" content="webkit">
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <meta name="description" content="今天要讲解商品详情页中sku的弹出选着框，这个涉及css动画样式，css动画是新的知识点，我们之前并没有接触过，请大家做好笔记，我们要做的效果是酱紫的~   这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框 ##代码的实现  detail.wxml  12345678910111213141516171819202122232425262728&amp;lt;imp">
+  <meta name="description" content="今天要讲解商品详情页中sku的弹出选着框，这个涉及css动画样式，css动画是新的知识点，我们之前并没有接触过，请大家做好笔记，我们要做的效果是酱紫的~   这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框 代码的实现  detail.wxml  12345678910111213141516171819202122232425262728&amp;lt;impor">
 <meta name="keywords" content="电商,小程序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信小程序实战篇-商品详情页（二）">
 <meta property="og:url" content="http://yoursite.com/2017/07/07/微信小程序实战篇-商品详情页（二）/index.html">
 <meta property="og:site_name" content="代码集中营">
-<meta property="og:description" content="今天要讲解商品详情页中sku的弹出选着框，这个涉及css动画样式，css动画是新的知识点，我们之前并没有接触过，请大家做好笔记，我们要做的效果是酱紫的~   这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框 ##代码的实现  detail.wxml  12345678910111213141516171819202122232425262728&amp;lt;imp">
+<meta property="og:description" content="今天要讲解商品详情页中sku的弹出选着框，这个涉及css动画样式，css动画是新的知识点，我们之前并没有接触过，请大家做好笔记，我们要做的效果是酱紫的~   这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框 代码的实现  detail.wxml  12345678910111213141516171819202122232425262728&amp;lt;impor">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-b95548b9486020a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-08-29T03:47:48.000Z">
+<meta property="og:updated_time" content="2017-08-29T11:35:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信小程序实战篇-商品详情页（二）">
-<meta name="twitter:description" content="今天要讲解商品详情页中sku的弹出选着框，这个涉及css动画样式，css动画是新的知识点，我们之前并没有接触过，请大家做好笔记，我们要做的效果是酱紫的~   这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框 ##代码的实现  detail.wxml  12345678910111213141516171819202122232425262728&amp;lt;imp">
+<meta name="twitter:description" content="今天要讲解商品详情页中sku的弹出选着框，这个涉及css动画样式，css动画是新的知识点，我们之前并没有接触过，请大家做好笔记，我们要做的效果是酱紫的~   这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框 代码的实现  detail.wxml  12345678910111213141516171819202122232425262728&amp;lt;impor">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-b95548b9486020a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
   
@@ -129,35 +129,33 @@ var _hmt = _hmt || [];
 <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-b95548b9486020a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sku选着.png"><br></center>
 
 <p>这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框</p>
-<p>##代码的实现</p>
+<h2 id="代码的实现"><a href="#代码的实现" class="headerlink" title="代码的实现"></a>代码的实现</h2><hr>
 <ol>
 <li><p><strong>detail.wxml</strong></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;import src=&quot;/template/quantity/index.wxml&quot; /&gt;</div><div class="line">  &lt;!-- sku选择 --&gt;</div><div class="line">  &lt;text bindtap=&quot;toggleDialog&quot;&gt;请选择购买数量&lt;/text&gt;</div><div class="line">  &lt;view class=&quot;dialog &#123;&#123; showDialog ? &apos;dialog--show&apos; : &apos;&apos; &#125;&#125;&quot;&gt;</div><div class="line">    &lt;view class=&quot;dialog__mask&quot; bindtap=&quot;toggleDialog&quot; /&gt;</div><div class="line">    &lt;view class=&quot;dialog__container&quot;&gt;</div><div class="line">      &lt;view class=&quot;row&quot;&gt;</div><div class="line">         &lt;image bindtap=&quot;closeDialog&quot; class=&quot;image-close&quot; src=&quot;../../images/detail/close.png&quot;&gt;&lt;/image&gt;</div><div class="line">        &lt;image class=&quot;image-sku&quot; src=&quot;http://mz.djmall.xmisp.cn/files/product/20161201/148057921620_middle.jpg&quot;&gt;&lt;/image&gt;</div><div class="line">        &lt;view class=&quot;column&quot;&gt;</div><div class="line">          &lt;text class=&quot;sku-price&quot;&gt;￥500&lt;/text&gt;</div><div class="line">          &lt;text class=&quot;sku-title&quot;&gt;库存20件&lt;/text&gt;</div><div class="line">           &lt;text class=&quot;sku-title&quot;&gt;商品编码：1456778788&lt;/text&gt;</div><div class="line">        &lt;/view&gt;</div><div class="line">      &lt;/view&gt;</div><div class="line">      &lt;text class=&quot;border-line&quot;&gt;&lt;/text&gt;</div><div class="line">      &lt;view class=&quot;row&quot;&gt;</div><div class="line">        &lt;text &gt;购买数量&lt;/text&gt;</div><div class="line">        &lt;view class=&quot;quantity-position&quot;&gt;</div><div class="line">          &lt;template is=&quot;quantity&quot; data=&quot;&#123;&#123; ...quantity1, componentId: &apos;quantity1&apos; &#125;&#125;&quot; /&gt;</div><div class="line">        &lt;/view&gt;</div><div class="line">      &lt;/view&gt;</div><div class="line">      &lt;text class=&quot;border-line&quot;&gt;&lt;/text&gt;</div><div class="line"></div><div class="line">      &lt;button class=&quot;button-green&quot; bindtap=&quot;addCar&quot; formType=&quot;submit&quot;&gt;加入购物车&lt;/button&gt;</div><div class="line">      &lt;button class=&quot;button-red&quot; formType=&quot;submit&quot;&gt;立即购买&lt;/button&gt;</div><div class="line">    &lt;/view&gt;</div><div class="line">  &lt;/view&gt;</div></pre></td></tr></table></figure>
+<p> 这里面要重点讲解的是<strong>template</strong>，微信小程序提供模板template，可以在模板中定义代码片段，然后在不同地方调用，这里面就引用了名为quantity的代码块，这样引用的好处和css样式引用一样，增加代码发复用率，引用方式如下，is后面是模板的名字，data放入模板中要用到的数据</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//自定义的模板</div><div class="line">&lt;template name=&quot;msgItem&quot;&gt;</div><div class="line">  &lt;view&gt;</div><div class="line">    &lt;text&gt; &#123;&#123;index&#125;&#125;: &#123;&#123;msg&#125;&#125; &lt;/text&gt;</div><div class="line">    &lt;text&gt; Time: &#123;&#123;time&#125;&#125; &lt;/text&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">&lt;/template&gt;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//引用模板</div><div class="line">&lt;template is=&quot;msgItem&quot; data=&quot;&#123;&#123;...item&#125;&#125;&quot;/&gt;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//数据</div><div class="line">Page(&#123;</div><div class="line">  data: &#123;</div><div class="line">    item: &#123;</div><div class="line">      index: 0,</div><div class="line">      msg: &apos;this is a template&apos;,</div><div class="line">      time: &apos;2016-09-15&apos;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>这里面要重点讲解的是<strong>template</strong>，微信小程序提供模板template，可以在模板中定义代码片段，然后在不同地方调用，这里面就引用了名为quantity的代码块，这样引用的好处和css样式引用一样，增加代码发复用率，引用方式如下，is后面是模板的名字，data放入模板中要用到的数据</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//自定义的模板</div><div class="line">&lt;template name=&quot;msgItem&quot;&gt;</div><div class="line">  &lt;view&gt;</div><div class="line">    &lt;text&gt; &#123;&#123;index&#125;&#125;: &#123;&#123;msg&#125;&#125; &lt;/text&gt;</div><div class="line">    &lt;text&gt; Time: &#123;&#123;time&#125;&#125; &lt;/text&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">&lt;/template&gt;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//引用模板</div><div class="line">&lt;template is=&quot;msgItem&quot; data=&quot;&#123;&#123;...item&#125;&#125;&quot;/&gt;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//数据</div><div class="line">Page(&#123;</div><div class="line">  data: &#123;</div><div class="line">    item: &#123;</div><div class="line">      index: 0,</div><div class="line">      msg: &apos;this is a template&apos;,</div><div class="line">      time: &apos;2016-09-15&apos;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<ol>
 <li><p><strong>detail.wxss</strong></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">/* sku选择 */</div><div class="line">.dialog__mask &#123;</div><div class="line">  position: fixed;</div><div class="line">  top: 0;</div><div class="line">  left: 0;</div><div class="line">  right: 0;</div><div class="line">  bottom: 0;</div><div class="line">  z-index: 10;</div><div class="line">  background: rgba(0, 0, 0, 0.7);</div><div class="line">  display: none;</div><div class="line">&#125;</div><div class="line">.dialog__container &#123;</div><div class="line">  position: fixed;</div><div class="line">  bottom: 0;</div><div class="line">  width: 750rpx;</div><div class="line">  background: white;</div><div class="line">  transform: translateY(150%);</div><div class="line">  transition: all 0.4s ease;</div><div class="line">  z-index: 11;</div><div class="line">&#125;</div><div class="line">.dialog--show .dialog__container &#123;</div><div class="line">  transform: translateY(0);</div><div class="line">&#125;</div><div class="line">.dialog--show .dialog__mask &#123;</div><div class="line">  display: block;</div><div class="line">&#125;</div><div class="line">.image-sku &#123;</div><div class="line">  width: 200rpx;</div><div class="line">  height: 200rpx;</div><div class="line">  z-index: 12;</div><div class="line">  position: absolute;</div><div class="line">  left: 20px;</div><div class="line">  top: -30px;</div><div class="line">  border-radius: 20rpx;</div><div class="line">&#125;</div><div class="line">.image-close &#123;</div><div class="line">  width: 40rpx;</div><div class="line">  height: 40rpx;</div><div class="line">  position: fixed;</div><div class="line">  right: 10rpx;</div><div class="line">  top: 10rpx;</div><div class="line">&#125;</div><div class="line">.column &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">&#125;</div><div class="line">.row &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: row;</div><div class="line">  align-items: center;</div><div class="line">&#125;</div><div class="line">.border-line &#123;</div><div class="line">  width: 100%;</div><div class="line">  height: 2rpx;</div><div class="line">  display: inline-block;</div><div class="line">  margin: 30rpx 0rpx;</div><div class="line">  background-color: gainsboro;</div><div class="line">  text-align: center;</div><div class="line">&#125;</div><div class="line">.sku-title &#123;</div><div class="line">  position: relative;</div><div class="line">  left: 300rpx;</div><div class="line">  margin: 1rpx;</div><div class="line">&#125;</div><div class="line">.sku-price &#123;</div><div class="line">  color: red;</div><div class="line">  position: relative;</div><div class="line">  left: 300rpx;</div><div class="line">  margin: 1rpx;</div><div class="line">&#125;</div><div class="line">.row .quantity-position &#123;</div><div class="line">  position: absolute;</div><div class="line">  right: 30rpx;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>今天重点讲解wxss样式</p>
+<p> 今天重点讲解wxss样式</p>
 <ol>
 <li><p><strong>position</strong> 位置属性</p>
-<pre><code>- absolute 生成绝对定位的元素，相对于父元素进行定位元素的位置通过 &quot;left&quot;, &quot;top&quot;, &quot;right&quot; 以及 &quot;bottom&quot; 属性进行规定。
-- fixed 生成绝对定位的元素，相对于浏览器窗口进行定位。
-</code></pre><p>元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</p>
-<pre><code>-  relative 生成相对定位的元素，相对于其正常位置进行定位。
-</code></pre><p> 阴影部分要铺满屏幕所以用到了fixed属性，把上下左右的距离都设置为0，就可以使整个阴影铺满浏览器的窗口了</p>
-<ol>
+<ul>
+<li>absolute 生成绝对定位的元素，相对于父元素进行定位元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</li>
+<li>fixed 生成绝对定位的元素，相对于浏览器窗口进行定位。<br>元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</li>
+<li><p>relative 生成相对定位的元素，相对于其正常位置进行定位。</p>
+<p>阴影部分要铺满屏幕所以用到了fixed属性，把上下左右的距离都设置为0，就可以使整个阴影铺满浏览器的窗口了</p>
+</li>
+</ul>
+</li>
 <li><p><strong>transform</strong> 转换</p>
 <ul>
 <li>transform : scale(x,y); 缩放</li>
 <li>transform : rotate(deg); 旋转 deg（度）</li>
-<li>transform : skew( x ,y); 倾斜</li>
+<li>transform : skew( x ,y); 斜</li>
 <li>transform : scale(x,y); 缩放</li>
 <li><p>transform : translateY(y); 位置移动</p>
 <p>sku选着栏从底部出来就是用到translateY属性，代码中设置150%-&gt;0,就是从本身的1.5倍距离移动到本身的位置</p>
@@ -170,13 +168,14 @@ var _hmt = _hmt || [];
 <li>duration : 过度时间，必须有值，否则动画无效果</li>
 <li>timing-function : 允许一个过渡效果，以改变其持续时间的速度 ease规定慢速开始，然后变快，然后慢速结束的过渡效果</li>
 <li><p>delay :推迟动画的时间</p>
-<p>transition: all 0.4s ease;意思是全部属性执行动画在0.4s之内，开始慢速然后变快，最后慢速结束</p>
+<p> transition: all 0.4s ease;意思是全部属性执行动画在0.4s之内，开始慢速然后变快，最后慢速结束</p>
 </li>
 </ul>
 </li>
-<li><strong>detail.js</strong></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">var Temp = require(&apos;../../template/contract.js&apos;);</div><div class="line">Page(Object.assign(&#123;&#125;, Temp.Quantity,&#123;</div><div class="line">  data: &#123;</div><div class="line">    quantity1: &#123;</div><div class="line">      quantity: 10,</div><div class="line">      min: 1,</div><div class="line">      max: 20</div><div class="line">    &#125;,</div><div class="line">&#125;,</div><div class="line">  //数量变化处理</div><div class="line">  handleQuantityChange(e) &#123;</div><div class="line">    var componentId = e.componentId;</div><div class="line">    var quantity = e.quantity;</div><div class="line">  this.setData(&#123;</div><div class="line">      &#123;componentId&#125;.quantity: quantity</div><div class="line">    &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>detail.js</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">var Temp = require(&apos;../../template/contract.js&apos;);</div><div class="line">Page(Object.assign(&#123;&#125;, Temp.Quantity,&#123;</div><div class="line">  data: &#123;</div><div class="line">    quantity1: &#123;</div><div class="line">      quantity: 10,</div><div class="line">      min: 1,</div><div class="line">      max: 20</div><div class="line">    &#125;,</div><div class="line">&#125;,</div><div class="line">  //数量变化处理</div><div class="line">  handleQuantityChange(e) &#123;</div><div class="line">    var componentId = e.componentId;</div><div class="line">    var quantity = e.quantity;</div><div class="line">  this.setData(&#123;</div><div class="line">      &#123;componentId&#125;.quantity: quantity</div><div class="line">    &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>这里我们要掌握以下几点</p>
@@ -185,10 +184,8 @@ var _hmt = _hmt || [];
 <li><strong>Object.assign</strong>，这个是js的属性，定义是：从一个对象复制所有的属性到另一个对象是一个常见的操作，这里就是把Temp.Quantity的数据和detail.js的数据合并到一起</li>
 <li>handleQuantityChange 加减按钮触发的事件监听，每点击加减按钮，都会回调此方法</li>
 </ol>
-<p>##总结</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
 <p>今天的知识点难度有点大，大家可能需要点时间去消化，尤其是为了复用代码，js、wxml、wxss都有对应的引入语法，大家一定要区分开，好了，今天就到这，祝大家周末愉快~</p>
-<p>###上一篇：<a href="http://www.jianshu.com/p/9feb4a128ba4" target="_blank" rel="external">微信小程序实战篇-商品详情页（一）</a></p>
-<p>###下一篇：<a href="http://www.jianshu.com/p/a6cb3940f92f" target="_blank" rel="external">微信小程序实战篇-购物车</a></p>
 
       
       
@@ -203,7 +200,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/07/07/微信小程序实战篇-商品详情页（二）/" data-id="cj6x8tfto0000tpqimm9h52yu" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（二）">分享到</a>
+        <a data-url="http://yoursite.com/2017/07/07/微信小程序实战篇-商品详情页（二）/" data-id="cj6x9odlc000k4cqigsrzyzk0" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（二）">分享到</a>
       
 
       
@@ -255,12 +252,12 @@ var _hmt = _hmt || [];
       
         
         <li>
-          <a href="/2016/07/24/javascript-lesson-readme/" target="_blank">1. 《JavaScript 闯关记》</a>
+          <a href="/2017/08/21/开源项目汇总/" target="_blank">1. Github开源项目汇总</a>
         </li>
       
         
         <li>
-          <a href="/2016/06/10/frontend-css-float-learning-note/" target="_blank">2. CSS基础知识之float</a>
+          <a href="/2017/08/24/基于Android系统的动画总结/" target="_blank">2. 基于Android系统的动画总结</a>
         </li>
       
     </ul>
@@ -331,7 +328,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">2017年 01月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
