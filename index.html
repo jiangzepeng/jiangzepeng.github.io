@@ -72,6 +72,8 @@ var _hmt = _hmt || [];
         
           <a class="main-nav-link" href="/archives">文章</a>
         
+          <a class="main-nav-link" href="/2017/05/06/个人简历/">个人简历</a>
+        
       </nav>
       <!--
       <nav id="sub-nav">
@@ -94,6 +96,244 @@ var _hmt = _hmt || [];
 </header>
     <div class="outer">
       <section id="main">
+  
+    <article id="post- Android Studio 内存泄漏分析指南" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/07/ Android Studio 内存泄漏分析指南/" class="article-date">
+  <time datetime="2017-09-06T16:00:00.000Z" itemprop="datePublished">2017-09-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/内存泄漏/">内存泄漏</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/07/ Android Studio 内存泄漏分析指南/">Android Studio 内存泄漏分析指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>最近在优化公司的项目，想针对内存泄漏进行分析一下，查阅网上的一些资料，发现苦逼的是，资料一大堆，但是内容都差不多，至今未找到一篇实战的内存泄漏分析，全部停留在理论知识上，最后查阅了一些外文文献，才有了一点思路，好吧！既然没有实战分析，我就做第一人，把我学到的分享出来，希望对你们有帮助，当然有说的不对的，望各位指出来~</p>
+<h1 id="内存泄漏原因"><a href="#内存泄漏原因" class="headerlink" title="内存泄漏原因"></a>内存泄漏原因</h1><hr>
+<p>当应用不需要某对象时候，忘记释放分配的内存，该对象仍然保持被引用状态（当对象拥有强引用，GC无法回收），从而导致内存泄漏</p>
+<h1 id="泄漏的源头"><a href="#泄漏的源头" class="headerlink" title="泄漏的源头"></a>泄漏的源头</h1><hr>
+<p>泄漏的源头有很多，有开源的第三方框架引起的、android系统自身造成的如webview的内存泄漏，还有一个是我们可以控制的就是自身编码引起的内存泄漏，这也是我们可以避免的，一下情况容易出现内存泄漏</p>
+<h3 id="一、-Context-引起的内存泄漏"><a href="#一、-Context-引起的内存泄漏" class="headerlink" title="一、 Context 引起的内存泄漏"></a>一、 Context 引起的内存泄漏</h3><p><strong>常见问题：</strong></p>
+<p>这个是最常见的，因为Activity经常要用到上下文Context，很有可能Activity作为Context传递给某些类，Activity生命周期结束之后，某些类仍然存活并保持着该Activity的引用，保持引用就无法被回收。从而导致内存泄漏</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li>下次如果要传入context给某些类的时候，最好是用ApplicationContext，这样可以有效避免内存泄漏</li>
+<li>在界面销毁的时候，手动释放掉引用过activity的context</li>
+</ol>
+<h3 id="二、Static-静态变量"><a href="#二、Static-静态变量" class="headerlink" title="二、Static 静态变量"></a>二、Static 静态变量</h3><p><strong>常见问题：</strong></p>
+<p>我们有时候会为了方便，设置某个Activity或者View为静态变量，但是你要知道，static变量是要贯穿整个应该的生命周期，就是意味着即使Activity销毁，static变量也不会销毁，所以，如果你把View或者Activity设置为静态变量，这会导致当前的Activity会一直存在，从而导致内存泄漏</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li>尽量避免使用static变量</li>
+<li>如果非要使用的话，记得在界面销毁的时候，把静态变量也释放掉，简单说就是把静态变量置空，如staticView=null</li>
+</ol>
+<h3 id="三、非静态内部类、匿名内部类持有外部类的引用"><a href="#三、非静态内部类、匿名内部类持有外部类的引用" class="headerlink" title="三、非静态内部类、匿名内部类持有外部类的引用"></a>三、非静态内部类、匿名内部类持有外部类的引用</h3><p><strong>常见问题：</strong></p>
+<p>我们在使用AsyncTash、Handler、TimerTask、Thread的时候，为了方便，直接new一个匿名内部类对象，殊不知我们在new一个的时候，编译器在编译的时候会自动为内部类的构造方法加上外包类的引用，所以这些匿名内部类会持有Activity，当这些匿名内部类处理非常耗时的操作时候，就算Activity生命周期结束，也不会被销毁，这就会造成内存泄漏</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li>当Activity销毁的时候，对不需要的匿名内部类进行任务停止操作</li>
+<li>使用静态内部类，静态内部类内部使用弱引用来引外外部类，这样当Activity销毁的时候，弱引用是可以被回收的</li>
+</ol>
+<h3 id="四、其他引起的泄漏"><a href="#四、其他引起的泄漏" class="headerlink" title="四、其他引起的泄漏"></a>四、其他引起的泄漏</h3><ol>
+<li>我们在使用系统服务的时候，比如注册了一些广播监听，在使用完后，要释放掉</li>
+<li>我们在给View绘制动画的时候，View被动画持有，而Activity又被View持有引用，导致Activity也无法释放。所以在Activity销毁时，调用animator.cancel()来停止动画</li>
+</ol>
+<h1 id="内存泄漏分析-实战篇"><a href="#内存泄漏分析-实战篇" class="headerlink" title="内存泄漏分析-实战篇"></a>内存泄漏分析-实战篇</h1><hr>
+<p>这个才是尽头的重头戏，前面写的只是对网上文献的一些总结</p>
+<h3 id="分析工具"><a href="#分析工具" class="headerlink" title="分析工具"></a>分析工具</h3><ol>
+<li>MAT ：eclipse时代的分析工具，具体分析实战可以参考<a href="http://www.jianshu.com/p/c49f778e7acf" target="_blank" rel="external">这篇文章</a></li>
+<li>LeakCanary:  Square开源的内存泄漏探测器，具体使用参考<a href="http://www.jianshu.com/p/7db231163168" target="_blank" rel="external">这篇文章</a></li>
+<li>Android Monitor：Android Studio 自带的分析工具，今天的重头戏</li>
+</ol>
+<h3 id="Android-Monitor"><a href="#Android-Monitor" class="headerlink" title="Android Monitor"></a>Android Monitor</h3><p>1.生成HPROF文件，点击红框中有绿色下载箭头的按钮（Dump java Heap），这个会生成以hprof结尾的文件</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-7ba9dee242bdbd28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android Monitor.png"></p>
+<p>2.生成的效果如下图，简单介绍一下界面功能</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-34af0a88a0524d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HPROF.png"><br>    功能描述：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total  Count</td>
+<td>该类的实例总数</td>
+</tr>
+<tr>
+<td>Heap Count</td>
+<td>所选择的堆中该类的实例的数量</td>
+</tr>
+<tr>
+<td>Sizeof</td>
+<td>单个实例所占空间大小（如果每个实例所占空间大小不一样则显示0）</td>
+</tr>
+<tr>
+<td>Shallow Size</td>
+<td>堆里所有实例大小总和（Heap Count * Sizeof）</td>
+</tr>
+<tr>
+<td>Retained Size</td>
+<td>该类所有实例所支配的内存大小</td>
+</tr>
+<tr>
+<td>Instance</td>
+<td>具体的实例</td>
+</tr>
+<tr>
+<td>Reference Tree</td>
+<td>所选实例的引用，以及指向该引用的引用。</td>
+</tr>
+<tr>
+<td>Depth</td>
+<td>GC根节点到所选实例的最短路径的深度</td>
+</tr>
+<tr>
+<td>Shallow Size</td>
+<td>所选实例的大小</td>
+</tr>
+<tr>
+<td>Dominating  Size</td>
+<td>所选实例所支配的内存大小</td>
+</tr>
+</tbody>
+</table>
+<p>3.也许你看完这些也还是一头雾水，不知道怎么分析，没关系，我们不就是要找到内存泄漏的源头嘛，来看这里，要开始放大招啦，看到上图中最右边的   <strong>Analyzer Tasks</strong>，点击这个版块，这个版块就是主要的查找内存泄漏版块</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-6dfa350ce64c7aa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Analyzer Tasks.png"></p>
+<p>4.启动页很简单，点击绿色运行按钮就好，之后会在下面列出可能存在内存泄漏的Activity，如果没显示，说明启动的Activity中没有内存泄漏</p>
+<p>5.查看引用树（Reference Tree），都是根据这个查找内存泄漏的具体地方的</p>
+<p>6.一般有类似三角形的，就是一直被引用这，导致内存泄漏，找到对应的地方也很简单，右键项目点击<strong>Jump to Source</strong>就会打开对应泄漏源码的地方啦，然后我们在根据上面说的泄漏原因，及解决办法修正就好啦<br><img src="http://upload-images.jianshu.io/upload_images/1750086-6204c91351d2f432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jump to Source.png"><br><img src="http://upload-images.jianshu.io/upload_images/1750086-74b0f22614c38553.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak Code.png"></p>
+<p>上面一共有五六处内存泄漏，都是我故意写出来的，目的就是为了练习排查分析内存泄漏，特地放上源码，demo中内存泄漏以及修复代码都有，欢迎下载学习，如果觉得不错，顺手给个star</p>
+<h3 id="下载地址：MemoryLeakSamples"><a href="#下载地址：MemoryLeakSamples" class="headerlink" title="下载地址：MemoryLeakSamples"></a>下载地址：<a href="https://github.com/jiangzepeng/MemoryLeakSamples" target="_blank" rel="external">MemoryLeakSamples</a></h3><p><img src="http://upload-images.jianshu.io/upload_images/1750086-43c165cdbef19e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MemoryLeakSamples.png"></p>
+<h5 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献 :"></a>参考文献 :</h5><p><a href="http://www.jianshu.com/p/fec129afab1b" target="_blank" rel="external">明白原理，轻松应对 Android 常见内存泄漏</a></p>
+<p><a href="http://www.jianshu.com/p/7d958959cf33" target="_blank" rel="external">HPROF文件查看和分析工具</a></p>
+<p><a href="https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570" target="_blank" rel="external">Memory Leak Patterns in Android</a></p>
+
+      
+      
+    </div>
+    
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2017/09/07/ Android Studio 内存泄漏分析指南/" data-id="cj7bncyf700003uqiglwfyw1n" class="article-share-link" data-share="baidu" data-title="Android Studio 内存泄漏分析指南">分享到</a>
+      
+
+      
+        <a href="http://yoursite.com/2017/09/07/ Android Studio 内存泄漏分析指南/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存泄漏/">内存泄漏</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Android 3D旋转动画库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/01/Android 3D旋转动画库/" class="article-date">
+  <time datetime="2017-08-31T16:00:00.000Z" itemprop="datePublished">2017-09-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/动画/">动画</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/01/Android 3D旋转动画库/">Android 3D旋转动画库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>今天兴趣来潮，撸了一个动画特效，我把他应用在登录的界面，当然也可以用在其他地方，先来预览一下我的特效吧</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-2c22f1c1db6c3605.gif?imageMogr2/auto-orient/strip" alt="预览.gif"></p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><hr>
+<ol>
+<li><p>在build.gradle里面配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">   compile &apos;com.jzp:rotate3D:1.0.0&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>生成一个Rotate3D对象</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Rotate3D  anim = new Rotate3D.Builder(this)</div><div class="line">         .bindParentView(parent_ll)</div><div class="line">         .bindPositiveView(account_login_ll)</div><div class="line">         .bindNegativeView(account_phone_ll)</div><div class="line">         .create();</div></pre></td></tr></table></figure>
+<p> 这里面必须要设置的参数是bindParentView，bindPositiveView，bindNegativeView，这些分别是父类View，正面View，以及旋转后的反面View，有提供可选参数</p>
+<ul>
+<li>setDuration 设置动画时间</li>
+<li>setDepthZ 设置Z轴深度<br>可选参数未设置的话就使用默认的</li>
+</ul>
+</li>
+<li><p>启动动画</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">anim.transform();</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><hr>
+<p>由于android提供的动画 alpha（淡入淡出），translate（位移），scale（缩放大小），rotate（旋转），这些都是平面上的动画，那想要做3D立体的动画，我们就需要从写animation，3D立体动画用到android的Camera库，Camera提供了三种旋转方法：</p>
+<ul>
+<li>rotateX()</li>
+<li>rotateY()</li>
+<li><p>rotateX()</p>
+<p> 调用这三种方法，传入旋转角度参数，即可实现视图沿着坐标轴旋转的功能。</p>
+</li>
+</ul>
+<p>实现的核心代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">public class Rotate3dAnimation extends Animation &#123;</div><div class="line">    private final float mFromDegrees;</div><div class="line">    private final float mToDegrees;</div><div class="line">    private final float mCenterX;</div><div class="line">    private final float mCenterY;</div><div class="line">    private final float mDepthZ;</div><div class="line">    private final boolean mReverse;</div><div class="line">    private Camera mCamera;</div><div class="line">    float scale = 1;    // 像素密度</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 创建一个绕 y 轴旋转的3D动画效果，旋转过程中具有深度调节，可以指定旋转中心。</div><div class="line">     *</div><div class="line">     * @param context     上下文,用于获取像素密度</div><div class="line">     * @param fromDegrees 起始时角度</div><div class="line">     * @param toDegrees   结束时角度</div><div class="line">     * @param centerX     旋转中心x坐标</div><div class="line">     * @param centerY     旋转中心y坐标</div><div class="line">     * @param depthZ      最远到达的z轴坐标</div><div class="line">     * @param reverse     true 表示由从0到depthZ，false相反</div><div class="line">     */</div><div class="line"></div><div class="line">    public Rotate3dAnimation(Context context, float fromDegrees, float toDegrees,</div><div class="line">                             float centerX, float centerY, float depthZ, boolean reverse) &#123;</div><div class="line">        mFromDegrees = fromDegrees;</div><div class="line">        mToDegrees = toDegrees;</div><div class="line">        mCenterX = centerX;</div><div class="line">        mCenterY = centerY;</div><div class="line">        mDepthZ = depthZ;</div><div class="line">        mReverse = reverse;</div><div class="line">        // 获取手机像素密度 （即dp与px的比例）</div><div class="line">        scale = context.getResources().getDisplayMetrics().density;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void initialize(int width, int height, int parentWidth, int parentHeight) &#123;</div><div class="line">        super.initialize(width, height, parentWidth, parentHeight);</div><div class="line">        mCamera = new Camera();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void applyTransformation(float interpolatedTime, Transformation t) &#123;</div><div class="line">        final float fromDegrees = mFromDegrees;</div><div class="line">        float degrees = fromDegrees + ((mToDegrees - fromDegrees) * interpolatedTime);</div><div class="line"></div><div class="line">        final float centerX = mCenterX;</div><div class="line">        final float centerY = mCenterY;</div><div class="line">        final Camera camera = mCamera;</div><div class="line">        final Matrix matrix = t.getMatrix();</div><div class="line"></div><div class="line">        camera.save();</div><div class="line">        // 调节深度</div><div class="line">        if (mReverse) &#123;</div><div class="line">            camera.translate(0.0f, 0.0f, mDepthZ * interpolatedTime);</div><div class="line">        &#125; else &#123;</div><div class="line">            camera.translate(0.0f, 0.0f, mDepthZ * (1.0f - interpolatedTime));</div><div class="line">        &#125;</div><div class="line">        // 绕y轴旋转</div><div class="line">        camera.rotateY(degrees);</div><div class="line">        camera.getMatrix(matrix);</div><div class="line">        camera.restore();</div><div class="line"></div><div class="line">        // 修正失真</div><div class="line">        float[] mValues = new float[9];</div><div class="line">        matrix.getValues(mValues);                //获取数值</div><div class="line">        mValues[6] = mValues[6] / scale;            //数值修正</div><div class="line">        mValues[7] = mValues[7] / scale;            //数值修正</div><div class="line">        matrix.setValues(mValues);                //重新赋值</div><div class="line"></div><div class="line">        // 调节中心点，旋转中心默认是坐标原点，对于图片来说就是左上角位置。</div><div class="line">        matrix.preTranslate(-centerX, -centerY); // 使用pre将旋转中心移动到和Camera位置相同</div><div class="line">        matrix.postTranslate(centerX, centerY);  // 使用post将图片(View)移动到原来的位置</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><hr>
+<p>代码中的作用我都有写注释，所以在这里就不多解释了，有的时候，我们看一些特效觉得做起来一定很麻烦，其实只要你掌握其实现原理，并不是很难，所以给大家一句忠告，多读源码，对技术的提升很有帮助。</p>
+<p>参考文献：<a href="http://www.jianshu.com/p/153d9f31288d" target="_blank" rel="external">http://www.jianshu.com/p/153d9f31288d</a> 我是根据这篇博客进行封装的，谢谢亦枫大神的分享</p>
+<h3 id="Github源码下载：3D旋转动画库"><a href="#Github源码下载：3D旋转动画库" class="headerlink" title="Github源码下载：3D旋转动画库"></a>Github源码下载：<a href="https://github.com/jiangzepeng/Rotate3DSample" target="_blank" rel="external">3D旋转动画库</a></h3>
+      
+      
+    </div>
+    
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2017/09/01/Android 3D旋转动画库/" data-id="cj7bncyfm00043uqif96lfznr" class="article-share-link" data-share="baidu" data-title="Android 3D旋转动画库">分享到</a>
+      
+
+      
+        <a href="http://yoursite.com/2017/09/01/Android 3D旋转动画库/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3D动画/">3D动画</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-基于Android系统的动画总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -194,7 +434,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/08/24/基于Android系统的动画总结/" data-id="cj6x9odkj00044cqix1oxrqwl" class="article-share-link" data-share="baidu" data-title="基于Android系统的动画总结">分享到</a>
+        <a data-url="http://yoursite.com/2017/08/24/基于Android系统的动画总结/" data-id="cj7bncyfv00063uqivcdgn5l2" class="article-share-link" data-share="baidu" data-title="基于Android系统的动画总结">分享到</a>
       
 
       
@@ -313,7 +553,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/08/21/开源项目汇总/" data-id="cj6x9odk900014cqitimdziiy" class="article-share-link" data-share="baidu" data-title="Android 开源项目-源码汇总">分享到</a>
+        <a data-url="http://yoursite.com/2017/08/21/开源项目汇总/" data-id="cj7bncyge000f3uqiojt3ov3z" class="article-share-link" data-share="baidu" data-title="Android 开源项目-源码汇总">分享到</a>
       
 
       
@@ -382,7 +622,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/08/04/微信小程序实战篇-个人中心/" data-id="cj6x9odku000a4cqioppxb4m2" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-个人中心">分享到</a>
+        <a data-url="http://yoursite.com/2017/08/04/微信小程序实战篇-个人中心/" data-id="cj7bncygk000l3uqi8sn756re" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-个人中心">分享到</a>
       
 
       
@@ -501,7 +741,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/07/21/微信小程序实战篇-购物车/" data-id="cj6x9odlo000r4cqi7qlgswad" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-购物车">分享到</a>
+        <a data-url="http://yoursite.com/2017/07/21/微信小程序实战篇-购物车/" data-id="cj7bncyh400113uqin40ilpkj" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-购物车">分享到</a>
       
 
       
@@ -614,7 +854,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/07/07/微信小程序实战篇-商品详情页（二）/" data-id="cj6x9odlc000k4cqigsrzyzk0" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（二）">分享到</a>
+        <a data-url="http://yoursite.com/2017/07/07/微信小程序实战篇-商品详情页（二）/" data-id="cj7bncygv000t3uqieczz5zcq" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（二）">分享到</a>
       
 
       
@@ -725,7 +965,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/06/30/微信小程序实战篇-商品详情页（一）/" data-id="cj6x9odl7000g4cqivney9kvv" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（一）">分享到</a>
+        <a data-url="http://yoursite.com/2017/06/30/微信小程序实战篇-商品详情页（一）/" data-id="cj7bncygt000r3uqi7b4uss97" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（一）">分享到</a>
       
 
       
@@ -840,7 +1080,7 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/06/23/微信小程序实战篇-分类页面制作/" data-id="cj6x9odlr000u4cqi1nn7wtb4" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-分类页面制作">分享到</a>
+        <a data-url="http://yoursite.com/2017/06/23/微信小程序实战篇-分类页面制作/" data-id="cj7bncygn000n3uqi6do1jwm8" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-分类页面制作">分享到</a>
       
 
       
@@ -942,172 +1182,11 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/" data-id="cj6x9odkz000c4cqi51bcnpdf" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-下拉刷新与加载更多">分享到</a>
+        <a data-url="http://yoursite.com/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/" data-id="cj7bncygg000h3uqi9xc6wuna" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-下拉刷新与加载更多">分享到</a>
       
 
       
         <a href="http://yoursite.com/2017/06/17/微信小程序实战篇-下拉刷新与加载更多/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电商/">电商</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-微信小程序实战篇-电商（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/09/微信小程序实战篇-电商（二）/" class="article-date">
-  <time datetime="2017-06-08T16:00:00.000Z" itemprop="datePublished">2017-06-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/微信小程序/">微信小程序</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/09/微信小程序实战篇-电商（二）/">微信小程序实战篇-电商（二）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <p>哈喽，大家好，今天总于挤出时间，写第二篇啦，自从决定写文章才发现时间都不够用啊，废话不多说，我们直接进入正题吧！<br>先回顾一下上篇文章，我们讲解了底部导航栏和顶部导航栏的制作，大家应该都记得把，基本上电商小程序都会带底部当导航栏，所以底部导航栏一定要会哦~，今天呐，我将教大家另一个必须会的，banner 图的制作，也叫广告轮播图，就是我们经常看到首页自动轮播的那个控件。</p>
-<h2 id="广告轮播图的制作"><a href="#广告轮播图的制作" class="headerlink" title="广告轮播图的制作"></a>广告轮播图的制作</h2><hr>
-<p>先上效果让大家过过瘾，是不是很眼熟，别急，看完这篇文章，你也可以轻松制作出这样的效果。我还是把广告轮播图写在home的页面里了，需要改动的页面有<strong>home.js、home.wxml、home.wxss</strong></p>
-<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-f42e4a4c5cb0519d.gif?imageMogr2/auto-orient/strip" alt="广告轮播图.gif"></center>
-
-<p><strong>home.wxml</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;!-- banner --&gt;</div><div class="line">&lt;swiper indicator-dots=&quot;&#123;&#123;indicatorDots&#125;&#125;&quot; autoplay=&quot;&#123;&#123;autoplay&#125;&#125;&quot; interval=&quot;&#123;&#123;interval&#125;&#125;&quot; duration=&quot;&#123;&#123;duration&#125;&#125;&quot;&gt;</div><div class="line">  &lt;block wx:for=&quot;&#123;&#123;imgUrls&#125;&#125;&quot;&gt;</div><div class="line">    &lt;swiper-item&gt;</div><div class="line">      &lt;image src=&quot;&#123;&#123;item&#125;&#125;&quot; /&gt;</div><div class="line">    &lt;/swiper-item&gt;</div><div class="line">  &lt;/block&gt;</div><div class="line">&lt;/swiper&gt;</div></pre></td></tr></table></figure>
-<p>swiper 是微信自带的视图，我们直接使用就好，记住 <swiper> 里面一定要包含 <swiper-item>，你用自定义的 view 是无效的，下面介绍一下这个控件的常用属性，</swiper-item></swiper></p>
-<ul>
-<li>indicator-dots 是否显示面板指示点</li>
-<li>autoplay           是否自动切换</li>
-<li>interval           自动切换时间间隔</li>
-<li>duration 滑动动画时长</li>
-</ul>
-<p>剩下的 wx:for，已经可以算老生常谈了，几乎每篇都会遇到，所以就一带而过不讲了，不懂的自己查询前面几篇文章，</p>
-<p><strong>home.wxss</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/* 直接设置swiper属性 */</div><div class="line">swiper &#123;</div><div class="line">  height: 300rpx;</div><div class="line">&#125;</div><div class="line">swiper-item image &#123;</div><div class="line">  width: 100%;</div><div class="line">  height: 100%;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>home.js</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// banner</div><div class="line">    imgUrls: [</div><div class="line">      &apos;http:\/\/mz.djmall.xmisp.cn\/files\/banner\/20161219\/148211980641.png&apos;,</div><div class="line">      &apos;http:\/\/mz.djmall.xmisp.cn\/files\/banner\/20161222\/148238831285.png&apos;,</div><div class="line">      &apos;http:\/\/mz.djmall.xmisp.cn\/files\/banner\/20161222\/14823895573.png&apos;</div><div class="line">    ],</div><div class="line">    indicatorDots: true, //是否显示面板指示点</div><div class="line">    autoplay: true, //是否自动切换</div><div class="line">    interval: 3000, //自动切换时间间隔,3s</div><div class="line">    duration: 1000, //	滑动动画时长1s</div></pre></td></tr></table></figure>
-<p>home.js 就是数据了，imgUrls、indicatorDots、autoplay、interval、duration这些个字段在 home.wxml 都有用到，不明白的看注释，已经写的很清楚了</p>
-<h2 id="界面布局"><a href="#界面布局" class="headerlink" title="界面布局"></a>界面布局</h2><hr>
-<p>剩下的布局都是css的基础啦，我就放在这里统一讲，先上效果图</p>
-<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-489d6701707e9e60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图.png"></center><br>我们接下来要做的布局就是广告轮播图下面的<strong>品牌馆模块布局、以及新品上架这个模块的布局</strong><br><br><strong>home.wxml</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 分类导航 --&gt;</div><div class="line">&lt;view class=&quot;navs&quot;&gt;</div><div class="line">  &lt;block wx:for-items=&quot;&#123;&#123;navItems&#125;&#125;&quot; wx:key=&quot;name&quot;&gt;</div><div class="line">    &lt;view class=&quot;nav-item&quot; catchtap=&quot;catchTapCategory&quot; data-type=&quot;&#123;&#123;item.name&#125;&#125;&quot; data-typeid=&quot;&#123;&#123;item.typeId&#125;&#125;&quot;&gt;</div><div class="line">      &lt;image src=&quot;&#123;&#123;item.imageurl&#125;&#125;&quot; class=&quot;nav-image&quot; /&gt;</div><div class="line">      &lt;text&gt;&#123;&#123;item.name&#125;&#125;&lt;/text&gt;</div><div class="line">    &lt;/view&gt;</div><div class="line">  &lt;/block&gt;</div><div class="line">&lt;/view&gt;</div><div class="line"></div><div class="line">&lt;view class=&quot;separate&quot;&gt;&lt;/view&gt;</div><div class="line"></div><div class="line">&lt;view class=&quot;cate-container&quot;&gt;</div><div class="line"></div><div class="line">  &lt;view class=&quot;category-title&quot;&gt;</div><div class="line">    &lt;text class=&quot;name&quot;&gt;新品上架&lt;/text&gt;</div><div class="line">    &lt;view class=&quot;line_flag&quot;&gt;&lt;/view&gt;</div><div class="line">    &lt;image class=&quot;head-img&quot; src=&quot;&#123;&#123;newgoods_head_url&#125;&#125;&quot;&gt;&lt;/image&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line"></div><div class="line">  &lt;scroll-view scroll-x=&quot;true&quot;&gt;</div><div class="line">    &lt;view class=&quot;goods&quot;&gt;</div><div class="line">      &lt;block wx:for-items=&quot;&#123;&#123;goodsItems&#125;&#125;&quot; wx:key=&quot;name&quot;&gt;</div><div class="line">        &lt;view class=&quot;goods-item&quot; catchtap=&quot;catchTapCategory&quot; data-type=&quot;&#123;&#123;item.name&#125;&#125;&quot; data-typeid=&quot;&#123;&#123;item.typeId&#125;&#125;&quot;&gt;</div><div class="line">          &lt;image src=&quot;&#123;&#123;item.imageurl&#125;&#125;&quot; class=&quot;goods-image&quot; /&gt;</div><div class="line">          &lt;text&gt;&#123;&#123;item.name&#125;&#125;&lt;/text&gt;</div><div class="line">          &lt;p&gt;&#123;&#123;item.newprice&#125;&#125;&lt;/p&gt;</div><div class="line">        &lt;/view&gt;</div><div class="line">      &lt;/block&gt;</div><div class="line">    &lt;/view&gt;</div><div class="line">  &lt;/scroll-view&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure><br><br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-d1683f2bbfe01c16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="代码图片.png"></center><br>其实代码已经有注释了，我用带有颜色的框区分，是为了读者更好的理解，第一个红框是 banner，这个上面讲过了，跳过，第二个红框分类导航，view 层包含一个 for 循环的 block 模块，每个模块里有一个 image 控件和 text 控件，对比效果图，对应的就是品牌馆、类目等数据，这里我再从新教一遍如何看懂这些代码，拿分类导航来说<br><br>- <view class="navs"> 第一行这么写，class字段意思是给这个view定义了名叫 navs 的样式，那navs样式在哪里呐，在对应名下的.wxss 样式里，所以我们要去 home.wxss 去找navs ，<br>- data-xxx，xxx就是你给home.js里提供的数据关键词，home.js通过获取xxx关键词来获取xxx里面的数据，回调数据的时候会用的到<br>- image src src很容易理解了，是填图片路径，要求这个图片路径要正确，就是必须可以读取的到，不然会报异常<br><br>回顾到此结束，接着看最后一个红框，红框中的第二个绿框，新控件<br><strong>scroll-view</strong> 看单纯就知道他的作用，滚动的视图嘛，就是<strong>scroll-view</strong>里面包含了很多view 当超过屏幕的时候，你可以滚动查看被遮盖的view ，看一下<strong>scroll-view</strong>的属性<br><br>- scroll-x 允许横向滚动<br>- scroll-y 允许纵向滚动<br>- scroll-top 设置竖向滚动条位置<br>- scroll-left 设置横向滚动条位置<br>- bindscrolltoupper 滚动到顶部/左边，会触发 scrolltoupper 事件<br>- bindscrolltolower  滚动到底部/右边，会触发 scrolltolower 事件<br>- enable-back-to-top iOS点击顶部状态栏、安卓双击标题栏时，滚动条返回顶部，只支持竖向<br>- scroll-with-animation 在设置滚动条位置时使用动画过渡<br><br>我实现的是横向滚动，所以把scroll-x设置为true就好，大家可以试一下其他属性，多试试，看效果才能理解每个属性的效果<br><br><strong>home.wxss</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line">/*=================品牌馆、类目 的样式====================*/</div><div class="line"></div><div class="line">.navs &#123;</div><div class="line">  display: flex;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.nav-item &#123;</div><div class="line">  width: 25%;</div><div class="line">  display: flex;</div><div class="line">  align-items: center;</div><div class="line">  flex-direction: column;</div><div class="line">  padding: 20rpx;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.nav-item .nav-image &#123;</div><div class="line">  width: 80rpx;</div><div class="line">  height: 80rpx;</div><div class="line">  /*border-radius: 50%;设置边界圆角*/</div><div class="line">&#125;</div><div class="line"></div><div class="line">.nav-item text &#123;</div><div class="line">  padding-top: 20rpx;</div><div class="line">  font-size: 25rpx;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*=================新品上架 样式====================*/</div><div class="line"></div><div class="line">.category-title &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  margin-top: 15rpx;</div><div class="line">  margin-bottom: 0rpx;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.category-title .name &#123;</div><div class="line">  font-size: 40rpx;</div><div class="line">  text-align: center;</div><div class="line">  margin: 10rpx auto;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.line_flag &#123;</div><div class="line">  width: 80rpx;</div><div class="line">  height: 1rpx;</div><div class="line">  display: inline-block;</div><div class="line">  margin: 20rpx auto;</div><div class="line">  background-color: gainsboro;</div><div class="line">  text-align: center;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.line &#123;</div><div class="line">  width: 100%;</div><div class="line">  height: 2rpx;</div><div class="line">  display: inline-block;</div><div class="line">  margin: 20rpx 0rpx;</div><div class="line">  background-color: gainsboro;</div><div class="line">  text-align: center;</div><div class="line">&#125;</div><div class="line"></div><div class="line">image.head-img &#123;</div><div class="line">  width: 100%;</div><div class="line">  height: 270rpx;</div><div class="line">&#125;</div><div class="line"></div><div class="line">text &#123;</div><div class="line">  color: #444;</div><div class="line">  font-size: 40rpx;</div><div class="line">&#125;</div><div class="line"></div><div class="line">p&#123;</div><div class="line">  color: red;</div><div class="line">  font-size: 30rpx;</div><div class="line">  margin-top: 20rpx;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.cate-container &#123;</div><div class="line">  color: #fff;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* 分割线 */</div><div class="line">.separate &#123;</div><div class="line">  height: 15rpx;</div><div class="line">  background-color: #f2f2f2;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>刚刚我们在 home.wxml 中提到的navs、nav-item都在这里，display、flex-directio等对应的样式在 <a href="http://www.jianshu.com/p/80c2d80ae41d" target="_blank" rel="external">微信小程序入门篇（二）</a><strong>wxss样式积累</strong>模块里都有记录，不明白属性作用的可以跳过去查阅一下，这个是基本功，不是什么技巧，只能死记硬背。<br><br><strong>home.js</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div></pre></td><td class="code"><pre><div class="line">data: &#123;</div><div class="line">    navbar: [&apos;护肤&apos;, &apos;彩妆&apos;, &apos;香水&apos;, &apos;个人护理&apos;],</div><div class="line">    currentTab: 0,</div><div class="line">    // banner</div><div class="line">    imgUrls: [</div><div class="line">      &apos;http:\/\/mz.djmall.xmisp.cn\/files\/banner\/20161219\/148211980641.png&apos;,</div><div class="line">      &apos;http:\/\/mz.djmall.xmisp.cn\/files\/banner\/20161222\/148238831285.png&apos;,</div><div class="line">      &apos;http:\/\/mz.djmall.xmisp.cn\/files\/banner\/20161222\/14823895573.png&apos;</div><div class="line">    ],</div><div class="line">    indicatorDots: true, //是否显示面板指示点</div><div class="line">    autoplay: true, //是否自动切换</div><div class="line">    interval: 3000, //自动切换时间间隔,3s</div><div class="line">    duration: 1000, //	滑动动画时长1s</div><div class="line"></div><div class="line">    hot_products:</div><div class="line">    [</div><div class="line">      &#123;</div><div class="line">        product_id: 1,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/banner/20161222/148237182618.png&apos;,</div><div class="line">        html: &quot;http://mz.djmall.xmisp.cn/files/activity/20161216/5853a0137573e84/mz2_ajax/index.html&quot;</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        product_id: 2,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/banner/20161202/148066038440.png&apos;,</div><div class="line">        html: &quot;http://mz.djmall.xmisp.cn/files/activity/20161208/584926f0017d874/mz1/index.html&quot;</div><div class="line">      &#125;</div><div class="line">    ],</div><div class="line"></div><div class="line">    // navItems</div><div class="line">    navItems: [</div><div class="line">      &#123;</div><div class="line">        typeId: 0,</div><div class="line">        name: &apos;品牌馆&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;../../images/navItems/home_icon_brand.png&apos;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        typeId: 1,</div><div class="line">        name: &apos;类目&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;../../images/navItems/home_icon_sort.png&apos;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        typeId: 2,</div><div class="line">        name: &apos;特惠专场&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;../../images/navItems/home_icon_gift.png&apos;</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        typeId: 3,</div><div class="line">        name: &apos;推荐好友&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;../../images/navItems/home_icon_frends.png&apos;</div><div class="line">      &#125;</div><div class="line">    ],</div><div class="line"></div><div class="line">    // 新品上架</div><div class="line">    goodsItems: [</div><div class="line">      &#123;</div><div class="line">        goodId: 0,</div><div class="line">        name: &apos;兰蔻小黑瓶&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148057921620.jpg&apos;,</div><div class="line">        newprice: &quot;￥200.00&quot;,</div><div class="line">        oldprice: &quot;￥300.00&quot;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        goodId: 1,</div><div class="line">        name: &apos;兰蔻清莹柔肤爽肤水&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148057953326.jpg&apos;,</div><div class="line">        newprice: &quot;￥120.00&quot;,</div><div class="line">        oldprice: &quot;￥200.00&quot;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        goodId: 2,</div><div class="line">        name: &apos;倩碧水嫩保湿精华面霜&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148058228431.jpg&apos;,</div><div class="line">        newprice: &quot;￥320.00&quot;,</div><div class="line">        oldprice: &quot;￥400.00&quot;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        goodId: 3,</div><div class="line">        name: &apos;特效润肤露&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/14805828016.jpg&apos;,</div><div class="line">        newprice: &quot;￥30.00&quot;,</div><div class="line">        oldprice: &quot;￥80.00&quot;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        goodId: 4,</div><div class="line">        name: &apos;倩碧焕妍活力精华露&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148058301941.jpg&apos;,</div><div class="line">        newprice: &quot;￥30.00&quot;,</div><div class="line">        oldprice: &quot;￥80.00&quot;,</div><div class="line">      &#125;, &#123;</div><div class="line">        goodId: 5,</div><div class="line">        name: &apos;日本资生堂洗颜&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148058328876.jpg&apos;,</div><div class="line">        newprice: &quot;￥30.00&quot;,</div><div class="line">        oldprice: &quot;￥80.00&quot;,</div><div class="line">      &#125;</div><div class="line">    ],</div><div class="line"></div><div class="line">    newgoods_head_url:&quot;http://mz.djmall.xmisp.cn/files/banner/20161202/148066062976.jpg&quot;,</div><div class="line"></div><div class="line">    // 新品上架</div><div class="line">    recommends: [</div><div class="line">      </div><div class="line">      &#123;</div><div class="line">        goodId: 7,</div><div class="line">        name: &apos;OLAY玉兰油精油沐浴露玫瑰滋养二合一450ml&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161213/148162245074.jpg&apos;,</div><div class="line">        newprice: &quot;￥36.60&quot;,</div><div class="line">        oldprice: &quot;￥40.00&quot;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        goodId: 10,</div><div class="line">        name: &apos;兰蔻玫瑰清滢保湿柔肤水嫩肤水化妆水400ml补水保湿温和不刺激&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148057937593.jpg&apos;,</div><div class="line">        newprice: &quot;￥30.00&quot;,</div><div class="line">        oldprice: &quot;￥80.00&quot;,</div><div class="line">      &#125;, &#123;</div><div class="line">        goodId: 11,</div><div class="line">        name: &apos;Lancome/兰蔻清莹柔肤爽肤水/粉水400ml补水保湿玫瑰水化妆水&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148057953326.jpg&apos;,</div><div class="line">        newprice: &quot;￥30.00&quot;,</div><div class="line">        oldprice: &quot;￥80.00&quot;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        goodId: 12,</div><div class="line">        name: &apos;美国CLINIQUE倩碧黄油无油/特效润肤露125ml&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/14805828016.jpg&apos;,</div><div class="line">        newprice: &quot;￥239.00&quot;,</div><div class="line">        oldprice: &quot;￥320.00&quot;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        goodId: 13,</div><div class="line">        name: &apos;法国LANCOME兰蔻柔皙轻透隔离防晒乳霜50ML2017年3月到期&apos;,</div><div class="line">        url: &apos;bill&apos;,</div><div class="line">        imageurl: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148058014894.jpg&apos;,</div><div class="line">        newprice: &quot;￥130.00&quot;,</div><div class="line">        oldprice: &quot;￥180.00&quot;,</div><div class="line">      &#125;,</div><div class="line">    ],</div><div class="line">  &#125;</div></pre></td></tr></table></figure><br><br>home.js 已经多次强调这个是用来放数据和处理事件监听的，事件监听先跳过，后面会专门出一篇来讲解，数据目前也是模拟的数据，还没有涉及到网络请求，我要强调的是，所有的模拟数据一定要放在page下面的data里，代码君就犯过错，写在data括号的外边，程序就一直报错，招了好半天，才发现是这么低级的错误，所以我踩过的坑已经提醒你们了，不要继续掉坑里哦~<br><br>## 总结<br>—<br><br>好了，如果你照着我的代码敲的话，应该可以实现这些布局效果，代码君想告诉大家的是，一定要动手实践，只有实践你才会发现你哪里是真的理解了，哪里不会，相信我，实践后你会对程序的理解更透彻。好了，今天就讲解到这里，住大家周末愉快，最后放一张这几天我带领大家实现的代码效果图。<br><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-56ab749f16a78247.gif?imageMogr2/auto-orient/strip" alt="微信商城.gif"><br></center>
-
-</view>
-      
-      
-    </div>
-    
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/06/09/微信小程序实战篇-电商（二）/" data-id="cj6x9odlg000m4cqinyv7lxqk" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-电商（二）">分享到</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/06/09/微信小程序实战篇-电商（二）/#ds-thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电商/">电商</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-微信小程序实战篇-电商（一）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/31/微信小程序实战篇-电商（一）/" class="article-date">
-  <time datetime="2017-05-30T16:00:00.000Z" itemprop="datePublished">2017-05-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/微信小程序/">微信小程序</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/31/微信小程序实战篇-电商（一）/">微信小程序实战篇-电商（一）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <p>哈喽，大家好，端午节过的怎么样啊，代码君可是没休息，专心的写电商文章哦，也是蛮拼的，如果对代码君认可的话，欢迎点赞转发，你们的点赞转发是对我最大的支持！好啦，言归正传，我们今天要讲解微信小程序的实战篇-电商，因为很多读者都反馈让我出一个关于电商的教程，所以我就打算利用空余时间写几篇关于电商小程序的教程，这个是第一篇，好，小明同学，现在要开始划重点啦，注意听哦~</p>
-<h2 id="电商底部导航栏的制作"><a href="#电商底部导航栏的制作" class="headerlink" title="电商底部导航栏的制作"></a>电商底部导航栏的制作</h2><hr>
-<p>我想大家对电商一定不陌生，一般电商的底部导航栏有以下几个<strong>首页、分类、购物车、个人中心</strong>。所以我们按照这个来做吧，说到底部导航，不知道你还记得在<a href="http://www.jianshu.com/p/e63be70e3ab9" target="_blank" rel="external"> 微信小程序入门篇（一）</a>中app.json的作用，如果不记得，请翻看一下，app.json是用来配置page路径以及导航栏属性的，那我们要做<strong>首页、分类、购物车、个人中心</strong>界面就要在page也添加这几个界面，所以在app.json的page里添加如下代码，写入page路径，系统会自动帮你创建界面的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&quot;pages&quot;:[</div><div class="line">  &quot;pages/home/home&quot;,</div><div class="line">  &quot;pages/classify/classify&quot;,  </div><div class="line">  &quot;pages/cart/cart&quot;,</div><div class="line">  &quot;pages/mine/mine&quot;,</div><div class="line">  &quot;pages/index/index&quot;</div><div class="line">],</div></pre></td></tr></table></figure>
-<p>好，既然添加了四个界面，那我们要怎么做底部导航栏呐，今天给app.json再添加一个属性，就是可以在app.json里配置导航栏，将下面代码添加到app.json里面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&quot;tabBar&quot;: &#123;</div><div class="line">   &quot;color&quot;: &quot;#858585&quot;,</div><div class="line">   &quot;selectedColor&quot;: &quot;#f0145a&quot;,</div><div class="line">   &quot;backgroundColor&quot;: &quot;#ffffff&quot;,</div><div class="line">   &quot;borderStyle&quot;: &quot;#000&quot;,</div><div class="line">   &quot;list&quot;: [</div><div class="line">     &#123;</div><div class="line">       &quot;pagePath&quot;: &quot;pages/home/home&quot;,</div><div class="line">       &quot;iconPath&quot;: &quot;images/bottomNav/home.png&quot;,</div><div class="line">       &quot;selectedIconPath&quot;: &quot;images/bottomNav/home_select.png&quot;,</div><div class="line">       &quot;text&quot;: &quot;首页&quot;</div><div class="line">     &#125;,</div><div class="line">     &#123;</div><div class="line">       &quot;pagePath&quot;: &quot;pages/classify/classify&quot;,</div><div class="line">       &quot;iconPath&quot;: &quot;images/bottomNav/classify.png&quot;,</div><div class="line">       &quot;selectedIconPath&quot;: &quot;images/bottomNav/classify_select.png&quot;,</div><div class="line">       &quot;text&quot;: &quot;分类&quot;</div><div class="line">     &#125;,</div><div class="line">     &#123;</div><div class="line">       &quot;pagePath&quot;: &quot;pages/cart/cart&quot;,</div><div class="line">       &quot;iconPath&quot;: &quot;images/bottomNav/cart.png&quot;,</div><div class="line">       &quot;selectedIconPath&quot;: &quot;images/bottomNav/cart_select.png&quot;,</div><div class="line">       &quot;text&quot;: &quot;购物车&quot;</div><div class="line">     &#125;,</div><div class="line">     &#123;</div><div class="line">       &quot;pagePath&quot;: &quot;pages/mine/mine&quot;,</div><div class="line">       &quot;iconPath&quot;: &quot;images/bottomNav/mine.png&quot;,</div><div class="line">       &quot;selectedIconPath&quot;: &quot;images/bottomNav/mine_select.png&quot;,</div><div class="line">       &quot;text&quot;: &quot;我的&quot;</div><div class="line">     &#125;</div><div class="line">   ]</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<p><strong>tabBar</strong>系统自带字段，不可改，添加这个字段就是告诉系统你要添加导航栏，<strong>color、selectedColor、backgroundColor</strong>从字面意思也字段，分别对应的属性是默认字体颜色、勾选字体颜色、背景颜色。着重说一下<strong>borderStyle</strong>，这个的定义底部导航栏与界面的边界线，属性有点特殊，特殊在如果你不想要这个分界线，可以把属性设置为<strong>white</strong>，剩下的不管你写入的是什么，系统都理解为要添加这条分界线，不信你可以试试。<strong>list</strong>属性自然是设置对应导航栏的界面啦，</p>
-<ul>
-<li>pagePath：页面路径，就是你写在page里的路径</li>
-<li>iconPath：默认导航栏图片路径</li>
-<li>selectedIconPath：勾选图片的路径</li>
-<li>text：导航栏名字</li>
-</ul>
-<p>这里要说的是，图片路径，一定要写对，不然找不到图片就显示不出来，这里给大家提供我的<a href="https://pan.baidu.com/s/1nvmcLGP" target="_blank" rel="external">导航栏图片—提取码：8zwe</a> 大家可以根据我的图片路径创建对应的文件夹，如下图</p>
-<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-26afdc990e647eb1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1.png"><br></center><br>需要注意的：<br><br> - 添加tabBar的时候别忘记别忘记上面有一个<strong>逗号</strong>，这个是用来区分每个属性的，所以你每添加一个属性都要用逗号分隔开来，这点要注意，不然会报错，这就是我把标点去掉的错误日志，一般报出错误日志<strong>Expecting ‘EOF’ XXXXXXXXX，got STRING</strong>都是语法错误，所以要仔细检查看看哪里少写了东西。<br> <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-c4c29921e999ed2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-2.png"><br></center>
-
-<ul>
-<li>还有就是在.json文件里是不可以写注释的，我原本想添加一点注释方便读者阅读，然而会出现下面错误信息，解决办法很简单，把注释删除就可以啦<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-0c0b7b1c128c056a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-3.png"></center>
-
-</li>
-</ul>
-<h3 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h3><hr>
-<ol>
-<li><strong>我们创建了四个导航栏，那么如果我想再添加两个导航栏可以吗？</strong><br>你也许觉得很简单，试着去在list列表里添加两个了吧，我也是这么做的，但是出问题啦。系统会报错，这回知道了吧，最多只能是五个，没办法，谁让微信是老大，人家定最多五个那就只能最多五个喽！  <center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-1af755230d1331f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-3.png"></center></li>
-<li><p><strong>不知道你有没有注意到，导航栏默认</strong>首页<strong>勾选为红色，那么我想要默认勾选</strong>分类<strong>为红色呐，要怎么办？</strong></p>
-<p>这个有点难度了吧，我刚开始想的是在tabBar属性把list里的第一个home属性和classify属性换一下应该就可以解决，然而并不是这样的，因为没有效果，后来也是一次误打误撞给发现的，我给你点小提示，有没有注意到，pages的第一个路径是什么<strong>pages/home/home</strong>,没错，就是它，如果想要分类classify作为默认的勾选项，你只需要在pages属性把home的路径和classify路径换一下，保存，重新编译一下，你要的效果就出来了，这里可以总结的一点就是，tabBar是到page里的第一行路径作为默认勾选项的。</p>
-</li>
-</ol>
-<p>##电商顶部导航栏制作<br>既然讲了导航栏，干脆今天多讲解一点，接着教教大家顶部导航栏怎么制作，先上效果图</p>
-<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-7ec5e6c49fb45887.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-1.png"></center><br>这个导航栏可不像底部导航栏啦，因为他的级别比较低，是页面级别的导航栏，所以要写在页面里，你想要在哪个页面加入顶部导航栏就在哪个页面里添加如下代码，这里以首页的界面为例：<br><strong>home.wxss</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">/* pages/home/home.wxss */</div><div class="line">page&#123;  </div><div class="line">  display: flex;  </div><div class="line">  flex-direction: column;  </div><div class="line">  height: 100%;  </div><div class="line">&#125;  </div><div class="line">.navbar&#123;  </div><div class="line">  flex: none;  </div><div class="line">  display: flex;  </div><div class="line">  background: #fff;  </div><div class="line">&#125;  </div><div class="line">.navbar .item&#123;  </div><div class="line">  position: relative;  </div><div class="line">  flex: auto;  </div><div class="line">  text-align: center;  </div><div class="line">  line-height: 80rpx;  </div><div class="line">  font-size:14px;</div><div class="line">&#125;  </div><div class="line">/* 顶部导航字体颜色 */</div><div class="line">.navbar .item.active&#123;  </div><div class="line">  color: #f0145a;  </div><div class="line">&#125;  </div><div class="line">/* 顶部指示条属性 */</div><div class="line">.navbar .item.active:after&#123;  </div><div class="line">  content: &quot;&quot;;  </div><div class="line">  display: block;  </div><div class="line">  position: absolute;  </div><div class="line">  bottom: 0;  </div><div class="line">  left: 0;  </div><div class="line">  right: 0;  </div><div class="line">  height: 6rpx;  </div><div class="line">  background: #f0145a;  </div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br><strong>home.wxml</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--导航条--&gt;  </div><div class="line">&lt;view class=&quot;navbar&quot;&gt;  </div><div class="line">  &lt;text wx:for=&quot;&#123;&#123;navbar&#125;&#125;&quot; data-idx=&quot;&#123;&#123;index&#125;&#125;&quot; class=&quot;item &#123;&#123;currentTab==index ? &apos;active&apos; : &apos;&apos;&#125;&#125;&quot; wx:key=&quot;unique&quot; bindtap=&quot;navbarTap&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/text&gt;  </div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure><br><br>在home.wxml里面bindtap字段我们已经讲解过啦，是事件监听的标识符，事件名称叫“navbarTap”可以到home.js里查找到这个事件<strong>wx:for</strong>这个字段重点讲解，在组件上使用<strong>wx:for</strong>控制属性绑定一个数组，即可使用数组中各项的数据重复渲染该组件。默认数组的当前项的下标变量名默认为index，数组当前项的变量名默认为item，这是官方解释，说白了就是item默认叫做变量的值，index表示第几个变量的值，还不太明白请看这个<a href="https://www.w3cschool.cn/weixinapp/weixinapp-list.html" target="_blank" rel="external"> 微信 wx:for 的讲解</a><br><br> - <strong>wx:for=”“</strong>  意思是虚幻navbar的数组数据<br> - <strong></strong> 这里面是navbar数组里面的值，如护肤、彩妆等值<br> - <strong>wx:key=”unique”</strong> 来指定列表中项目的唯一的标识符<br> - <strong>data-idx=”“</strong>存储一些数据供home.js里调用，这里data-xxx，xxx就是你给home.js里提供的数据关键词，home.js通过获取xxx关键词来获取xxx里面的数据<br><br><strong>home.js</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// pages/home/home.js</div><div class="line">var app = getApp()</div><div class="line">Page(&#123;</div><div class="line">  data: &#123;</div><div class="line">    navbar: [&apos;护肤&apos;, &apos;彩妆&apos;, &apos;香水&apos;,&apos;个人护理&apos;],</div><div class="line">    currentTab: 0,</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  // 导航切换监听</div><div class="line">  navbarTap: function (e) &#123;</div><div class="line">    console.debug(e);</div><div class="line">    this.setData(&#123;</div><div class="line">      currentTab: e.currentTarget.dataset.idx</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  </div><div class="line">&#125;)</div></pre></td></tr></table></figure><br><br>home.js，这里读过<a href="http://www.jianshu.com/p/80c2d80ae41d" target="_blank" rel="external">微信小程序入门篇（二）</a>都知道，page页面里.js一般是放data数据和事件监听的，这里data有一个navbar导航栏数据，还有一个记录当前位置的currentTab,字段可以自由命名，赋值的时候对应上就好，<br><br>- <strong>navbarTap</strong> 记得在home.wxml里面data-idx属性吗，在这里用到，<strong>currentTab: e.currentTarget.dataset.idx</strong> 把当前用户选择的Tab传给currentTab里，为了验证一下结果，我在这里面加入了一个输出日志<strong>console.debug(e);</strong>，可以在控制台上看输出的日志，我选择点击彩妆，输出台的数据<strong>idx：1</strong>刚好是彩妆的位置。<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-17d2e73e05f468dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-2.png"><br></center>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><hr>
-<p>今天我们讲解的微信小程序的底部导航栏和顶部导航栏，导航栏应该说是必须的对于电商小程序来说，那么今天的导航栏教程你掌握了吗？，有不懂的可以在下面留言评论，代码君会时刻答复的，如果觉得我写的不错的话，帮忙点赞转发一下吧~</p>
-
-      
-      
-    </div>
-    
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2017/05/31/微信小程序实战篇-电商（一）/" data-id="cj6x9odl6000f4cqix9jxyxpj" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-电商（一）">分享到</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/05/31/微信小程序实战篇-电商（一）/#ds-thread" class="article-comment-link">评论</a>
       
 
       
@@ -1153,16 +1232,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li></ul>
+      <a href="/tags/3D动画/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/个人简历/" style="font-size: 10px;">个人简历</a> <a href="/tags/内存泄漏/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
     </div>
   </div>
 
@@ -1211,9 +1281,18 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/内存泄漏/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/简历/">简历</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1251,6 +1330,8 @@ var _hmt = _hmt || [];
     <a href="/" class="mobile-nav-link">首页</a>
   
     <a href="/archives" class="mobile-nav-link">文章</a>
+  
+    <a href="/2017/05/06/个人简历/" class="mobile-nav-link">个人简历</a>
   
 </nav>
   <!-- totop start -->
