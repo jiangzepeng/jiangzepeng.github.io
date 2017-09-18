@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>代码集中营</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+<meta property="og:type" content="website">
+<meta property="og:title" content="代码集中营">
+<meta property="og:url" content="http://jiangzepeng.cn/page/6/index.html">
+<meta property="og:site_name" content="代码集中营">
+<meta property="og:description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码集中营">
+<meta name="twitter:description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+  
+  
+    <link rel="icon" href="/img/logo.jpeg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Chrome on Android -->    
+    <link rel="icon" sizes="192x192" href="/img/logo.jpeg">
+    <!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.jpeg">    
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/img/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?10f2720e6f47d1b4a5ebc811df8dc361";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">代码集中营</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">学如逆水行舟，不进则退，心如平原驰马，易放难收</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">文章</a>
+        
+          <a class="main-nav-link" href="/2017/04/06/个人简历/">个人简历</a>
+        
+      </nav>
+      <!--
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="jiangzepeng.cn">
+        </form>
+      </div>
+      -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main">
+  
+    <article id="post-微信小程序实战篇-购物车" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/21/微信小程序实战篇-购物车/" class="article-date">
+  <time datetime="2017-07-20T16:00:00.000Z" itemprop="datePublished">2017-07-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/微信小程序/">微信小程序</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/21/微信小程序实战篇-购物车/">微信小程序实战篇-购物车</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>哈喽，大家好，快半个月没写了，现在提笔都有点生硬了，一直没更新的原因，一个是代码君也要上班，加上最近工作比较忙，还有就是写文章一直未被认可，所以没什么动力再创作了，那时真的坚持不下去，打算放弃了，感谢读者<strong>曹明</strong>，一个韩国的研究生读者，支持我，并给我鼓励，期待我更新下一篇，我非常感动，瞬间战斗力恢复，其实你们简单的点赞，评论，都是给我最大的支持，好了，煽情完毕，该讲今天的重点了，购物车，购物车的界面实现到不是很难，难点是处理里面的逻辑，无论是小程序，还是APP，购物车的逻辑都是最难的，下面开始教大家如何实现购物车了，先上效果图</p>
+<p><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-262578ff79c5bf5f.gif?imageMogr2/auto-orient/strip" alt="购物车.gif"><br></center></p>
+<h2 id="购物车实现"><a href="#购物车实现" class="headerlink" title="购物车实现"></a>购物车实现</h2><hr>
+<ol>
+<li><p><strong>cart.wxml</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;import src=&quot;/template/quantity/index.wxml&quot; /&gt;</div><div class="line">&lt;scroll-view class=&quot;scroll&quot; scroll-y=&quot;true&quot;&gt;</div><div class="line">  &lt;view class=&quot;separate&quot;&gt;&lt;/view&gt;</div><div class="line">  &lt;view wx:for=&quot;&#123;&#123;carts&#125;&#125;&quot;&gt;</div><div class="line">    &lt;view class=&quot;cart_container&quot;&gt;</div><div class="line">      &lt;image class=&quot;item-select&quot; bindtap=&quot;switchSelect&quot; data-index=&quot;&#123;&#123;index&#125;&#125;&quot; data-id=&quot;&#123;&#123;index&#125;&#125;&quot; src=&quot;&#123;&#123;item.isSelect?&apos;../../images/cart/comment_select.png&apos;:&apos;../../images/cart/comment_normal.png&apos;&#125;&#125;&quot; /&gt;</div><div class="line">      &lt;image class=&quot;item-image&quot; src=&quot;&#123;&#123;item.pic&#125;&#125;&quot;&gt;&lt;/image&gt;</div><div class="line">      &lt;view class=&quot;column&quot;&gt;</div><div class="line">        &lt;text class=&quot;title&quot;&gt;&#123;&#123;item.name&#125;&#125;&lt;/text&gt;</div><div class="line">        &lt;view class=&quot;row&quot;&gt;</div><div class="line">          &lt;text class=&quot;sku-price&quot;&gt;￥&lt;/text&gt;</div><div class="line">          &lt;text class=&quot;sku-price&quot;&gt;&#123;&#123;item.price&#125;&#125;&lt;/text&gt;</div><div class="line">          &lt;view class=&quot;sku&quot;&gt;</div><div class="line">            &lt;template is=&quot;quantity&quot; data=&quot;&#123;&#123; ...item.count, componentId: index &#125;&#125;&quot; /&gt;</div><div class="line">          &lt;/view&gt;</div><div class="line">        &lt;/view&gt;</div><div class="line">      &lt;/view&gt;</div><div class="line">    &lt;/view&gt;</div><div class="line">    &lt;view class=&quot;separate&quot;&gt;&lt;/view&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">&lt;/scroll-view&gt;</div><div class="line">&lt;view class=&quot;bottom_total&quot;&gt;</div><div class="line">  &lt;view class=&quot;bottom_line&quot;&gt;&lt;/view&gt;</div><div class="line">  &lt;view class=&quot;row&quot;&gt;</div><div class="line">    &lt;image class=&quot;item-allselect&quot; bindtap=&quot;allSelect&quot; src=&quot;&#123;&#123;isAllSelect?&apos;../../images/cart/comment_select.png&apos;:&apos;../../images/cart/comment_normal.png&apos;&#125;&#125;&quot; /&gt;</div><div class="line">    &lt;text class=&quot;small_text&quot;&gt;全选&lt;/text&gt;</div><div class="line">    &lt;text&gt;合计:￥ &lt;/text&gt;</div><div class="line">    &lt;text class=&quot;price&quot;&gt;&#123;&#123;totalMoney&#125;&#125;&lt;/text&gt;</div><div class="line">    &lt;button class=&quot;button-red&quot; bindtap=&quot;toBuy&quot; formType=&quot;submit&quot;&gt;去结算&lt;/button&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
+<p> 布局不是很复杂，一个循环列表，循环出购物车商品，外加一个结算的底部控件，还需要提醒的是，循环列表外面要加一层scroll-view，这样当数据很多是时候，可以滚动，不熟悉scroll-view的，请自行翻看前面几篇文章，里面有讲解</p>
+</li>
+<li><p><strong>cat.wxss</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line">/* pages/cart/cart.wxss */</div><div class="line">.cart_container &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: row;</div><div class="line">&#125;</div><div class="line">.scroll &#123;</div><div class="line">  margin-bottom: 120rpx;</div><div class="line">&#125;</div><div class="line">.column &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">&#125;</div><div class="line">.row &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: row;</div><div class="line">  align-items: center;</div><div class="line">&#125;</div><div class="line">.sku &#123;</div><div class="line">  margin-top: 60rpx;</div><div class="line">  margin-left: 100rpx;</div><div class="line">&#125;</div><div class="line">.sku-price &#123;</div><div class="line">  color: red;</div><div class="line">  position: relative;</div><div class="line">  margin-top: 70rpx;</div><div class="line">&#125;</div><div class="line">.price &#123;</div><div class="line">  color: red;</div><div class="line">  position: relative;</div><div class="line">&#125;</div><div class="line">.title &#123;</div><div class="line">  font-size: 38rpx;</div><div class="line">  margin-top: 40rpx;</div><div class="line">&#125;</div><div class="line">.small_text &#123;</div><div class="line">  font-size: 28rpx;</div><div class="line">  margin-right: 40rpx;</div><div class="line">  margin-left: 10rpx;</div><div class="line">&#125;</div><div class="line">.item-select &#123;</div><div class="line">  width: 40rpx;</div><div class="line">  height: 40rpx;</div><div class="line">  margin-top: 90rpx;</div><div class="line">  margin-left: 20rpx;</div><div class="line">&#125;</div><div class="line">.item-allselect &#123;</div><div class="line">  width: 40rpx;</div><div class="line">  height: 40rpx;</div><div class="line">  margin-left: 20rpx;</div><div class="line">&#125;</div><div class="line">.item-image &#123;</div><div class="line">  width: 180rpx;</div><div class="line">  height: 180rpx;</div><div class="line">  margin: 20rpx;</div><div class="line">&#125;</div><div class="line">.bottom_line &#123;</div><div class="line">  width: 100%;</div><div class="line">  height: 2rpx;</div><div class="line">  background: lightgray;</div><div class="line">&#125;</div><div class="line">.bottom_total &#123;</div><div class="line">  position: fixed;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  bottom: 0;</div><div class="line">  width: 100%;</div><div class="line">  height: 120rpx;</div><div class="line">  line-height: 120rpx;</div><div class="line">  background: white;</div><div class="line">&#125;</div><div class="line">.button-red &#123;</div><div class="line">  background-color: #f44336; /* 红色 */</div><div class="line">&#125;</div><div class="line">button &#123;</div><div class="line">  position: fixed;</div><div class="line">  right: 0;</div><div class="line">  color: white;</div><div class="line">  text-align: center;</div><div class="line">  display: inline-block;</div><div class="line">  font-size: 30rpx;</div><div class="line">  border-radius: 0rpx;</div><div class="line">  width: 30%;</div><div class="line">  height: 120rpx;</div><div class="line">  line-height: 120rpx;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> wxss样式没什么可说的，了解其属性，调用class就好，重点说一下cart.js,全篇的逻辑都在这里面</p>
+</li>
+<li><p><strong>cart.js</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div></pre></td><td class="code"><pre><div class="line">// pages/cart/cart.js</div><div class="line">var Temp = require(&apos;../../template/contract.js&apos;);</div><div class="line">Page(Object.assign(&#123;&#125;, Temp.Quantity, &#123;</div><div class="line">  data: &#123;</div><div class="line">    isAllSelect:false,</div><div class="line">    totalMoney:0,</div><div class="line">    // 商品详情介绍</div><div class="line">    carts: [</div><div class="line">      &#123;</div><div class="line">        pic: &quot;http://mz.djmall.xmisp.cn/files/product/20161201/148058328876.jpg&quot;,</div><div class="line">        name:&quot;日本资生堂洗颜&quot;,</div><div class="line">        price:200,</div><div class="line">        isSelect:false,</div><div class="line">        // 数据设定</div><div class="line">        count: &#123;</div><div class="line">          quantity: 2,</div><div class="line">          min: 1,</div><div class="line">          max: 20</div><div class="line">        &#125;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        pic: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148058301941.jpg&apos;,</div><div class="line">        name: &quot;倩碧焕妍活力精华露&quot;,</div><div class="line">        price: 340,</div><div class="line">        isSelect: false,</div><div class="line">        // 数据设定</div><div class="line">        count: &#123;</div><div class="line">          quantity: 1,</div><div class="line">          min: 1,</div><div class="line">          max: 20</div><div class="line">        &#125;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        pic: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/14805828016.jpg&apos;,</div><div class="line">        name: &quot;特效润肤露&quot;,</div><div class="line">        price: 390,</div><div class="line">        isSelect: false,</div><div class="line">        // 数据设定</div><div class="line">        count: &#123;</div><div class="line">          quantity: 3,</div><div class="line">          min: 1,</div><div class="line">          max: 20</div><div class="line">        &#125;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        pic: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148058228431.jpg&apos;,</div><div class="line">        name: &quot;倩碧水嫩保湿精华面霜&quot;,</div><div class="line">        price: 490,</div><div class="line">        isSelect: false,</div><div class="line">        // 数据设定</div><div class="line">        count: &#123;</div><div class="line">          quantity: 1,</div><div class="line">          min: 1,</div><div class="line">          max: 20</div><div class="line">        &#125;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        pic: &apos;http://mz.djmall.xmisp.cn/files/product/20161201/148057953326.jpg&apos;,</div><div class="line">        name: &quot;兰蔻清莹柔肤爽肤水&quot;,</div><div class="line">        price: 289,</div><div class="line">        isSelect: false,</div><div class="line">        // 数据设定</div><div class="line">        count: &#123;</div><div class="line">          quantity: 10,</div><div class="line">          min: 1,</div><div class="line">          max: 20</div><div class="line">        &#125;,</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">        pic: &quot;http://mz.djmall.xmisp.cn/files/product/20161201/148057921620_middle.jpg&quot;,</div><div class="line">        name: &quot;LANCOME兰蔻小黑瓶精华&quot;,</div><div class="line">        price: 230,</div><div class="line">        isSelect: false,</div><div class="line">        // 数据设定</div><div class="line">        count: &#123;</div><div class="line">          quantity: 1,</div><div class="line">          min: 1,</div><div class="line">          max: 20</div><div class="line">        &#125;,</div><div class="line">      &#125;,</div><div class="line">    ],</div><div class="line">  &#125;,</div><div class="line"> </div><div class="line">  //勾选事件处理函数  </div><div class="line">  switchSelect: function (e) &#123;</div><div class="line">    // 获取item项的id，和数组的下标值  </div><div class="line">    var Allprice = 0,i=0;</div><div class="line">    let id = e.target.dataset.id,</div><div class="line">  </div><div class="line">    index = parseInt(e.target.dataset.index);</div><div class="line">    this.data.carts[index].isSelect = !this.data.carts[index].isSelect;</div><div class="line">    //价钱统计</div><div class="line">    if (this.data.carts[index].isSelect) &#123;</div><div class="line">      this.data.totalMoney = this.data.totalMoney + this.data.carts[index].price;</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">      this.data.totalMoney = this.data.totalMoney - this.data.carts[index].price;</div><div class="line">    &#125;</div><div class="line">   //是否全选判断</div><div class="line">    for (i = 0; i &lt; this.data.carts.length; i++) &#123;</div><div class="line">      Allprice = Allprice + this.data.carts[i].price;</div><div class="line">    &#125;</div><div class="line">    if (Allprice == this.data.totalMoney)</div><div class="line">    &#123;</div><div class="line">      this.data.isAllSelect=true;</div><div class="line">    &#125;</div><div class="line">    else </div><div class="line">    &#123;</div><div class="line">      this.data.isAllSelect = false;</div><div class="line">    &#125;</div><div class="line">    this.setData(&#123;</div><div class="line">      carts: this.data.carts,</div><div class="line">      totalMoney: this.data.totalMoney,</div><div class="line">      isAllSelect: this.data.isAllSelect,</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  //全选</div><div class="line">  allSelect: function (e) &#123;</div><div class="line">    //处理全选逻辑</div><div class="line">    let i = 0;</div><div class="line">    if (!this.data.isAllSelect)</div><div class="line">    &#123;</div><div class="line">      for (i = 0; i &lt; this.data.carts.length; i++) &#123;</div><div class="line">        this.data.carts[i].isSelect = true;</div><div class="line">        this.data.totalMoney = this.data.totalMoney + this.data.carts[i].price;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">      for (i = 0; i &lt; this.data.carts.length; i++) &#123;</div><div class="line">        this.data.carts[i].isSelect = false;</div><div class="line">      &#125;</div><div class="line">      this.data.totalMoney=0;</div><div class="line">    &#125;</div><div class="line">    this.setData(&#123;</div><div class="line">      carts: this.data.carts,</div><div class="line">      isAllSelect: !this.data.isAllSelect,</div><div class="line">      totalMoney: this.data.totalMoney,</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  // 去结算</div><div class="line">  toBuy() &#123;</div><div class="line">    wx.showToast(&#123;</div><div class="line">      title: &apos;去结算&apos;,</div><div class="line">      icon: &apos;success&apos;,</div><div class="line">      duration: 3000</div><div class="line">    &#125;);</div><div class="line">    this.setData(&#123;</div><div class="line">      showDialog: !this.data.showDialog</div><div class="line">    &#125;);</div><div class="line">  &#125;,</div><div class="line">  //数量变化处理</div><div class="line">  handleQuantityChange(e) &#123;</div><div class="line">    var componentId = e.componentId;</div><div class="line">    var quantity = e.quantity;</div><div class="line">    this.data.carts[componentId].count.quantity = quantity;</div><div class="line">    this.setData(&#123;</div><div class="line">      carts: this.data.carts,</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;));</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>介绍一下用到的参数</p>
+<ol>
+<li>isAllSelect：是否全选</li>
+<li>totalMoney：总金额</li>
+<li><p>carts ：购物车商品数据</p>
+<p>switchSelect 勾选按钮需要做的逻辑处理</p>
+</li>
+<li><p>判断是否达到全部勾选，如果全部勾选，底部的全选按钮要点亮，判断依据是，价钱是否等于总价，当然这只是一种判断方式，读者也可以通过勾选的数量判断，</p>
+</li>
+<li>对勾选或取消的按钮，进行总价的加减法计算</li>
+<li><p>this.setData，更新数据，这个是重点，每次处理完数据，都要记得更新数据</p>
+<p>allSelect 全选按钮的逻辑处理</p>
+</li>
+<li><p>全选就把每个item勾选图标点亮，然后统计总价钱，不全选就置为灰色，总价钱为0</p>
+</li>
+<li>this.setData更新数据</li>
+</ol>
+<h2 id="微信小程序数据处理"><a href="#微信小程序数据处理" class="headerlink" title="微信小程序数据处理"></a>微信小程序数据处理</h2><hr>
+<h4 id="一、修改数据方式"><a href="#一、修改数据方式" class="headerlink" title="一、修改数据方式"></a>一、修改数据方式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">data:&#123;</div><div class="line">  name:&apos;我是初始化的name&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>this.data.name</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.data.name=&apos;我是代码君data&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>this.setData</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.setData(&#123;</div><div class="line">     name:&apos;我是代码君setData&apos;</div><div class="line">   &#125;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这两种方式都可以改变数据，this.setData的好处是可以有刷新的效果，即实时更新数据</p>
+<h4 id="二、修改对象数组"><a href="#二、修改对象数组" class="headerlink" title="二、修改对象数组"></a>二、修改对象数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">data:&#123;</div><div class="line">person:&#123;</div><div class="line">  name:&apos;代码君&apos;,</div><div class="line">  city:&apos;厦门&apos;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>修改全部对象</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">this.setData(&#123;</div><div class="line">      person:&#123;</div><div class="line">        name:&apos;新代码君&apos;,</div><div class="line">        city:&apos;湖南&apos;</div><div class="line">      &#125;</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改部分数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.setData(&#123;</div><div class="line">      &apos;person.name&apos;: &apos;代码君只修改名字&apos;</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//多个数组用这个</div><div class="line">this.setData(&#123;</div><div class="line">      &apos;person[0].name&apos;: &apos;代码君只修改名字&apos;</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="三、添加删除数据"><a href="#三、添加删除数据" class="headerlink" title="三、添加删除数据"></a>三、添加删除数据</h4><ol>
+<li><p>添加数据<strong>concat</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//假设这一段是我们要新增的数组</div><div class="line">var newarray = [&#123;</div><div class="line">        name:&apos;增加的数据--&apos;+new Date().getTime() ,</div><div class="line">&#125;];</div><div class="line">//向前--用newarray与this.data.list合拼</div><div class="line">this.data.list = newarray.concat(this.data.list);</div><div class="line">//向后--用this.data.list与newarray合拼</div><div class="line">this.data.list = this.data.list.concat(newarray);</div></pre></td></tr></table></figure>
+</li>
+<li><p>删除数据<strong>splice()</strong>删除数据，然后返回被删除的数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//删除</div><div class="line">  remove:function (e)&#123;</div><div class="line">    var dataset = e.target.dataset;</div><div class="line">    var Index = dataset.index;</div><div class="line">    //通过index识别要删除第几条数据，第二个数据为要删除的项目数量，通常为1</div><div class="line">    this.data.list.splice(Index,1);</div><div class="line">    //渲染数据</div><div class="line">    this.setData(&#123;</div><div class="line">        list:this.data.list</div><div class="line">    &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>清空数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//清空</div><div class="line">  clear:function ()&#123;</div><div class="line">    //其实就是让数组变成一个空数组即可</div><div class="line">      this.setData(&#123;</div><div class="line">          list:&#123;&#125;</div><div class="line">      &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<p>今天主要讲解js是如何处理数据逻辑的，也讲解了数据的增删改查，这是必备的知识项，回去要多多练习。好了今天就讲到这，祝大家周末愉快~</p>
+<h3 id="上一篇：微信小程序实战篇-商品详情页（二）"><a href="#上一篇：微信小程序实战篇-商品详情页（二）" class="headerlink" title="上一篇：微信小程序实战篇-商品详情页（二）"></a>上一篇：<a href="http://www.jianshu.com/p/64e3c896bead" target="_blank" rel="external">微信小程序实战篇-商品详情页（二）</a></h3><h3 id="下一篇：微信小程序实战篇-个人中心"><a href="#下一篇：微信小程序实战篇-个人中心" class="headerlink" title="下一篇：微信小程序实战篇-个人中心"></a>下一篇：<a href="http://www.jianshu.com/p/431d65fc719f" target="_blank" rel="external">微信小程序实战篇-个人中心</a></h3>
+      
+      
+    </div>
+    
+    <footer class="article-footer">
+      
+        <a data-url="http://jiangzepeng.cn/2017/07/21/微信小程序实战篇-购物车/" data-id="cj7psz0id0011j1qix21zwcup" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-购物车">分享到</a>
+      
+
+      
+        <a href="http://jiangzepeng.cn/2017/07/21/微信小程序实战篇-购物车/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电商/">电商</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/7/">下一页 &raquo;</a>
+  </nav>
+</section>
+      
+      <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">推荐文章</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        <li>
+          <a href="/2017/08/21/开源项目汇总/" target="_blank">1. Github开源项目汇总</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2017/08/24/基于Android系统的动画总结/" target="_blank">2. 基于Android系统的动画总结</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2017/09/07/%20Android%20Studio%20内存泄漏分析指南/" target="_blank">3. AndroidStudio内存泄漏分析指南</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3D动画/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/个人简历/" style="font-size: 10px;">个人简历</a> <a href="/tags/内存泄漏/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">关于我</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        
+          <div style="text-align: center;">
+            <img src="/img/logo.jpeg" style="width: 100%; max-width: 250px;">
+          </div>
+        
+        <li>
+          <a href="https://github.com/jiangzepeng" target="_blank">1. 我的「GitHub」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://www.jianshu.com/u/b4a296d6ebee" target="_blank">2. 我的「简书」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://blog.csdn.net/u012927188?viewmode=list" target="_blank">3. 我的「CSDN」</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">微信公众号</h3>
+	<div class="widget">
+		<div style="text-align: center;">
+			<img src="http://upload-images.jianshu.io/upload_images/1750086-f45ba6f2712a8c9a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" style="width: 100%; max-width: 250px;">
+			<div style="margin-top: -15px;">「代码集中营」</div>
+		</div>
+	</div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/内存泄漏/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/简历/">简历</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2012 - 2017 <a href="/" target="_blank">代码君</a>.
+      &nbsp;
+      <span id="busuanzi_container_site_pv">
+        总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
+      </span>
+      <span id="busuanzi_container_site_uv">
+        <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_uv"></span></a> 人.
+      </span>
+      
+        &nbsp;
+        <span>
+          <a href="http://www.miibeian.gov.cn" >粤ICP备15013245号-2</a>.
+        </span>
+      
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">文章</a>
+  
+    <a href="/2017/04/06/个人简历/" class="mobile-nav-link">个人简历</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijiajie"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

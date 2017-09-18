@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>代码集中营</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+<meta property="og:type" content="website">
+<meta property="og:title" content="代码集中营">
+<meta property="og:url" content="http://jiangzepeng.cn/page/3/index.html">
+<meta property="og:site_name" content="代码集中营">
+<meta property="og:description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码集中营">
+<meta name="twitter:description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+  
+  
+    <link rel="icon" href="/img/logo.jpeg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Chrome on Android -->    
+    <link rel="icon" sizes="192x192" href="/img/logo.jpeg">
+    <!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.jpeg">    
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/img/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?10f2720e6f47d1b4a5ebc811df8dc361";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">代码集中营</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">学如逆水行舟，不进则退，心如平原驰马，易放难收</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">文章</a>
+        
+          <a class="main-nav-link" href="/2017/04/06/个人简历/">个人简历</a>
+        
+      </nav>
+      <!--
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="jiangzepeng.cn">
+        </form>
+      </div>
+      -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main">
+  
+    <article id="post-基于Android系统的动画总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/24/基于Android系统的动画总结/" class="article-date">
+  <time datetime="2017-08-23T16:00:00.000Z" itemprop="datePublished">2017-08-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/动画特效/">动画特效</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/24/基于Android系统的动画总结/">基于Android系统的动画总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="Share-Element"><a href="#Share-Element" class="headerlink" title="Share Element"></a>Share Element</h2><hr>
+<p>由一张图片过度到一个界面，适用于购物车图片直接跳转到商品详情界面，圆形按钮的过度也可以应用于圆形菜单里</p>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-6174a1f75902a802.gif?imageMogr2/auto-orient/strip" alt="share.gif"><br></center>
+
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>利用android 5.0 提供的方法，实现共享元素动画的过度，实现原理很简单，在界面跳转的时候加入以下代码</p>
+<ol>
+<li><p><strong>java代码</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//第一个界面跳转的时候执行</div><div class="line">Intent shareIntent = new Intent(MainActivity.this, ShareElementActivity.class);</div><div class="line">                                String transitionName = getString(R.string.share_tag);</div><div class="line">                                ActivityOptionsCompat transitionActivityOptions</div><div class="line">                                        = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, holder.item_image, transitionName);</div><div class="line">                                startActivity(shareIntent, transitionActivityOptions.toBundle());</div></pre></td></tr></table></figure>
+<p> <strong>makeSceneTransitionAnimation(Activity activity,View sharedElement, String sharedElementName)</strong>makeSceneTransitionAnimation中参数sharedElement就是传入第一个界面要与第二个界面共有的view元素，sharedElementName这个参数可以随便起名，他相当于tag，系统就是根据这个tag来定位两个界面元素的位置，然后进行动画渲染的</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//第二个界面动画完成回调监听，控制进出动画效果</div><div class="line">setEnterSharedElementCallback(ImageTransitionUtil.DEFAULT_SHARED_ELEMENT_CALLBACK);</div></pre></td></tr></table></figure>
+<p> 在 <strong>setEnterSharedElementCallback</strong> 里面可以实现自己想要的动画效果</p>
+</li>
+<li><p><strong>布局文件代码</strong><br>这里用系统自带的ImageView就可以，记住，两个界面跳转activity中的共享元素ImageView，一定要设置这个属性 <strong>transitionName</strong> 上文说过，这个就是相当于tag，系统是根据这个来定位的，所以一定要设置。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;ImageView</div><div class="line">         android:id=&quot;@+id/image&quot;</div><div class="line">         android:layout_width=&quot;match_parent&quot;</div><div class="line">         android:layout_height=&quot;300dp&quot;</div><div class="line">         android:src=&quot;@drawable/sample&quot;</div><div class="line">         android:transitionName=&quot;@string/share_tag&quot;</div><div class="line">         /&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><br></p>
+<h2 id="CollapsingToolbarLayout"><a href="#CollapsingToolbarLayout" class="headerlink" title="CollapsingToolbarLayout"></a>CollapsingToolbarLayout</h2><hr>
+<p>折叠式的标题栏，这个是系统提供的动画效果，引用系统控件就好了</p>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-706fd47f5f53cda8.gif?imageMogr2/auto-orient/strip" alt="fold.gif"><br></center>
+
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><ol>
+<li><p><strong>gradle里的引用</strong></p>
+<blockquote>
+<p>   bash compile ‘com.android.support:design:22.2.1’</p>
+</blockquote>
+</li>
+<li><p><strong>java代码</strong></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_collapsing_toolbar);</div><div class="line">        ButterKnife.bind(this);</div><div class="line">        content.setText(R.string.content);</div><div class="line"></div><div class="line">        initToolbar();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void <span class="function"><span class="title">initToolbar</span></span>() &#123;</div><div class="line">        collapsingToolbar.setTitle(<span class="string">"折叠式标题栏"</span>);</div><div class="line">        setSupportActionBar(toolbar);</div><div class="line">        getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="literal">true</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   //toolbar返回事件实现</div><div class="line">    @Override</div><div class="line">    public boolean onOptionsItemSelected(MenuItem item) &#123;</div><div class="line">        <span class="keyword">if</span> (item.getItemId() == android.R.id.home) &#123;</div><div class="line">            finish();</div><div class="line">            <span class="built_in">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">return</span> super.onOptionsItemSelected(item);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>布局文件代码</strong></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;android.support.design.widget.CoordinatorLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    android:id=<span class="string">"@+id/main_content"</span></div><div class="line">    android:layout_width=<span class="string">"match_parent"</span></div><div class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    &lt;android.support.design.widget.AppBarLayout</div><div class="line">        android:id=<span class="string">"@+id/appbar"</span></div><div class="line">        android:layout_width=<span class="string">"match_parent"</span></div><div class="line">        android:layout_height=<span class="string">"300dp"</span></div><div class="line">        android:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</div><div class="line"></div><div class="line">        &lt;android.support.design.widget.CollapsingToolbarLayout</div><div class="line">            android:id=<span class="string">"@+id/collapsing_toolbar"</span></div><div class="line">            android:layout_width=<span class="string">"match_parent"</span></div><div class="line">            android:layout_height=<span class="string">"match_parent"</span></div><div class="line">            app:contentScrim=<span class="string">"?attr/colorPrimary"</span></div><div class="line">            app:layout_scrollFlags=<span class="string">"scroll|exitUntilCollapsed"</span></div><div class="line">            app:title=<span class="string">"Share Element"</span>&gt;</div><div class="line"></div><div class="line">            &lt;ImageView</div><div class="line">                android:id=<span class="string">"@+id/image"</span></div><div class="line">                android:layout_width=<span class="string">"match_parent"</span></div><div class="line">                android:layout_height=<span class="string">"match_parent"</span></div><div class="line">                android:src=<span class="string">"@drawable/sample"</span></div><div class="line">                android:scaleType=<span class="string">"centerCrop"</span></div><div class="line">                app:layout_collapseMode=<span class="string">"parallax"</span></div><div class="line">                app:layout_collapseParallaxMultiplier=<span class="string">"0.5"</span></div><div class="line">                /&gt;</div><div class="line"></div><div class="line">            &lt;android.support.v7.widget.Toolbar</div><div class="line">                android:id=<span class="string">"@+id/toolbar"</span></div><div class="line">                android:layout_width=<span class="string">"match_parent"</span></div><div class="line">                android:layout_height=<span class="string">"?attr/actionBarSize"</span></div><div class="line">                app:layout_collapseMode=<span class="string">"pin"</span> /&gt;</div><div class="line"></div><div class="line">        &lt;/android.support.design.widget.CollapsingToolbarLayout&gt;</div><div class="line"></div><div class="line">    &lt;/android.support.design.widget.AppBarLayout&gt;</div><div class="line"></div><div class="line">    &lt;android.support.v4.widget.NestedScrollView</div><div class="line">        android:layout_width=<span class="string">"match_parent"</span></div><div class="line">        android:layout_height=<span class="string">"match_parent"</span></div><div class="line">        app:layout_behavior=<span class="string">"@string/appbar_scrolling_view_behavior"</span>&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=<span class="string">"@+id/content"</span></div><div class="line">            android:layout_width=<span class="string">"match_parent"</span></div><div class="line">            android:layout_height=<span class="string">"match_parent"</span></div><div class="line">            android:text=<span class="string">"test"</span></div><div class="line">            android:textColor=<span class="string">"@color/black"</span></div><div class="line">            android:textSize=<span class="string">"20sp"</span></div><div class="line">            android:padding=<span class="string">"10dp"</span>/&gt;</div><div class="line"></div><div class="line">    &lt;/android.support.v4.widget.NestedScrollView&gt;</div><div class="line"></div><div class="line">	&lt;/android.support.design.widget.CoordinatorLayout&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>布局文件的一些属性说明</p>
+<ol>
+<li><strong>layout_scrollFlags</strong><ul>
+<li>scroll - 想滚动就必须设置这个。</li>
+<li>enterAlways - 实现quick return效果, 当向下移动时，立即显示View（比如Toolbar)。</li>
+<li>exitUntilCollapsed - 向上滚动时收缩View，但可以固定Toolbar一直在上面。</li>
+<li>enterAlwaysCollapsed - 当你的View已经设置minHeight属性又使用此标志时，你的View只能以最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度</li>
+</ul>
+</li>
+<li><strong>layout_collapseMode</strong><ul>
+<li>pin - 设置为这个模式时，当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。</li>
+<li>parallax - 设置为这个模式时，在内容滚动时，CollapsingToolbarLayout中的View（比如ImageView)也可以同时滚动，实现视差滚动效果，通常和layout_collapseParallaxMultiplier(设置视差因子)搭配使用。</li>
+<li>layout_collapseParallaxMultiplier(视差因子) - 设置视差滚动因子，值为：0~1</li>
+</ul>
+</li>
+<li><p>使用CollapsingToolbarLayout时必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上不会显示</p>
+<blockquote>
+<p>bash collapsingToolbar.setTitle(“折叠式标题栏”);</p>
+</blockquote>
+</li>
+</ol>
+<p><br></p>
+<h2 id="Reveal-Animation"><a href="#Reveal-Animation" class="headerlink" title="Reveal Animation"></a>Reveal Animation</h2><hr>
+<p>google爸爸自从5.0之后对动画效果特别注重，这里给大家介绍一个波纹效果，也是系统提供的</p>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-09a84314d5b373ea.gif?imageMogr2/auto-orient/strip" alt="reveal.gif"><br></center>
+
+<p>实现原理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)</div><div class="line">  private Animator animateRevealColorFromCoordinates(ViewGroup viewRoot, @ColorRes int color, int pointx, int pointY) &#123;</div><div class="line">      float finalRadius = (float) Math.hypot(viewRoot.getWidth(), viewRoot.getHeight());</div><div class="line">      //由于toolbar是自己绘制的所以要减去这个高度</div><div class="line">      pointY = pointY - toolbarHeight;</div><div class="line">      Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, pointx, pointY, 0, finalRadius);</div><div class="line">      viewRoot.setBackgroundColor(ContextCompat.getColor(this, color));</div><div class="line">      anim.setDuration(500);</div><div class="line">      anim.setInterpolator(new AccelerateDecelerateInterpolator());</div><div class="line">      anim.start();</div><div class="line">      return anim;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="ViewAnimationUtils-createCircularReveal-View-view-int-centerX-int-centerY-float-startRadius-float-endRadius"><a href="#ViewAnimationUtils-createCircularReveal-View-view-int-centerX-int-centerY-float-startRadius-float-endRadius" class="headerlink" title="ViewAnimationUtils.createCircularReveal(View view, int centerX,  int centerY, float startRadius, float endRadius)"></a>ViewAnimationUtils.createCircularReveal(View view, int centerX,  int centerY, float startRadius, float endRadius)</h5><p>重点是这个方法，设置在哪个View里绘制波纹，起始点及半径就可以实现了，很多开源的button波纹效果都是基于这个实现再次封装的</p>
+<p>源码在下面，如果觉得不错，随手帮忙Star、Fork一下，算是对作者最大的支持啦~</p>
+<h3 id="Github项目地址：MaterialAnim"><a href="#Github项目地址：MaterialAnim" class="headerlink" title="Github项目地址：MaterialAnim"></a>Github项目地址：<a href="https://github.com/jiangzepeng/MaterialAnim" target="_blank" rel="external">MaterialAnim</a></h3>
+      
+      
+    </div>
+    
+    <footer class="article-footer">
+      
+        <a data-url="http://jiangzepeng.cn/2017/08/24/基于Android系统的动画总结/" data-id="cj7psz0h40006j1qi2ur48ela" class="article-share-link" data-share="baidu" data-title="基于Android系统的动画总结">分享到</a>
+      
+
+      
+        <a href="http://jiangzepeng.cn/2017/08/24/基于Android系统的动画总结/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动画/">动画</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
+  </nav>
+</section>
+      
+      <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">推荐文章</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        <li>
+          <a href="/2017/08/21/开源项目汇总/" target="_blank">1. Github开源项目汇总</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2017/08/24/基于Android系统的动画总结/" target="_blank">2. 基于Android系统的动画总结</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2017/09/07/%20Android%20Studio%20内存泄漏分析指南/" target="_blank">3. AndroidStudio内存泄漏分析指南</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3D动画/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/个人简历/" style="font-size: 10px;">个人简历</a> <a href="/tags/内存泄漏/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">关于我</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        
+          <div style="text-align: center;">
+            <img src="/img/logo.jpeg" style="width: 100%; max-width: 250px;">
+          </div>
+        
+        <li>
+          <a href="https://github.com/jiangzepeng" target="_blank">1. 我的「GitHub」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://www.jianshu.com/u/b4a296d6ebee" target="_blank">2. 我的「简书」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://blog.csdn.net/u012927188?viewmode=list" target="_blank">3. 我的「CSDN」</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">微信公众号</h3>
+	<div class="widget">
+		<div style="text-align: center;">
+			<img src="http://upload-images.jianshu.io/upload_images/1750086-f45ba6f2712a8c9a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" style="width: 100%; max-width: 250px;">
+			<div style="margin-top: -15px;">「代码集中营」</div>
+		</div>
+	</div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/内存泄漏/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/简历/">简历</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2012 - 2017 <a href="/" target="_blank">代码君</a>.
+      &nbsp;
+      <span id="busuanzi_container_site_pv">
+        总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
+      </span>
+      <span id="busuanzi_container_site_uv">
+        <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_uv"></span></a> 人.
+      </span>
+      
+        &nbsp;
+        <span>
+          <a href="http://www.miibeian.gov.cn" >粤ICP备15013245号-2</a>.
+        </span>
+      
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">文章</a>
+  
+    <a href="/2017/04/06/个人简历/" class="mobile-nav-link">个人简历</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijiajie"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

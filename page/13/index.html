@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>代码集中营</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+<meta property="og:type" content="website">
+<meta property="og:title" content="代码集中营">
+<meta property="og:url" content="http://jiangzepeng.cn/page/13/index.html">
+<meta property="og:site_name" content="代码集中营">
+<meta property="og:description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码集中营">
+<meta name="twitter:description" content="学如逆水行舟，不进则退，心如平原驰马，易放难收">
+  
+  
+    <link rel="icon" href="/img/logo.jpeg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add to homescreen for Chrome on Android -->    
+    <link rel="icon" sizes="192x192" href="/img/logo.jpeg">
+    <!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.jpeg">    
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/img/logo.jpeg">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?10f2720e6f47d1b4a5ebc811df8dc361";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">代码集中营</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">学如逆水行舟，不进则退，心如平原驰马，易放难收</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">文章</a>
+        
+          <a class="main-nav-link" href="/2017/04/06/个人简历/">个人简历</a>
+        
+      </nav>
+      <!--
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="jiangzepeng.cn">
+        </form>
+      </div>
+      -->
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main">
+  
+    <article id="post-微信小程序入门篇（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/23/微信小程序入门篇（二）/" class="article-date">
+  <time datetime="2017-05-22T16:00:00.000Z" itemprop="datePublished">2017-05-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/微信小程序/">微信小程序</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/23/微信小程序入门篇（二）/">微信小程序入门篇（二）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>上篇<a href="http://www.jianshu.com/p/e63be70e3ab9" target="_blank" rel="external"> 微信小程序入门篇（一）</a>我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈</p>
+<h2 id="页面的构成"><a href="#页面的构成" class="headerlink" title="页面的构成"></a>页面的构成</h2><hr>
+<ol>
+<li>还记得我们在上篇文章中讲解如何加入一个界面吗？在app.json中的pages加入要加的文件路径就可以啦，文件路径可以随便起，系统会自动创建出来的，那么我就接着之前的讲，我们之前创建了一个页面叫addPage，addPage里面包含四个文件<strong>addPage.js、addPage.json、addPage.wxml、addPage.wxss</strong>这四个对应的作用是什么呐？<ul>
+<li><strong>addPage.js</strong> 页面数据的存储，网络请求的加载都是在这里</li>
+<li><strong>addPage.json</strong> 用于设置导航栏样式，和app.json性质一样，如果没设置样式，默认用app.json中的样式</li>
+<li><strong>addPage.wxml</strong> 页面的效果都在这里面，就是展现给用户的界面</li>
+<li><strong>addPage.wxss</strong> 页面样式设计，页面的一些样式属性都写在这里</li>
+</ul>
+</li>
+</ol>
+<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-f4a28e737f424802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1.png"><br></center>
+
+<h2 id="页面的解析"><a href="#页面的解析" class="headerlink" title="页面的解析"></a>页面的解析</h2><hr>
+<ol>
+<li><p>addPage.js解析</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">// pages/addPage/addPage.js</div><div class="line">Page(&#123;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面的初始数据</div><div class="line">   */</div><div class="line">  data: &#123;</div><div class="line">  </div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面加载</div><div class="line">   */</div><div class="line">  onLoad: <span class="keyword">function</span> (options) &#123;</div><div class="line">    console.debug(<span class="string">"onLoad--监听页面加载"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面初次渲染完成</div><div class="line">   */</div><div class="line">  onReady: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onReady--监听页面初次渲染完成"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面显示</div><div class="line">   */</div><div class="line">  onShow: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onShow--监听页面显示"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面隐藏</div><div class="line">   */</div><div class="line">  onHide: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onHide--监听页面隐藏"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面卸载</div><div class="line">   */</div><div class="line">  onUnload: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onUnload--监听页面卸载"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面相关事件处理函数--监听用户下拉动作</div><div class="line">   */</div><div class="line">  onPullDownRefresh: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onPullDownRefresh--监听用户下拉动作"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面上拉触底事件的处理函数</div><div class="line">   */</div><div class="line">  onReachBottom: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onReachBottom--页面上拉触底事件的处理函数"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 用户点击右上角分享</div><div class="line">   */</div><div class="line">  onShareAppMessage: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onShareAppMessage--用户点击右上角分享"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里面注释都是系统自动创建的，我没动，注释写的很清楚，我没什么要多说的啦，差别是我在每个方法里加入了<strong>console.debug（）</strong>这个是以后调试bug会用到的，输出日志，就是以后程序出现的问题就靠他输出来，我加入的目的就是要展示一下，系统启动小程序都执行了那些方法,怎么测试系统执行了那些方法呐？ </p>
+<ul>
+<li><p>第一步，改动跳转的代码，首先找到pages/index/index.js,修改bindViewTap方法里的url,路径改为addPage的路径，这样页面跳转的时候就会跳到addPage界面啦，修改过的代码记得保存，否者效果无效！</p>
+<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bindViewTap: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">   wx.navigateTo(&#123;</div><div class="line">     //url: <span class="string">'../logs/logs'</span></div><div class="line">     url: <span class="string">'../addPage/addPage'</span></div><div class="line">   &#125;)</div><div class="line"> &#125;,</div></pre></td></tr></table></figure>
+</code></pre></li>
+<li><p>第二步，找到菜单栏的调试按钮，切换到调试模式，找到Console控制台，选着All或者Debug模式，Console会输出日志信息，接下来点击一下helloWord上面的用户头像，看看会出现上面效果，如果操作没错的话会出现下面的效果，<br><br><img src="http://upload-images.jianshu.io/upload_images/1750086-019d649c928f4417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-1.png"><br>看控制台输出的信息，理论上是会出现三行蓝色字，第四行是因为我还执行了一个返回键的操作由此可判断，当点击返回键时执行<strong>onUnload</strong>方法，还有当页面加载的时候方法执行的先后顺序为onLoad-&gt;onShow-&gt;onReady，我们只要知道页面的生命周期就好，至于具体的调用，我们在后面实战的时候讲解，还有如果你点击界面三个小点，然后执行转发操作，就会执行<strong>onShareAppMessage</strong>方法，具体我就不演示啦，addPage.js中还有的方法是<strong>onHide、onPullDownRefresh、onReachBottom</strong>，当A跳转到B时候，A就会执行onHide的方法啦，onPullDownRefresh下拉刷新数据会用到，onReachBottom用于底部加载更多，这些都放在后面在讲解电商开发的时候一起讲。好，关于addPage.js就讲解到这里</p>
+</li>
+</ul>
+<ol>
+<li><p>addPage.wxml与addPage.wxss<br><br><strong>.wxml与.wxss</strong>构成了整个界面，我们自己新建的addPage文件没什么样式，所以我就拿index.wxml和index.wxss来讲解</p>
+<ul>
+<li><p><strong>index.wxml</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!--index.wxml--&gt;</div><div class="line">&lt;view class=&quot;container&quot;&gt;</div><div class="line">  &lt;view  bindtap=&quot;bindViewTap&quot; class=&quot;userinfo&quot;&gt;</div><div class="line">    &lt;image class=&quot;userinfo-avatar&quot; src=&quot;&#123;&#123;userInfo.avatarUrl&#125;&#125;&quot; background-size=&quot;cover&quot;&gt;&lt;/image&gt;</div><div class="line">    &lt;text class=&quot;userinfo-nickname&quot;&gt;&#123;&#123;userInfo.nickName&#125;&#125;&lt;/text&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">  &lt;view class=&quot;usermotto&quot;&gt;</div><div class="line">    &lt;text class=&quot;user-motto&quot;&gt;&#123;&#123;motto&#125;&#125;&lt;/text&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-2590b822f203ca4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-2.png">看代码对应的视图，从代码看过去黑色框（view）包含两个黄色框（view），第一个黄色框又包含两个image和text，界面布局大致就是这样，看里面具体代码，黑色框view里有一个属性class，这个class可以理解为ID这个class是用来关联index.wxss,可以理解为黑色框的view设置为”container”的样式，继续看第一个黄色框View，同理可以知道第二个黄色框View的样式设为”userinfo”,咦，<strong>bindtap</strong>是什么意思呐？<strong>bindtap</strong>你可以理解为事件监听，系统定义的固定字段，写事件一定会用到这个，还记得上面我们做的测试系统执行的方法时，不是有修改过index.js中”bindViewTap”的方法嘛，这个”bindViewTap”是自定义的方法名，可以随意修改，但是<strong>bindtap</strong>字段是不可修改的否则代码无效，再说说绿色框中的text，有没有注意到<strong></strong>，这个就是给视图赋值，就是界面上你看到的HelloWord就是这么设置的，”motto、userInfo.nickName”字段是在index.js中的data里面，这里要强调的是我们在调用index.js里data数据时，赋值的时候要记得加入<strong></strong>两个中括号，这样系统才能识别数据。</p>
+<ul>
+<li><p><strong>index.wxss</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**index.wxss**/</div><div class="line">.userinfo &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  align-items: center;</div><div class="line">&#125;</div><div class="line">.userinfo-avatar &#123;</div><div class="line">  width: 128rpx;</div><div class="line">  height: 128rpx;</div><div class="line">  margin: 20rpx;</div><div class="line">  border-radius: 50%;</div><div class="line">&#125;</div><div class="line">.userinfo-nickname &#123;</div><div class="line">  color: #aaa;</div><div class="line">&#125;</div><div class="line">.usermotto &#123;</div><div class="line">  margin-top: 200px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**app.wxss**/</div><div class="line">.container &#123;</div><div class="line">  height: 100%;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  align-items: center;</div><div class="line">  justify-content: space-between;</div><div class="line">  padding: 200rpx 0;</div><div class="line">  box-sizing: border-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-13a7439527e75866.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-3.png"><br></center><br>结合效果图一起看样式代码，看到”userinfo”和”container”是不是眼熟，就是之前在index.wxml中class的样式，我们在wxss定义好样式，就是通过这些字段把index.wxml和index.wxss关联起来，才有的上面的界面效果</p>
+<h3 id="wxss样式积累"><a href="#wxss样式积累" class="headerlink" title="wxss样式积累"></a>wxss样式积累</h3><hr>
+<p>wxss样式里代码看不懂可以查阅这里，如果没找到对应样式，请自行百度喽，这些也是代码君问的度娘</p>
+<ol>
+<li>display属性<ul>
+<li>none:此元素不会被显示</li>
+<li>block：两个元素自动换行</li>
+<li>inline：两个元素靠在一起</li>
+<li>inherit：继承父类</li>
+<li>flex：多栏多列</li>
+</ul>
+<ol>
+<li>flex-direction:</li>
+</ol>
+<ul>
+<li>column 垂直分布</li>
+<li>row 水平分布</li>
+</ul>
+<ol>
+<li>flex-wrap：</li>
+</ol>
+<ul>
+<li>nowrap item溢出不换行</li>
+<li>wrap 超出的item跳到下一行</li>
+</ul>
+<ol>
+<li>justify-content属性</li>
+</ol>
+<ul>
+<li>flex-start：左对齐</li>
+<li>flex-end：右对齐</li>
+<li>center：居中</li>
+<li>space-between ：item中间留出等间距</li>
+<li>space-around：环绕item流程等间距</li>
+</ul>
+<ol>
+<li>align-items item 边界线对齐方式  </li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>flex-start | flex-end | center | baseline | stretch <ol>
+<li>border-bottom 边界线</li>
+</ol>
+</li>
+<li>举个栗子 1px solid #ccc;<ol>
+<li>align-items item 边界线对齐方式  </li>
+</ol>
+</li>
+<li>flex-start | flex-end | center | baseline | stretch <ol>
+<li>overflow-x   内容超过边框处理方式<ul>
+<li>visible 显示超出的内容</li>
+<li>hidden 隐藏超出的内容</li>
+<li>auto 自动加入滚动条</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<p>今天我们讲解了页面的所有内容，知识点很多，尤其是wxss的样式，其实wxss样式和css样式的属性是差不多的，所以可以多去参考css样式属性，今天就说这么多，两篇的小程序入门文章，应该可以帮助大家跨进小程序的大门啦，接下来，我们将进入实战篇《电商》，很多朋友都问怎么做一个电商小程序，所以我将在后面的文章中，一步步教大家开发一个电商小程序，敬请期待！原创不易，觉得不错就点个赞吧！</p>
+
+      
+      
+    </div>
+    
+    <footer class="article-footer">
+      
+        <a data-url="http://jiangzepeng.cn/2017/05/23/微信小程序入门篇（二）/" data-id="cj7psz0hi000fj1qim5trj5j8" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（二）">分享到</a>
+      
+
+      
+        <a href="http://jiangzepeng.cn/2017/05/23/微信小程序入门篇（二）/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电商/">电商</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/12/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/14/">下一页 &raquo;</a>
+  </nav>
+</section>
+      
+      <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">推荐文章</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        <li>
+          <a href="/2017/08/21/开源项目汇总/" target="_blank">1. Github开源项目汇总</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2017/08/24/基于Android系统的动画总结/" target="_blank">2. 基于Android系统的动画总结</a>
+        </li>
+      
+        
+        <li>
+          <a href="/2017/09/07/%20Android%20Studio%20内存泄漏分析指南/" target="_blank">3. AndroidStudio内存泄漏分析指南</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3D动画/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/个人简历/" style="font-size: 10px;">个人简历</a> <a href="/tags/内存泄漏/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">关于我</h3>
+  <div class="widget">
+    <ul>
+      
+      
+        
+        
+          <div style="text-align: center;">
+            <img src="/img/logo.jpeg" style="width: 100%; max-width: 250px;">
+          </div>
+        
+        <li>
+          <a href="https://github.com/jiangzepeng" target="_blank">1. 我的「GitHub」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://www.jianshu.com/u/b4a296d6ebee" target="_blank">2. 我的「简书」</a>
+        </li>
+      
+        
+        
+        <li>
+          <a href="http://blog.csdn.net/u012927188?viewmode=list" target="_blank">3. 我的「CSDN」</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+  
+    <div class="widget-wrap">
+	<h3 class="widget-title">微信公众号</h3>
+	<div class="widget">
+		<div style="text-align: center;">
+			<img src="http://upload-images.jianshu.io/upload_images/1750086-f45ba6f2712a8c9a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" style="width: 100%; max-width: 250px;">
+			<div style="margin-top: -15px;">「代码集中营」</div>
+		</div>
+	</div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/内存泄漏/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/简历/">简历</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2012 - 2017 <a href="/" target="_blank">代码君</a>.
+      &nbsp;
+      <span id="busuanzi_container_site_pv">
+        总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
+      </span>
+      <span id="busuanzi_container_site_uv">
+        <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_uv"></span></a> 人.
+      </span>
+      
+        &nbsp;
+        <span>
+          <a href="http://www.miibeian.gov.cn" >粤ICP备15013245号-2</a>.
+        </span>
+      
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">文章</a>
+  
+    <a href="/2017/04/06/个人简历/" class="mobile-nav-link">个人简历</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"shijiajie"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
