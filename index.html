@@ -98,14 +98,14 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main">
   
-    <article id="post- Android Studio 内存泄漏分析指南" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Google Play 上架的那些坑" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2017-09-06T16:00:00.000Z" itemprop="datePublished">2017-09-07</time>
+    <a href="/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/" class="article-date">
+  <time datetime="2020-01-17T16:00:00.000Z" itemprop="datePublished">2020-01-18</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a>
+    <a class="article-category-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a>
   </div>
 
   </div>
@@ -116,7 +116,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/">Android Studio 内存泄漏分析指南</a>
+      <a class="article-title" href="/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">Google Play 上架的那些坑</a>
     </h1>
   
 
@@ -126,105 +126,60 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>最近在优化公司的项目，想针对内存泄漏进行分析一下，查阅网上的一些资料，发现苦逼的是，资料一大堆，但是内容都差不多，至今未找到一篇实战的内存泄漏分析，全部停留在理论知识上，最后查阅了一些外文文献，才有了一点思路，好吧！既然没有实战分析，我就做第一人，把我学到的分享出来，希望对你们有帮助，当然有说的不对的，望各位指出来~</p>
-<h1 id="内存泄漏原因"><a href="#内存泄漏原因" class="headerlink" title="内存泄漏原因"></a>内存泄漏原因</h1><hr>
-<p>当应用不需要某对象时候，忘记释放分配的内存，该对象仍然保持被引用状态（当对象拥有强引用，GC无法回收），从而导致内存泄漏</p>
-<h1 id="泄漏的源头"><a href="#泄漏的源头" class="headerlink" title="泄漏的源头"></a>泄漏的源头</h1><hr>
-<p>泄漏的源头有很多，有开源的第三方框架引起的、android系统自身造成的如webview的内存泄漏，还有一个是我们可以控制的就是自身编码引起的内存泄漏，这也是我们可以避免的，一下情况容易出现内存泄漏</p>
-<h3 id="一、-Context-引起的内存泄漏"><a href="#一、-Context-引起的内存泄漏" class="headerlink" title="一、 Context 引起的内存泄漏"></a>一、 Context 引起的内存泄漏</h3><p><strong>常见问题：</strong></p>
-<p>这个是最常见的，因为Activity经常要用到上下文Context，很有可能Activity作为Context传递给某些类，Activity生命周期结束之后，某些类仍然存活并保持着该Activity的引用，保持引用就无法被回收。从而导致内存泄漏</p>
-<p><strong>解决方案：</strong></p>
+        <p>公司最近扩展业务到海外，因此，需要把App上架到Google Play市场，当时一脸茫然，不知道如何上架，后来网上查询了一些资料，以及实战后，遇到了一些坑，再次记录下来，供大家参考借鉴</p>
+<h4 id="一、前提条件"><a href="#一、前提条件" class="headerlink" title="一、前提条件"></a>一、前提条件</h4><ol>
+<li>具备科学上网</li>
+<li>申请一个Google Play 开发者账号，需要支付25美刀，账号注册地址： <a href="https://link.jianshu.com?t=https://accounts.google.com/SignUp" target="_blank" rel="noopener">https://link.jianshu.com?t=https://accounts.google.com/SignUp</a></li>
+</ol>
+<h4 id="二、创建上架App"><a href="#二、创建上架App" class="headerlink" title="二、创建上架App"></a>二、创建上架App</h4><ol>
+<li><p>根据注册的开发者账号，登入开发者平台 <a href="https://play.google.com/apps/publish，然后点击**创建应用" target="_blank" rel="noopener">https://play.google.com/apps/publish，然后点击**创建应用</a>**<br><img src="https://upload-images.jianshu.io/upload_images/1750086-96ed79dbae13be9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>选择语言与App名称，语言最好选择英文，毕竟是给国外的人用，然后创建<br><img src="https://upload-images.jianshu.io/upload_images/1750086-b76d64d8962617b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>资料的填写，上面写的很详细，星号必填，按照指示填写即可，需要注意的是，手机号的填写，光写手机号提交会提示”错误手机号码“，原因是海外需要+86，所以你需要填写+86XXXXXXXXXX，XXX为手机号码，即可<br><img src="https://upload-images.jianshu.io/upload_images/1750086-c42f2869dbb703ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/1750086-f420425ad2b19a6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>隐私政策，刚开始一脸懵逼，其实就是一个静态Html页面，里面写一些保证书之类的，保证不会把用户隐私泄露出去，这个相当于国内注册的时候，都需要勾选的用户协议，并且必须同意的H5界面，我就是把我们App的用户协议放上去，没什么问题，都填写完，点击<strong>保存草稿</strong><br><img src="https://upload-images.jianshu.io/upload_images/1750086-742db313fc25e4d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+</ol>
+<h4 id="三、上传项目以及内容分级"><a href="#三、上传项目以及内容分级" class="headerlink" title="三、上传项目以及内容分级"></a>三、上传项目以及内容分级</h4><ol>
+<li><p>刚刚填写的资料都在<strong>商品详情</strong>栏目里，如果有需要修改的，还可以到此模块继续修改，之后要做的是Apk上传，点击应用版本，里面分为三种 正式报、Beta版、Alpha版，正式的App建议在内测阶段先上传Alpha和Beta版本<br><img src="https://upload-images.jianshu.io/upload_images/1750086-924e82d9c0fdec09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>我先创建的是Beta版，点击管理，进入Beta版界面，然后<strong>创建版本</strong><br><img src="https://upload-images.jianshu.io/upload_images/1750086-bc70fe9af48cadbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>会有个签名询问，点击继续，然后就到了我们熟悉的界面，上传Apk项目，这里有一个坑，就是google play 不允许上传相同版本号的Apk，比如，你上传了一个版本号为10的项目，后来发现一个bug，紧急修复后，版本号不想改动，想直接替换之前那个版本号为10的项目 ，提交后应用平台会提示，已提交过版本号为10的项目，就是该平台不提供删除之前包，和替换之前包的功能，只可以通过版本升级来提交Apk包，所以我只能将版本号改为11，如果有其他办法，欢迎留言向我拍砖<br><img src="https://upload-images.jianshu.io/upload_images/1750086-cdeb60812abecbe4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/1750086-4c18eba6a1fba413.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>内容分析需要Apk上传成功才可以填写，其实就是一些问卷调查，按照流程走即可，没有什么坑，当执行完上面说的四个步骤，对应的那四个模块都会打绿色的钩，只有四个都变绿色了，点击商品详情才会出现可以发布字样，如果有未变绿的，把鼠标放到灰色钩上，会提示，什么信息未补全，按照提示操作即可<br><img src="https://upload-images.jianshu.io/upload_images/1750086-cb235a3f964a26e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/1750086-16cf8ee8a4cab645.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+</ol>
+<p>####四、发布项目</p>
 <ol>
-<li>下次如果要传入context给某些类的时候，最好是用ApplicationContext，这样可以有效避免内存泄漏</li>
-<li>在界面销毁的时候，手动释放掉引用过activity的context</li>
+<li><p>点击应用版本，在正式版里选择修改版本<br><img src="https://upload-images.jianshu.io/upload_images/1750086-e1e0c7dd5b8481f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>输入更新版本说明，记得用英文的说明，之后点击<strong>查看</strong><br><img src="https://upload-images.jianshu.io/upload_images/1750086-c80149786decace6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>核对信息后，点击开始发布正式版就可以了，一般审核在一小时左右，我写完这篇文章，刚好就审核过了，挺快的~<br><img src="https://upload-images.jianshu.io/upload_images/1750086-0656cbfa437b09b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>补充一个，发布最好先发布测试版，等测试版审核通过，再发布正式的，原因就是，代码君之前闲麻烦直接上正式，但是遇到审核不通过，再修改，再提交，依然审核不通过，不通过原因是测试版的代码没更新过来，所以又要去测试环境改，很麻烦，与其这样，还不如按照流程，测试通过了，再上正式环境比较稳妥</p>
+</li>
 </ol>
-<h3 id="二、Static-静态变量"><a href="#二、Static-静态变量" class="headerlink" title="二、Static 静态变量"></a>二、Static 静态变量</h3><p><strong>常见问题：</strong></p>
-<p>我们有时候会为了方便，设置某个Activity或者View为静态变量，但是你要知道，static变量是要贯穿整个应该的生命周期，就是意味着即使Activity销毁，static变量也不会销毁，所以，如果你把View或者Activity设置为静态变量，这会导致当前的Activity会一直存在，从而导致内存泄漏</p>
-<p><strong>解决方案：</strong></p>
+<h4 id="五、上架的一些坑总结"><a href="#五、上架的一些坑总结" class="headerlink" title="五、上架的一些坑总结"></a>五、上架的一些坑总结</h4><ol>
+<li>手机号码需要输入+86XXXXXX，XXX为手机号码</li>
+<li>修改过的Apk版本号需要升级，不可再用之前的版本号</li>
+<li>Google Play 会强制开发者适配最新包的SDK，代码君当时只适配了Android6.0，目前最新是8.0，平台要求App必须适配到8.0才可以上架</li>
+<li>审核中遇到了审核被拒的情况，被拒理由，违反了谷歌安全 WebView SSL Error Handler，大致原因就是，你在WebView里面重写了方法onReceivedSslError，此方法是当SSL证书验证失败会回调，Google Play 的意思就是，当验证SSL证书回调无效后，需要告诉用户，让用户有知情权，选择是否继续访问WebView里面的网页，这样如果用户选择继续的话，他们就不用背锅啦，哈哈哈，开玩笑啦，其实这样强制要求也是为了防止黑客的攻击，我们程序员是要大大的支持地！，不废话了，直接贴上代码，如果有遇到此问题的直接从把下面的代码，拷贝到你们WebView里面的onReceivedSslError方法里。修改后从新发布就可以了，好像即使发布修复后的版本，也那个违反我们的恶意行为或用户数据政策的提示框不会里面小时掉，需要几个小时的验证，莫慌哈~<br><img src="https://upload-images.jianshu.io/upload_images/1750086-fcd88fce7c7b45e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) &#123;</span><br><span class="line">                final SslErrorHandler mHandler ;</span><br><span class="line">                mHandler&#x3D; handler;</span><br><span class="line">                AlertDialog.Builder builder &#x3D; new AlertDialog.Builder(activity);</span><br><span class="line">                builder.setMessage(&quot;ssl证书验证失败&quot;);</span><br><span class="line">                builder.setPositiveButton(&quot;继续&quot;, new DialogInterface.OnClickListener() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void onClick(DialogInterface dialog, int which) &#123;</span><br><span class="line">                        mHandler.proceed();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                builder.setNegativeButton(&quot;取消&quot;, new DialogInterface.OnClickListener() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void onClick(DialogInterface dialog, int which) &#123;</span><br><span class="line">                        mHandler.cancel();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                builder.setOnKeyListener(new DialogInterface.OnKeyListener() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) &#123;</span><br><span class="line">                        if (event.getAction() &#x3D;&#x3D; KeyEvent.ACTION_UP &amp;&amp; keyCode &#x3D;&#x3D; KeyEvent.KEYCODE_BACK) &#123;</span><br><span class="line">                            mHandler.cancel();</span><br><span class="line">                            dialog.dismiss();</span><br><span class="line">                            return true;</span><br><span class="line">                        &#125;</span><br><span class="line">                        return false;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                AlertDialog dialog &#x3D; builder.create();</span><br><span class="line">                dialog.show();</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="Google-Play-上架总结"><a href="#Google-Play-上架总结" class="headerlink" title="Google Play 上架总结"></a>Google Play 上架总结</h4><p>这此上架Google Play 一个很深的感受是，别人家的应用平台做的怎么那么好，比起国内各大应用市场都好，说几点是国内应用市场平台无法比的，</p>
 <ol>
-<li>尽量避免使用static变量</li>
-<li>如果非要使用的话，记得在界面销毁的时候，把静态变量也释放掉，简单说就是把静态变量置空，如staticView=null</li>
+<li><p>Google Play 自带崩溃日志、以及用户下载量、下载机型、日活统计等，这国内的其他平台是不具备的，一般还需要再集成友盟才可以做到这些<br><img src="https://upload-images.jianshu.io/upload_images/1750086-13b2e69911d907c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>审核速度，Google Play 应该是机器审核，审核速度很快，相信里面的算法也很强大，目前华为好像也开始逐步机器审核了，这样的好处是审核效率高，减少大量的人工审核成本</p>
+</li>
+<li><p>审核标准规范，我之前提交小米应用市场，一般审核周期要七天，而且还会需要人工审核不通过，当我从新提交并未做任何修改，又审核通过了，这就是人工审核的缺点，审核慢，而且标准不统一</p>
+</li>
 </ol>
-<h3 id="三、非静态内部类、匿名内部类持有外部类的引用"><a href="#三、非静态内部类、匿名内部类持有外部类的引用" class="headerlink" title="三、非静态内部类、匿名内部类持有外部类的引用"></a>三、非静态内部类、匿名内部类持有外部类的引用</h3><p><strong>常见问题：</strong></p>
-<p>我们在使用AsyncTash、Handler、TimerTask、Thread的时候，为了方便，直接new一个匿名内部类对象，殊不知我们在new一个的时候，编译器在编译的时候会自动为内部类的构造方法加上外包类的引用，所以这些匿名内部类会持有Activity，当这些匿名内部类处理非常耗时的操作时候，就算Activity生命周期结束，也不会被销毁，这就会造成内存泄漏</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li>当Activity销毁的时候，对不需要的匿名内部类进行任务停止操作</li>
-<li>使用静态内部类，静态内部类内部使用弱引用来引外外部类，这样当Activity销毁的时候，弱引用是可以被回收的</li>
-</ol>
-<h3 id="四、其他引起的泄漏"><a href="#四、其他引起的泄漏" class="headerlink" title="四、其他引起的泄漏"></a>四、其他引起的泄漏</h3><ol>
-<li>我们在使用系统服务的时候，比如注册了一些广播监听，在使用完后，要释放掉</li>
-<li>我们在给View绘制动画的时候，View被动画持有，而Activity又被View持有引用，导致Activity也无法释放。所以在Activity销毁时，调用animator.cancel()来停止动画</li>
-</ol>
-<h1 id="内存泄漏分析-实战篇"><a href="#内存泄漏分析-实战篇" class="headerlink" title="内存泄漏分析-实战篇"></a>内存泄漏分析-实战篇</h1><hr>
-<p>这个才是尽头的重头戏，前面写的只是对网上文献的一些总结</p>
-<h3 id="分析工具"><a href="#分析工具" class="headerlink" title="分析工具"></a>分析工具</h3><ol>
-<li>MAT ：eclipse时代的分析工具，具体分析实战可以参考<a href="http://www.jianshu.com/p/c49f778e7acf" target="_blank" rel="noopener">这篇文章</a></li>
-<li>LeakCanary:  Square开源的内存泄漏探测器，具体使用参考<a href="http://www.jianshu.com/p/7db231163168" target="_blank" rel="noopener">这篇文章</a></li>
-<li>Android Monitor：Android Studio 自带的分析工具，今天的重头戏</li>
-</ol>
-<h3 id="Android-Monitor"><a href="#Android-Monitor" class="headerlink" title="Android Monitor"></a>Android Monitor</h3><p>1.生成HPROF文件，点击红框中有绿色下载箭头的按钮（Dump java Heap），这个会生成以hprof结尾的文件</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-7ba9dee242bdbd28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android Monitor.png"></p>
-<p>2.生成的效果如下图，简单介绍一下界面功能</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-34af0a88a0524d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HPROF.png"><br>    功能描述：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Total  Count</td>
-<td>该类的实例总数</td>
-</tr>
-<tr>
-<td>Heap Count</td>
-<td>所选择的堆中该类的实例的数量</td>
-</tr>
-<tr>
-<td>Sizeof</td>
-<td>单个实例所占空间大小（如果每个实例所占空间大小不一样则显示0）</td>
-</tr>
-<tr>
-<td>Shallow Size</td>
-<td>堆里所有实例大小总和（Heap Count * Sizeof）</td>
-</tr>
-<tr>
-<td>Retained Size</td>
-<td>该类所有实例所支配的内存大小</td>
-</tr>
-<tr>
-<td>Instance</td>
-<td>具体的实例</td>
-</tr>
-<tr>
-<td>Reference Tree</td>
-<td>所选实例的引用，以及指向该引用的引用。</td>
-</tr>
-<tr>
-<td>Depth</td>
-<td>GC根节点到所选实例的最短路径的深度</td>
-</tr>
-<tr>
-<td>Shallow Size</td>
-<td>所选实例的大小</td>
-</tr>
-<tr>
-<td>Dominating  Size</td>
-<td>所选实例所支配的内存大小</td>
-</tr>
-</tbody></table>
-<p>3.也许你看完这些也还是一头雾水，不知道怎么分析，没关系，我们不就是要找到内存泄漏的源头嘛，来看这里，要开始放大招啦，看到上图中最右边的   <strong>Analyzer Tasks</strong>，点击这个版块，这个版块就是主要的查找内存泄漏版块</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-6dfa350ce64c7aa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Analyzer Tasks.png"></p>
-<p>4.启动页很简单，点击绿色运行按钮就好，之后会在下面列出可能存在内存泄漏的Activity，如果没显示，说明启动的Activity中没有内存泄漏</p>
-<p>5.查看引用树（Reference Tree），都是根据这个查找内存泄漏的具体地方的</p>
-<p>6.一般有类似三角形的，就是一直被引用这，导致内存泄漏，找到对应的地方也很简单，右键项目点击<strong>Jump to Source</strong>就会打开对应泄漏源码的地方啦，然后我们在根据上面说的泄漏原因，及解决办法修正就好啦<br><img src="http://upload-images.jianshu.io/upload_images/1750086-6204c91351d2f432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jump to Source.png"><br><img src="http://upload-images.jianshu.io/upload_images/1750086-74b0f22614c38553.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak Code.png"></p>
-<p>上面一共有五六处内存泄漏，都是我故意写出来的，目的就是为了练习排查分析内存泄漏，特地放上源码，demo中内存泄漏以及修复代码都有，欢迎下载学习，如果觉得不错，顺手给个star</p>
-<h3 id="下载地址：MemoryLeakSamples"><a href="#下载地址：MemoryLeakSamples" class="headerlink" title="下载地址：MemoryLeakSamples"></a>下载地址：<a href="https://github.com/jiangzepeng/MemoryLeakSamples" target="_blank" rel="noopener">MemoryLeakSamples</a></h3><p><img src="http://upload-images.jianshu.io/upload_images/1750086-43c165cdbef19e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MemoryLeakSamples.png"></p>
-<h5 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献 :"></a>参考文献 :</h5><p><a href="http://www.jianshu.com/p/fec129afab1b" target="_blank" rel="noopener">明白原理，轻松应对 Android 常见内存泄漏</a></p>
-<p><a href="http://www.jianshu.com/p/7d958959cf33" target="_blank" rel="noopener">HPROF文件查看和分析工具</a></p>
-<p><a href="https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570" target="_blank" rel="noopener">Memory Leak Patterns in Android</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-58e561db5db3a196.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
       
@@ -232,15 +187,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" data-id="ck5nguq0l00000v9ohgr00e4p" class="article-share-link" data-share="baidu" data-title="Android Studio 内存泄漏分析指南">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/" data-id="ck5nicz3g00079e9o7fg791q7" class="article-share-link" data-share="baidu" data-title="Google Play 上架的那些坑">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" rel="tag">内存泄漏</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Google-Play/" rel="tag">Google Play</a></li></ul>
 
     </footer>
   </div>
@@ -252,7 +207,7 @@ var _hmt = _hmt || [];
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">下一页 &amp;raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/2/">下一页 &amp;raquo;</a>
   </nav>
 </section>
       
@@ -287,7 +242,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/Android-Studio/" style="font-size: 13.33px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 16.67px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
     </div>
   </div>
 
@@ -338,7 +293,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -347,7 +302,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

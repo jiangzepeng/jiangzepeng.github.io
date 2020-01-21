@@ -98,14 +98,14 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main">
   
-    <article id="post-微信小程序入门篇（一）" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post- Android Studio 内存泄漏分析指南" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/05/22/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
-  <time datetime="2017-05-21T16:00:00.000Z" itemprop="datePublished">2017-05-22</time>
+    <a href="/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2017-09-06T16:00:00.000Z" itemprop="datePublished">2017-09-07</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a>
+    <a class="article-category-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a>
   </div>
 
   </div>
@@ -116,7 +116,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/22/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/">微信小程序入门篇（一）</a>
+      <a class="article-title" href="/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/">Android Studio 内存泄漏分析指南</a>
     </h1>
   
 
@@ -126,89 +126,105 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>小程序也已经出来有一段时间啦，对于一些想去学习又无从下手的朋友们，欢迎和代码君一起去学习一下小程序！</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><hr>
+        <p>最近在优化公司的项目，想针对内存泄漏进行分析一下，查阅网上的一些资料，发现苦逼的是，资料一大堆，但是内容都差不多，至今未找到一篇实战的内存泄漏分析，全部停留在理论知识上，最后查阅了一些外文文献，才有了一点思路，好吧！既然没有实战分析，我就做第一人，把我学到的分享出来，希望对你们有帮助，当然有说的不对的，望各位指出来~</p>
+<h1 id="内存泄漏原因"><a href="#内存泄漏原因" class="headerlink" title="内存泄漏原因"></a>内存泄漏原因</h1><hr>
+<p>当应用不需要某对象时候，忘记释放分配的内存，该对象仍然保持被引用状态（当对象拥有强引用，GC无法回收），从而导致内存泄漏</p>
+<h1 id="泄漏的源头"><a href="#泄漏的源头" class="headerlink" title="泄漏的源头"></a>泄漏的源头</h1><hr>
+<p>泄漏的源头有很多，有开源的第三方框架引起的、android系统自身造成的如webview的内存泄漏，还有一个是我们可以控制的就是自身编码引起的内存泄漏，这也是我们可以避免的，一下情况容易出现内存泄漏</p>
+<h3 id="一、-Context-引起的内存泄漏"><a href="#一、-Context-引起的内存泄漏" class="headerlink" title="一、 Context 引起的内存泄漏"></a>一、 Context 引起的内存泄漏</h3><p><strong>常见问题：</strong></p>
+<p>这个是最常见的，因为Activity经常要用到上下文Context，很有可能Activity作为Context传递给某些类，Activity生命周期结束之后，某些类仍然存活并保持着该Activity的引用，保持引用就无法被回收。从而导致内存泄漏</p>
+<p><strong>解决方案：</strong></p>
 <ol>
-<li>下载开发工具：<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html" target="_blank" rel="noopener">微信小程序开发工具</a></li>
+<li>下次如果要传入context给某些类的时候，最好是用ApplicationContext，这样可以有效避免内存泄漏</li>
+<li>在界面销毁的时候，手动释放掉引用过activity的context</li>
 </ol>
-<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><hr>
+<h3 id="二、Static-静态变量"><a href="#二、Static-静态变量" class="headerlink" title="二、Static 静态变量"></a>二、Static 静态变量</h3><p><strong>常见问题：</strong></p>
+<p>我们有时候会为了方便，设置某个Activity或者View为静态变量，但是你要知道，static变量是要贯穿整个应该的生命周期，就是意味着即使Activity销毁，static变量也不会销毁，所以，如果你把View或者Activity设置为静态变量，这会导致当前的Activity会一直存在，从而导致内存泄漏</p>
+<p><strong>解决方案：</strong></p>
 <ol>
-<li>添加项目<center>
-![创建项目1-1.png](http://upload-images.jianshu.io/upload_images/1750086-ea1c62b474a76c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center></li>
-<li>如果没有AppID可以选择无AppID,项目名称可以随便起，因为入门教程我想教大家都比较想学的商城，所以直接叫商城啦，项目目录中的shopping是自己创建的新文件夹，空文件夹系统就会自动在shopping文件夹中创建整个项目架构，记得勾选<strong>quick start</strong>项目</li>
+<li>尽量避免使用static变量</li>
+<li>如果非要使用的话，记得在界面销毁的时候，把静态变量也释放掉，简单说就是把静态变量置空，如staticView=null</li>
 </ol>
-<center>
-![创建项目1-2.png](http://upload-images.jianshu.io/upload_images/1750086-83c53a8be011813b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center>
-
-<h2 id="项目架构分析"><a href="#项目架构分析" class="headerlink" title="项目架构分析"></a>项目架构分析</h2><hr>
+<h3 id="三、非静态内部类、匿名内部类持有外部类的引用"><a href="#三、非静态内部类、匿名内部类持有外部类的引用" class="headerlink" title="三、非静态内部类、匿名内部类持有外部类的引用"></a>三、非静态内部类、匿名内部类持有外部类的引用</h3><p><strong>常见问题：</strong></p>
+<p>我们在使用AsyncTash、Handler、TimerTask、Thread的时候，为了方便，直接new一个匿名内部类对象，殊不知我们在new一个的时候，编译器在编译的时候会自动为内部类的构造方法加上外包类的引用，所以这些匿名内部类会持有Activity，当这些匿名内部类处理非常耗时的操作时候，就算Activity生命周期结束，也不会被销毁，这就会造成内存泄漏</p>
+<p><strong>解决方案：</strong></p>
 <ol>
-<li><p>整体架构:自动创建的项目就会以下架构目录</p>
-<ul>
-<li>红框1 ：菜单栏</li>
-<li>红框2：界面效果显示</li>
-<li>红框3 ：代码架构目录</li>
-<li>红框4 ：代码栏</li>
-</ul>
-<center>
-![项目架构1-1.png](http://upload-images.jianshu.io/upload_images/1750086-6d9f52a544d249cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center></li>
-<li><p>着重对代码架构目录做介绍：<strong>app.js、app.json、app.wxss</strong>，这三个中前两个是必看的，前两个相当于目录，就好比你读一本书，都要先看一下目录，所以以后看别人项目的时候，首先先看app.js和app.json</p>
-<ul>
-<li>app.js是小程序的脚本代码。我们可以在这个文件中监听并处理小程序的生命周期函数、声明全局变量。调用框架提供的丰富的 API，如本例的同步存储及同步读取本地数据。</li>
-<li>​ app.json 是对整个小程序的全局配置。我们可以在这个文件中配置小程序是由哪些页面组成，配置小程序的窗口背景色，配置导航条样式，配置默认标题。注意该文件不可添加任何注释。</li>
-<li>app.wxss 是整个小程序的公共样式表。我们可以在页面组件的 class 属性上直接使用 app.wxss 中声明的样式规则。</li>
-</ul>
-</li>
-<li><p>app.json解析：首先既然是.json所以一定是json格式，这里面包含两部分<strong>pages</strong>和<strong>window</strong>，固定字段，<strong>pages</strong>就是整个小程序包含的页面，可以根据路径查找到对应的页面，<strong>window</strong>就是设置一些窗口样式，依次是配置小程序的窗口  背景字体样式，配置导航条背景样式，配置默认标题，及颜色 </p>
-<center>
-![项目架构3-1.png](http://upload-images.jianshu.io/upload_images/1750086-b0f2fab48bf97349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center>
-### **现学现用**
-- **我要设置导航栏的标题为商城，字体为白色，背景为黑色要怎么做呐？** 很简单吧，找到app.json把下面的代码替换到window里面就可以啦，要解释一下navigationBarBackgroundColor和navigationBarTextStyle都是支持rgb的，也就是说设置字体颜色navigationBarTextStyle为白色填入white其实也可以填入#fff，都是一样的效果
-
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"window"</span>:&#123;</span><br><span class="line">  <span class="string">"backgroundTextStyle"</span>:<span class="string">"light"</span>,</span><br><span class="line">  <span class="string">"navigationBarBackgroundColor"</span>: <span class="string">"#000"</span>,</span><br><span class="line">  <span class="string">"navigationBarTitleText"</span>: <span class="string">"商城"</span>,</span><br><span class="line">  <span class="string">"navigationBarTextStyle"</span>:<span class="string">"white"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre><ul>
-<li><p><strong>我要增加一个界面怎么办呐？</strong>   同理只需在app.json里的pages属性加入你要的路径pages/addPage/addPage，你写好路径后系统会自动给你建好文件的</p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"pages"</span>:[</span><br><span class="line">    <span class="string">"pages/index/index"</span>,</span><br><span class="line">    <span class="string">"pages/logs/logs"</span>,</span><br><span class="line">    <span class="string">"pages/addPage/addPage"</span></span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
-<p>下图是解决以上两个问题的效果图，app.json就暂时解析到这里，记着我们在这里面有新添加一个界面addPage，后面会详细介绍这个界面的，篇幅限制，这个先搁置一下</p>
-<center>
-![项目架构3-2.png](http://upload-images.jianshu.io/upload_images/1750086-fa4ac946bd96d641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center></li>
-</ul>
-</li>
-<li><p>app.js解析:看后缀名.js就知道是JavaScript的代码，首先看一下App里面包含的几个方法<strong>onLaunch、getUserInfo、getUserInfo</strong></p>
-<center>
-![项目架构4-1.png](http://upload-images.jianshu.io/upload_images/1750086-95c639265f0c14b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center>
-- **onLaunch**方法是小程序启动的时候执行的方法
-
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var logs &#x3D; wx.getStorageSync(&#39;logs&#39;) || [] </span><br><span class="line">logs.unshift(Date.now())</span><br><span class="line">wx.setStorageSync(&#39;logs&#39;, logs)</span><br></pre></td></tr></table></figure></code></pre><p>看一下里面的代码，<strong>wx.</strong>以这个开头的都是系统封装好的方法，我们都可以直接调用，输入<strong>wx.</strong>,系统会自动提示出自带的方法，查询更多系统定义的方法请看<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/api/" target="_blank" rel="noopener">微信API文档</a>，这里篇幅限制不能全部介绍<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-421c14c170e2b8bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目架构4-2.png"></center><br>好，回归正题，看着三句话代码，wx.getStorageSync是获取本地缓存的logs字段，logs.unshift代码是什么意思呐？<strong>unshift</strong>是js的知识，unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。所以大概能理解这三句话代码啦，大致是取本地缓存数据logs字段，插入最新时间，然后存储再次存入到缓存中的logs字段里，说了这么多，那Storage存储的数据在哪里呐，请看下图，会更好理解，找到菜单栏里的调试-&gt;Storage下就可以看到本地缓存的logs字段及数据，你也可以自行添加数据，然后调用wx.getStorageSync(‘key值’) ，就可以获取数据啦</p>
-<center>
-![项目架构4-3.png](http://upload-images.jianshu.io/upload_images/1750086-4a259a494ff7d5ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center>
-
-<ul>
-<li><strong>globalData</strong>全局变量数据，</li>
-<li><strong>getUserInfo</strong>自定义的方法用于获取用户信息，整体的代码意思就是如果用户信息为空就去调用微信的登录接口，登录成功后存储在全局变量<strong>globalData</strong>里，分析两处代码第一处<strong>var that = this</strong>，that=this,这个是js语法属性，this应该是引用本实例的一个值，它将它赋值给that的原因从下面的代码中可以判断出来js的一些特性。每一个方法是一个封闭函数，它的上一层实例即为this，所以如果一个方法A包含另一个方法B，在A中使用this指的是A的实例，在B中使用this应该是B的实例，即拥有B的A，所以在这里我们为了拿到A中的实例this，必须要赋一个值给that，让B能使用A的实例。在此demo中，上面的this指的是app这个实例，为了在下面的方法中可以使用app的实例，所以赋了that给this。还不明白that=this可以参考<a href="https://zhidao.baidu.com/question/271694212.html" target="_blank" rel="noopener">此文献</a>，第二处是<strong>typeof cb == “function” &amp;&amp; cb(this.globalData.userInfo)</strong>，代码中两次调用此代码所以要剖析一下，cb是callback的缩写，翻译代码意思就是cb==function，要求cb为方法，并且回调cb方法，剩下的<strong>wx.login</strong>猜都能猜出来是微信封装好的登录方法啦</li>
-</ul>
-</li>
+<li>当Activity销毁的时候，对不需要的匿名内部类进行任务停止操作</li>
+<li>使用静态内部类，静态内部类内部使用弱引用来引外外部类，这样当Activity销毁的时候，弱引用是可以被回收的</li>
 </ol>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">getUserInfo:<span class="keyword">function</span>(cb)&#123;</span><br><span class="line">    var that = this</span><br><span class="line">    <span class="keyword">if</span>(this.globalData.userInfo)&#123;</span><br><span class="line">      typeof cb == <span class="string">"function"</span> &amp;&amp; cb(this.globalData.userInfo)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      //调用登录接口</span><br><span class="line">      wx.login(&#123;</span><br><span class="line">        success: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">          wx.getUserInfo(&#123;</span><br><span class="line">            success: <span class="keyword">function</span> (res) &#123;</span><br><span class="line">              that.globalData.userInfo = res.userInfo</span><br><span class="line">              typeof cb == <span class="string">"function"</span> &amp;&amp; cb(that.globalData.userInfo)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  globalData:&#123;</span><br><span class="line">    userInfo:null</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></code></pre><ol start="5">
-<li>app.wxss 我打算放在下一节和addPage页一起讲</li>
+<h3 id="四、其他引起的泄漏"><a href="#四、其他引起的泄漏" class="headerlink" title="四、其他引起的泄漏"></a>四、其他引起的泄漏</h3><ol>
+<li>我们在使用系统服务的时候，比如注册了一些广播监听，在使用完后，要释放掉</li>
+<li>我们在给View绘制动画的时候，View被动画持有，而Activity又被View持有引用，导致Activity也无法释放。所以在Activity销毁时，调用animator.cancel()来停止动画</li>
 </ol>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><hr>
-<ol>
-<li>通过这个篇幅的介绍，我们了解了小程序的整体架构，学习了如何创建小程序，以及对小程序目录app.js、app.json详细的分析，下一篇将会详细讲解addPage的编写，敬请期待！</li>
-<li>温故而知新，看文上面的文章，不能一带而过，要学会举一反三，下面我提几个问题，看看读者吸收的怎么样。能回答以下问题说明你读懂这篇文章啦，读不懂请查看上面的内容自行找答案<ul>
-<li>wx.login是什么？</li>
-<li>that = this的作用？</li>
-<li>在哪里可以查到StorageSync本地缓存的数据？</li>
-<li>如何增加页面？</li>
-<li>在哪里设置导航栏的属性？</li>
-</ul>
-</li>
+<h1 id="内存泄漏分析-实战篇"><a href="#内存泄漏分析-实战篇" class="headerlink" title="内存泄漏分析-实战篇"></a>内存泄漏分析-实战篇</h1><hr>
+<p>这个才是尽头的重头戏，前面写的只是对网上文献的一些总结</p>
+<h3 id="分析工具"><a href="#分析工具" class="headerlink" title="分析工具"></a>分析工具</h3><ol>
+<li>MAT ：eclipse时代的分析工具，具体分析实战可以参考<a href="http://www.jianshu.com/p/c49f778e7acf" target="_blank" rel="noopener">这篇文章</a></li>
+<li>LeakCanary:  Square开源的内存泄漏探测器，具体使用参考<a href="http://www.jianshu.com/p/7db231163168" target="_blank" rel="noopener">这篇文章</a></li>
+<li>Android Monitor：Android Studio 自带的分析工具，今天的重头戏</li>
 </ol>
+<h3 id="Android-Monitor"><a href="#Android-Monitor" class="headerlink" title="Android Monitor"></a>Android Monitor</h3><p>1.生成HPROF文件，点击红框中有绿色下载箭头的按钮（Dump java Heap），这个会生成以hprof结尾的文件</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-7ba9dee242bdbd28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android Monitor.png"></p>
+<p>2.生成的效果如下图，简单介绍一下界面功能</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-34af0a88a0524d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HPROF.png"><br>    功能描述：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Total  Count</td>
+<td>该类的实例总数</td>
+</tr>
+<tr>
+<td>Heap Count</td>
+<td>所选择的堆中该类的实例的数量</td>
+</tr>
+<tr>
+<td>Sizeof</td>
+<td>单个实例所占空间大小（如果每个实例所占空间大小不一样则显示0）</td>
+</tr>
+<tr>
+<td>Shallow Size</td>
+<td>堆里所有实例大小总和（Heap Count * Sizeof）</td>
+</tr>
+<tr>
+<td>Retained Size</td>
+<td>该类所有实例所支配的内存大小</td>
+</tr>
+<tr>
+<td>Instance</td>
+<td>具体的实例</td>
+</tr>
+<tr>
+<td>Reference Tree</td>
+<td>所选实例的引用，以及指向该引用的引用。</td>
+</tr>
+<tr>
+<td>Depth</td>
+<td>GC根节点到所选实例的最短路径的深度</td>
+</tr>
+<tr>
+<td>Shallow Size</td>
+<td>所选实例的大小</td>
+</tr>
+<tr>
+<td>Dominating  Size</td>
+<td>所选实例所支配的内存大小</td>
+</tr>
+</tbody></table>
+<p>3.也许你看完这些也还是一头雾水，不知道怎么分析，没关系，我们不就是要找到内存泄漏的源头嘛，来看这里，要开始放大招啦，看到上图中最右边的   <strong>Analyzer Tasks</strong>，点击这个版块，这个版块就是主要的查找内存泄漏版块</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-6dfa350ce64c7aa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Analyzer Tasks.png"></p>
+<p>4.启动页很简单，点击绿色运行按钮就好，之后会在下面列出可能存在内存泄漏的Activity，如果没显示，说明启动的Activity中没有内存泄漏</p>
+<p>5.查看引用树（Reference Tree），都是根据这个查找内存泄漏的具体地方的</p>
+<p>6.一般有类似三角形的，就是一直被引用这，导致内存泄漏，找到对应的地方也很简单，右键项目点击<strong>Jump to Source</strong>就会打开对应泄漏源码的地方啦，然后我们在根据上面说的泄漏原因，及解决办法修正就好啦<br><img src="http://upload-images.jianshu.io/upload_images/1750086-6204c91351d2f432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jump to Source.png"><br><img src="http://upload-images.jianshu.io/upload_images/1750086-74b0f22614c38553.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak Code.png"></p>
+<p>上面一共有五六处内存泄漏，都是我故意写出来的，目的就是为了练习排查分析内存泄漏，特地放上源码，demo中内存泄漏以及修复代码都有，欢迎下载学习，如果觉得不错，顺手给个star</p>
+<h3 id="下载地址：MemoryLeakSamples"><a href="#下载地址：MemoryLeakSamples" class="headerlink" title="下载地址：MemoryLeakSamples"></a>下载地址：<a href="https://github.com/jiangzepeng/MemoryLeakSamples" target="_blank" rel="noopener">MemoryLeakSamples</a></h3><p><img src="http://upload-images.jianshu.io/upload_images/1750086-43c165cdbef19e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MemoryLeakSamples.png"></p>
+<h5 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献 :"></a>参考文献 :</h5><p><a href="http://www.jianshu.com/p/fec129afab1b" target="_blank" rel="noopener">明白原理，轻松应对 Android 常见内存泄漏</a></p>
+<p><a href="http://www.jianshu.com/p/7d958959cf33" target="_blank" rel="noopener">HPROF文件查看和分析工具</a></p>
+<p><a href="https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570" target="_blank" rel="noopener">Memory Leak Patterns in Android</a></p>
 
       
       
@@ -216,15 +232,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2017/05/22/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/" data-id="ck5nguq0w00060v9o1mlqbwxg" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（一）">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" data-id="ck5nguq0l00000v9ohgr00e4p" class="article-share-link" data-share="baidu" data-title="Android Studio 内存泄漏分析指南">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2017/05/22/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" rel="tag">内存泄漏</a></li></ul>
 
     </footer>
   </div>
@@ -236,7 +252,7 @@ var _hmt = _hmt || [];
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/13/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/15/">下一页 &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/13/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/15/">下一页 &amp;raquo;</a>
   </nav>
 </section>
       
@@ -271,7 +287,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/Android-Studio/" style="font-size: 13.33px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 16.67px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
     </div>
   </div>
 
@@ -322,7 +338,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -331,7 +347,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
