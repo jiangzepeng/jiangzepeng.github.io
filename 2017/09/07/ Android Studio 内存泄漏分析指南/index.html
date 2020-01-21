@@ -12,23 +12,23 @@
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <meta name="description" content="最近在优化公司的项目，想针对内存泄漏进行分析一下，查阅网上的一些资料，发现苦逼的是，资料一大堆，但是内容都差不多，至今未找到一篇实战的内存泄漏分析，全部停留在理论知识上，最后查阅了一些外文文献，才有了一点思路，好吧！既然没有实战分析，我就做第一人，把我学到的分享出来，希望对你们有帮助，当然有说的不对的，望各位指出来~ 内存泄漏原因 当应用不需要某对象时候，忘记释放分配的内存，该对象仍然保持被引用状">
-<meta name="keywords" content="内存泄漏">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Studio 内存泄漏分析指南">
-<meta property="og:url" content="http://jiangzepeng.cn/2017/09/07/ Android Studio 内存泄漏分析指南/index.html">
+<meta property="og:url" content="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/index.html">
 <meta property="og:site_name" content="代码集中营">
 <meta property="og:description" content="最近在优化公司的项目，想针对内存泄漏进行分析一下，查阅网上的一些资料，发现苦逼的是，资料一大堆，但是内容都差不多，至今未找到一篇实战的内存泄漏分析，全部停留在理论知识上，最后查阅了一些外文文献，才有了一点思路，好吧！既然没有实战分析，我就做第一人，把我学到的分享出来，希望对你们有帮助，当然有说的不对的，望各位指出来~ 内存泄漏原因 当应用不需要某对象时候，忘记释放分配的内存，该对象仍然保持被引用状">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-7ba9dee242bdbd28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-34af0a88a0524d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-6dfa350ce64c7aa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-6204c91351d2f432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-74b0f22614c38553.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-43c165cdbef19e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-09-08T09:11:47.000Z">
+<meta property="article:published_time" content="2017-09-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-09-08T09:11:47.000Z">
+<meta property="article:author" content="代码君">
+<meta property="article:tag" content="内存泄漏">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Studio 内存泄漏分析指南">
-<meta name="twitter:description" content="最近在优化公司的项目，想针对内存泄漏进行分析一下，查阅网上的一些资料，发现苦逼的是，资料一大堆，但是内容都差不多，至今未找到一篇实战的内存泄漏分析，全部停留在理论知识上，最后查阅了一些外文文献，才有了一点思路，好吧！既然没有实战分析，我就做第一人，把我学到的分享出来，希望对你们有帮助，当然有说的不对的，望各位指出来~ 内存泄漏原因 当应用不需要某对象时候，忘记释放分配的内存，该对象仍然保持被引用状">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-7ba9dee242bdbd28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
   
@@ -42,7 +42,9 @@
     <meta name="msapplication-TileImage" content="/img/logo.jpeg">
     <meta name="msapplication-TileColor" content="#0e90d2">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
   
@@ -56,7 +58,7 @@ var _hmt = _hmt || [];
 })();
 </script>
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 <body>
 <div id="container">
   <div id="wrap">
@@ -81,7 +83,7 @@ var _hmt = _hmt || [];
         
           <a class="main-nav-link" href="/archives">文章</a>
         
-          <a class="main-nav-link" href="/2017/04/06/个人简历/">个人简历</a>
+          <a class="main-nav-link" href="/2017/04/06/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/">个人简历</a>
         
       </nav>
       <!--
@@ -106,12 +108,12 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main"><article id="post- Android Studio 内存泄漏分析指南" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/07/ Android Studio 内存泄漏分析指南/" class="article-date">
+    <a href="/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" class="article-date">
   <time datetime="2017-09-06T16:00:00.000Z" itemprop="datePublished">2017-09-07</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/内存泄漏/">内存泄漏</a>
+    <a class="article-category-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a>
   </div>
 
   </div>
@@ -165,8 +167,8 @@ var _hmt = _hmt || [];
 <h1 id="内存泄漏分析-实战篇"><a href="#内存泄漏分析-实战篇" class="headerlink" title="内存泄漏分析-实战篇"></a>内存泄漏分析-实战篇</h1><hr>
 <p>这个才是尽头的重头戏，前面写的只是对网上文献的一些总结</p>
 <h3 id="分析工具"><a href="#分析工具" class="headerlink" title="分析工具"></a>分析工具</h3><ol>
-<li>MAT ：eclipse时代的分析工具，具体分析实战可以参考<a href="http://www.jianshu.com/p/c49f778e7acf" target="_blank" rel="external">这篇文章</a></li>
-<li>LeakCanary:  Square开源的内存泄漏探测器，具体使用参考<a href="http://www.jianshu.com/p/7db231163168" target="_blank" rel="external">这篇文章</a></li>
+<li>MAT ：eclipse时代的分析工具，具体分析实战可以参考<a href="http://www.jianshu.com/p/c49f778e7acf" target="_blank" rel="noopener">这篇文章</a></li>
+<li>LeakCanary:  Square开源的内存泄漏探测器，具体使用参考<a href="http://www.jianshu.com/p/7db231163168" target="_blank" rel="noopener">这篇文章</a></li>
 <li>Android Monitor：Android Studio 自带的分析工具，今天的重头戏</li>
 </ol>
 <h3 id="Android-Monitor"><a href="#Android-Monitor" class="headerlink" title="Android Monitor"></a>Android Monitor</h3><p>1.生成HPROF文件，点击红框中有绿色下载箭头的按钮（Dump java Heap），这个会生成以hprof结尾的文件</p>
@@ -180,8 +182,7 @@ var _hmt = _hmt || [];
 <th>描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>Total  Count</td>
 <td>该类的实例总数</td>
 </tr>
@@ -221,18 +222,17 @@ var _hmt = _hmt || [];
 <td>Dominating  Size</td>
 <td>所选实例所支配的内存大小</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>3.也许你看完这些也还是一头雾水，不知道怎么分析，没关系，我们不就是要找到内存泄漏的源头嘛，来看这里，要开始放大招啦，看到上图中最右边的   <strong>Analyzer Tasks</strong>，点击这个版块，这个版块就是主要的查找内存泄漏版块</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1750086-6dfa350ce64c7aa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Analyzer Tasks.png"></p>
 <p>4.启动页很简单，点击绿色运行按钮就好，之后会在下面列出可能存在内存泄漏的Activity，如果没显示，说明启动的Activity中没有内存泄漏</p>
 <p>5.查看引用树（Reference Tree），都是根据这个查找内存泄漏的具体地方的</p>
 <p>6.一般有类似三角形的，就是一直被引用这，导致内存泄漏，找到对应的地方也很简单，右键项目点击<strong>Jump to Source</strong>就会打开对应泄漏源码的地方啦，然后我们在根据上面说的泄漏原因，及解决办法修正就好啦<br><img src="http://upload-images.jianshu.io/upload_images/1750086-6204c91351d2f432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jump to Source.png"><br><img src="http://upload-images.jianshu.io/upload_images/1750086-74b0f22614c38553.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak Code.png"></p>
 <p>上面一共有五六处内存泄漏，都是我故意写出来的，目的就是为了练习排查分析内存泄漏，特地放上源码，demo中内存泄漏以及修复代码都有，欢迎下载学习，如果觉得不错，顺手给个star</p>
-<h3 id="下载地址：MemoryLeakSamples"><a href="#下载地址：MemoryLeakSamples" class="headerlink" title="下载地址：MemoryLeakSamples"></a>下载地址：<a href="https://github.com/jiangzepeng/MemoryLeakSamples" target="_blank" rel="external">MemoryLeakSamples</a></h3><p><img src="http://upload-images.jianshu.io/upload_images/1750086-43c165cdbef19e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MemoryLeakSamples.png"></p>
-<h5 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献 :"></a>参考文献 :</h5><p><a href="http://www.jianshu.com/p/fec129afab1b" target="_blank" rel="external">明白原理，轻松应对 Android 常见内存泄漏</a></p>
-<p><a href="http://www.jianshu.com/p/7d958959cf33" target="_blank" rel="external">HPROF文件查看和分析工具</a></p>
-<p><a href="https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570" target="_blank" rel="external">Memory Leak Patterns in Android</a></p>
+<h3 id="下载地址：MemoryLeakSamples"><a href="#下载地址：MemoryLeakSamples" class="headerlink" title="下载地址：MemoryLeakSamples"></a>下载地址：<a href="https://github.com/jiangzepeng/MemoryLeakSamples" target="_blank" rel="noopener">MemoryLeakSamples</a></h3><p><img src="http://upload-images.jianshu.io/upload_images/1750086-43c165cdbef19e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MemoryLeakSamples.png"></p>
+<h5 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献 :"></a>参考文献 :</h5><p><a href="http://www.jianshu.com/p/fec129afab1b" target="_blank" rel="noopener">明白原理，轻松应对 Android 常见内存泄漏</a></p>
+<p><a href="http://www.jianshu.com/p/7d958959cf33" target="_blank" rel="noopener">HPROF文件查看和分析工具</a></p>
+<p><a href="https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570" target="_blank" rel="noopener">Memory Leak Patterns in Android</a></p>
 
       
       
@@ -247,15 +247,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2017/09/07/ Android Studio 内存泄漏分析指南/" data-id="cjdxtwt7n0000jxqibagdzc0m" class="article-share-link" data-share="baidu" data-title="Android Studio 内存泄漏分析指南">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" data-id="ck5nguq0l00000v9ohgr00e4p" class="article-share-link" data-share="baidu" data-title="Android Studio 内存泄漏分析指南">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2017/09/07/ Android Studio 内存泄漏分析指南/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存泄漏/">内存泄漏</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" rel="tag">内存泄漏</a></li></ul>
 
     </footer>
   </div>
@@ -264,7 +264,7 @@ var _hmt = _hmt || [];
 <nav id="article-nav">
   
   
-    <a href="/2017/09/01/Android 3D旋转动画库/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/09/01/Android%203D%E6%97%8B%E8%BD%AC%E5%8A%A8%E7%94%BB%E5%BA%93/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">Android 3D旋转动画库</div>
     </a>
@@ -276,7 +276,7 @@ var _hmt = _hmt || [];
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2017/09/07/ Android Studio 内存泄漏分析指南/" data-title="Android Studio 内存泄漏分析指南" data-url="http://jiangzepeng.cn/2017/09/07/ Android Studio 内存泄漏分析指南/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/09/07/ Android Studio 内存泄漏分析指南/" data-title="Android Studio 内存泄漏分析指南" data-url="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/"></div>
   </section>
 </section>
       
@@ -311,7 +311,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D动画/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/个人简历/" style="font-size: 10px;">个人简历</a> <a href="/tags/内存泄漏/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a>
     </div>
   </div>
 
@@ -362,7 +362,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/内存泄漏/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/简历/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -385,7 +385,7 @@ var _hmt = _hmt || [];
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2012 - 2018 <a href="/" target="_blank">代码君</a>.
+      Copyright &copy; 2012 - 2020 <a href="/" target="_blank">代码君</a>.
       &nbsp;
       <span id="busuanzi_container_site_pv">
         总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
@@ -396,7 +396,7 @@ var _hmt = _hmt || [];
       
         &nbsp;
         <span>
-          <a href="http://www.miibeian.gov.cn" >粤ICP备15013245号-2</a>.
+          <a href="http://www.miibeian.gov.cn" target="_blank" rel="noopener" >粤ICP备15013245号-2</a>.
         </span>
       
     </div>
@@ -410,7 +410,7 @@ var _hmt = _hmt || [];
   
     <a href="/archives" class="mobile-nav-link">文章</a>
   
-    <a href="/2017/04/06/个人简历/" class="mobile-nav-link">个人简历</a>
+    <a href="/2017/04/06/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" class="mobile-nav-link">个人简历</a>
   
 </nav>
   <!-- totop start -->
@@ -468,7 +468,9 @@ var duoshuoQuery = {short_name:"shijiajie"};
 
 
 
+
 <script src="/js/script.js"></script>
+
 
 </div>
 </body>

@@ -12,22 +12,21 @@
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <meta name="description" content="上篇 微信小程序入门篇（一）我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈 页面的构成  还记得我们在上篇文章中讲解如何加入一个界面吗？在app.json中的pages加入要加的文件路径就可以啦，文件路径可以随便起，系统会自动创建出来的，那么我就接着之前的讲，我们之前创建了一个页面叫addPage，addPage里面包含四个文件addPag">
-<meta name="keywords" content="电商,小程序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信小程序入门篇（二）">
-<meta property="og:url" content="http://jiangzepeng.cn/2017/05/23/微信小程序入门篇（二）/index.html">
+<meta property="og:url" content="http://jiangzepeng.cn/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="代码集中营">
 <meta property="og:description" content="上篇 微信小程序入门篇（一）我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈 页面的构成  还记得我们在上篇文章中讲解如何加入一个界面吗？在app.json中的pages加入要加的文件路径就可以啦，文件路径可以随便起，系统会自动创建出来的，那么我就接着之前的讲，我们之前创建了一个页面叫addPage，addPage里面包含四个文件addPag">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-f4a28e737f424802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-019d649c928f4417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-2590b822f203ca4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1750086-13a7439527e75866.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-08-29T10:54:14.000Z">
+<meta property="article:published_time" content="2017-05-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-08-29T10:54:14.000Z">
+<meta property="article:author" content="代码君">
+<meta property="article:tag" content="电商">
+<meta property="article:tag" content="小程序">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微信小程序入门篇（二）">
-<meta name="twitter:description" content="上篇 微信小程序入门篇（一）我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈 页面的构成  还记得我们在上篇文章中讲解如何加入一个界面吗？在app.json中的pages加入要加的文件路径就可以啦，文件路径可以随便起，系统会自动创建出来的，那么我就接着之前的讲，我们之前创建了一个页面叫addPage，addPage里面包含四个文件addPag">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-f4a28e737f424802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1750086-019d649c928f4417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
   
     <link rel="icon" href="/img/logo.jpeg">
@@ -40,7 +39,9 @@
     <meta name="msapplication-TileImage" content="/img/logo.jpeg">
     <meta name="msapplication-TileColor" content="#0e90d2">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
   
@@ -54,7 +55,7 @@ var _hmt = _hmt || [];
 })();
 </script>
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 <body>
 <div id="container">
   <div id="wrap">
@@ -79,7 +80,7 @@ var _hmt = _hmt || [];
         
           <a class="main-nav-link" href="/archives">文章</a>
         
-          <a class="main-nav-link" href="/2017/04/06/个人简历/">个人简历</a>
+          <a class="main-nav-link" href="/2017/04/06/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/">个人简历</a>
         
       </nav>
       <!--
@@ -104,12 +105,12 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main"><article id="post-微信小程序入门篇（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/05/23/微信小程序入门篇（二）/" class="article-date">
+    <a href="/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
   <time datetime="2017-05-22T16:00:00.000Z" itemprop="datePublished">2017-05-23</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/微信小程序/">微信小程序</a>
+    <a class="article-category-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a>
   </div>
 
   </div>
@@ -130,7 +131,7 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>上篇<a href="http://www.jianshu.com/p/e63be70e3ab9" target="_blank" rel="external"> 微信小程序入门篇（一）</a>我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈</p>
+        <p>上篇<a href="http://www.jianshu.com/p/e63be70e3ab9" target="_blank" rel="noopener"> 微信小程序入门篇（一）</a>我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈</p>
 <h2 id="页面的构成"><a href="#页面的构成" class="headerlink" title="页面的构成"></a>页面的构成</h2><hr>
 <ol>
 <li>还记得我们在上篇文章中讲解如何加入一个界面吗？在app.json中的pages加入要加的文件路径就可以啦，文件路径可以随便起，系统会自动创建出来的，那么我就接着之前的讲，我们之前创建了一个页面叫addPage，addPage里面包含四个文件<strong>addPage.js、addPage.json、addPage.wxml、addPage.wxss</strong>这四个对应的作用是什么呐？<ul>
@@ -141,39 +142,41 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ol>
-<center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-f4a28e737f424802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1.png"><br></center>
+<center>
+![1-1.png](http://upload-images.jianshu.io/upload_images/1750086-f4a28e737f424802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+</center>
 
 <h2 id="页面的解析"><a href="#页面的解析" class="headerlink" title="页面的解析"></a>页面的解析</h2><hr>
 <ol>
 <li><p>addPage.js解析</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">// pages/addPage/addPage.js</div><div class="line">Page(&#123;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面的初始数据</div><div class="line">   */</div><div class="line">  data: &#123;</div><div class="line">  </div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面加载</div><div class="line">   */</div><div class="line">  onLoad: <span class="keyword">function</span> (options) &#123;</div><div class="line">    console.debug(<span class="string">"onLoad--监听页面加载"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面初次渲染完成</div><div class="line">   */</div><div class="line">  onReady: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onReady--监听页面初次渲染完成"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面显示</div><div class="line">   */</div><div class="line">  onShow: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onShow--监听页面显示"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面隐藏</div><div class="line">   */</div><div class="line">  onHide: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onHide--监听页面隐藏"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 生命周期函数--监听页面卸载</div><div class="line">   */</div><div class="line">  onUnload: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onUnload--监听页面卸载"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面相关事件处理函数--监听用户下拉动作</div><div class="line">   */</div><div class="line">  onPullDownRefresh: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onPullDownRefresh--监听用户下拉动作"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 页面上拉触底事件的处理函数</div><div class="line">   */</div><div class="line">  onReachBottom: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onReachBottom--页面上拉触底事件的处理函数"</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  /**</div><div class="line">   * 用户点击右上角分享</div><div class="line">   */</div><div class="line">  onShareAppMessage: <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    console.debug(<span class="string">"onShareAppMessage--用户点击右上角分享"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-</li>
-</ol>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">// pages/addPage/addPage.js</span><br><span class="line">Page(&#123;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 页面的初始数据</span><br><span class="line">   */</span><br><span class="line">  data: &#123;</span><br><span class="line">  </span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面加载</span><br><span class="line">   */</span><br><span class="line">  onLoad: <span class="keyword">function</span> (options) &#123;</span><br><span class="line">    console.debug(<span class="string">"onLoad--监听页面加载"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面初次渲染完成</span><br><span class="line">   */</span><br><span class="line">  onReady: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onReady--监听页面初次渲染完成"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面显示</span><br><span class="line">   */</span><br><span class="line">  onShow: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onShow--监听页面显示"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面隐藏</span><br><span class="line">   */</span><br><span class="line">  onHide: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onHide--监听页面隐藏"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面卸载</span><br><span class="line">   */</span><br><span class="line">  onUnload: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onUnload--监听页面卸载"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 页面相关事件处理函数--监听用户下拉动作</span><br><span class="line">   */</span><br><span class="line">  onPullDownRefresh: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onPullDownRefresh--监听用户下拉动作"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 页面上拉触底事件的处理函数</span><br><span class="line">   */</span><br><span class="line">  onReachBottom: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onReachBottom--页面上拉触底事件的处理函数"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 用户点击右上角分享</span><br><span class="line">   */</span><br><span class="line">  onShareAppMessage: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onShareAppMessage--用户点击右上角分享"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>这里面注释都是系统自动创建的，我没动，注释写的很清楚，我没什么要多说的啦，差别是我在每个方法里加入了<strong>console.debug（）</strong>这个是以后调试bug会用到的，输出日志，就是以后程序出现的问题就靠他输出来，我加入的目的就是要展示一下，系统启动小程序都执行了那些方法,怎么测试系统执行了那些方法呐？ </p>
 <ul>
 <li><p>第一步，改动跳转的代码，首先找到pages/index/index.js,修改bindViewTap方法里的url,路径改为addPage的路径，这样页面跳转的时候就会跳到addPage界面啦，修改过的代码记得保存，否者效果无效！</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bindViewTap: <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">   wx.navigateTo(&#123;</div><div class="line">     //url: <span class="string">'../logs/logs'</span></div><div class="line">     url: <span class="string">'../addPage/addPage'</span></div><div class="line">   &#125;)</div><div class="line"> &#125;,</div></pre></td></tr></table></figure>
-</code></pre></li>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bindViewTap: <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">   wx.navigateTo(&#123;</span><br><span class="line">     //url: <span class="string">'../logs/logs'</span></span><br><span class="line">     url: <span class="string">'../addPage/addPage'</span></span><br><span class="line">   &#125;)</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure></li>
 <li><p>第二步，找到菜单栏的调试按钮，切换到调试模式，找到Console控制台，选着All或者Debug模式，Console会输出日志信息，接下来点击一下helloWord上面的用户头像，看看会出现上面效果，如果操作没错的话会出现下面的效果，<br><br><img src="http://upload-images.jianshu.io/upload_images/1750086-019d649c928f4417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-1.png"><br>看控制台输出的信息，理论上是会出现三行蓝色字，第四行是因为我还执行了一个返回键的操作由此可判断，当点击返回键时执行<strong>onUnload</strong>方法，还有当页面加载的时候方法执行的先后顺序为onLoad-&gt;onShow-&gt;onReady，我们只要知道页面的生命周期就好，至于具体的调用，我们在后面实战的时候讲解，还有如果你点击界面三个小点，然后执行转发操作，就会执行<strong>onShareAppMessage</strong>方法，具体我就不演示啦，addPage.js中还有的方法是<strong>onHide、onPullDownRefresh、onReachBottom</strong>，当A跳转到B时候，A就会执行onHide的方法啦，onPullDownRefresh下拉刷新数据会用到，onReachBottom用于底部加载更多，这些都放在后面在讲解电商开发的时候一起讲。好，关于addPage.js就讲解到这里</p>
 </li>
 </ul>
-<ol>
-<li><p>addPage.wxml与addPage.wxss<br><br><strong>.wxml与.wxss</strong>构成了整个界面，我们自己新建的addPage文件没什么样式，所以我就拿index.wxml和index.wxss来讲解</p>
-<ul>
-<li><p><strong>index.wxml</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!--index.wxml--&gt;</div><div class="line">&lt;view class=&quot;container&quot;&gt;</div><div class="line">  &lt;view  bindtap=&quot;bindViewTap&quot; class=&quot;userinfo&quot;&gt;</div><div class="line">    &lt;image class=&quot;userinfo-avatar&quot; src=&quot;&#123;&#123;userInfo.avatarUrl&#125;&#125;&quot; background-size=&quot;cover&quot;&gt;&lt;/image&gt;</div><div class="line">    &lt;text class=&quot;userinfo-nickname&quot;&gt;&#123;&#123;userInfo.nickName&#125;&#125;&lt;/text&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">  &lt;view class=&quot;usermotto&quot;&gt;</div><div class="line">    &lt;text class=&quot;user-motto&quot;&gt;&#123;&#123;motto&#125;&#125;&lt;/text&gt;</div><div class="line">  &lt;/view&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
 </li>
-</ul>
+<li><p>addPage.wxml与addPage.wxss<br></p>
 </li>
 </ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-2590b822f203ca4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-2.png">看代码对应的视图，从代码看过去黑色框（view）包含两个黄色框（view），第一个黄色框又包含两个image和text，界面布局大致就是这样，看里面具体代码，黑色框view里有一个属性class，这个class可以理解为ID这个class是用来关联index.wxss,可以理解为黑色框的view设置为”container”的样式，继续看第一个黄色框View，同理可以知道第二个黄色框View的样式设为”userinfo”,咦，<strong>bindtap</strong>是什么意思呐？<strong>bindtap</strong>你可以理解为事件监听，系统定义的固定字段，写事件一定会用到这个，还记得上面我们做的测试系统执行的方法时，不是有修改过index.js中”bindViewTap”的方法嘛，这个”bindViewTap”是自定义的方法名，可以随意修改，但是<strong>bindtap</strong>字段是不可修改的否则代码无效，再说说绿色框中的text，有没有注意到<strong></strong>，这个就是给视图赋值，就是界面上你看到的HelloWord就是这么设置的，”motto、userInfo.nickName”字段是在index.js中的data里面，这里要强调的是我们在调用index.js里data数据时，赋值的时候要记得加入<strong></strong>两个中括号，这样系统才能识别数据。</p>
+<p><strong>.wxml与.wxss</strong>构成了整个界面，我们自己新建的addPage文件没什么样式，所以我就拿index.wxml和index.wxss来讲解</p>
 <ul>
+<li><p><strong>index.wxml</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--index.wxml--&gt;</span><br><span class="line">&lt;view class&#x3D;&quot;container&quot;&gt;</span><br><span class="line">  &lt;view  bindtap&#x3D;&quot;bindViewTap&quot; class&#x3D;&quot;userinfo&quot;&gt;</span><br><span class="line">    &lt;image class&#x3D;&quot;userinfo-avatar&quot; src&#x3D;&quot;&#123;&#123;userInfo.avatarUrl&#125;&#125;&quot; background-size&#x3D;&quot;cover&quot;&gt;&lt;&#x2F;image&gt;</span><br><span class="line">    &lt;text class&#x3D;&quot;userinfo-nickname&quot;&gt;&#123;&#123;userInfo.nickName&#125;&#125;&lt;&#x2F;text&gt;</span><br><span class="line">  &lt;&#x2F;view&gt;</span><br><span class="line">  &lt;view class&#x3D;&quot;usermotto&quot;&gt;</span><br><span class="line">    &lt;text class&#x3D;&quot;user-motto&quot;&gt;&#123;&#123;motto&#125;&#125;&lt;&#x2F;text&gt;</span><br><span class="line">  &lt;&#x2F;view&gt;</span><br><span class="line">&lt;&#x2F;view&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-2590b822f203ca4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-2.png">看代码对应的视图，从代码看过去黑色框（view）包含两个黄色框（view），第一个黄色框又包含两个image和text，界面布局大致就是这样，看里面具体代码，黑色框view里有一个属性class，这个class可以理解为ID这个class是用来关联index.wxss,可以理解为黑色框的view设置为”container”的样式，继续看第一个黄色框View，同理可以知道第二个黄色框View的样式设为”userinfo”,咦，<strong>bindtap</strong>是什么意思呐？<strong>bindtap</strong>你可以理解为事件监听，系统定义的固定字段，写事件一定会用到这个，还记得上面我们做的测试系统执行的方法时，不是有修改过index.js中”bindViewTap”的方法嘛，这个”bindViewTap”是自定义的方法名，可以随意修改，但是<strong>bindtap</strong>字段是不可修改的否则代码无效，再说说绿色框中的text，有没有注意到<strong></strong>，这个就是给视图赋值，就是界面上你看到的HelloWord就是这么设置的，”motto、userInfo.nickName”字段是在index.js中的data里面，这里要强调的是我们在调用index.js里data数据时，赋值的时候要记得加入<strong></strong>两个中括号，这样系统才能识别数据。</p>
+</li>
 <li><p><strong>index.wxss</strong></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**index.wxss**/</div><div class="line">.userinfo &#123;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  align-items: center;</div><div class="line">&#125;</div><div class="line">.userinfo-avatar &#123;</div><div class="line">  width: 128rpx;</div><div class="line">  height: 128rpx;</div><div class="line">  margin: 20rpx;</div><div class="line">  border-radius: 50%;</div><div class="line">&#125;</div><div class="line">.userinfo-nickname &#123;</div><div class="line">  color: #aaa;</div><div class="line">&#125;</div><div class="line">.usermotto &#123;</div><div class="line">  margin-top: 200px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**app.wxss**/</div><div class="line">.container &#123;</div><div class="line">  height: 100%;</div><div class="line">  display: flex;</div><div class="line">  flex-direction: column;</div><div class="line">  align-items: center;</div><div class="line">  justify-content: space-between;</div><div class="line">  padding: 200rpx 0;</div><div class="line">  box-sizing: border-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**index.wxss**&#x2F;</span><br><span class="line">.userinfo &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: column;</span><br><span class="line">  align-items: center;</span><br><span class="line">&#125;</span><br><span class="line">.userinfo-avatar &#123;</span><br><span class="line">  width: 128rpx;</span><br><span class="line">  height: 128rpx;</span><br><span class="line">  margin: 20rpx;</span><br><span class="line">  border-radius: 50%;</span><br><span class="line">&#125;</span><br><span class="line">.userinfo-nickname &#123;</span><br><span class="line">  color: #aaa;</span><br><span class="line">&#125;</span><br><span class="line">.usermotto &#123;</span><br><span class="line">  margin-top: 200px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**app.wxss**&#x2F;</span><br><span class="line">.container &#123;</span><br><span class="line">  height: 100%;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: column;</span><br><span class="line">  align-items: center;</span><br><span class="line">  justify-content: space-between;</span><br><span class="line">  padding: 200rpx 0;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<center>
+![2-3.png](http://upload-images.jianshu.io/upload_images/1750086-13a7439527e75866.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+</center>
+结合效果图一起看样式代码，看到"userinfo"和"container"是不是眼熟，就是之前在index.wxml中class的样式，我们在wxss定义好样式，就是通过这些字段把index.wxml和index.wxss关联起来，才有的上面的界面效果
+
 </li>
 </ul>
-<p><center><br><img src="http://upload-images.jianshu.io/upload_images/1750086-13a7439527e75866.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-3.png"><br></center><br>结合效果图一起看样式代码，看到”userinfo”和”container”是不是眼熟，就是之前在index.wxml中class的样式，我们在wxss定义好样式，就是通过这些字段把index.wxml和index.wxss关联起来，才有的上面的界面效果</p>
 <h3 id="wxss样式积累"><a href="#wxss样式积累" class="headerlink" title="wxss样式积累"></a>wxss样式积累</h3><hr>
 <p>wxss样式里代码看不懂可以查阅这里，如果没找到对应样式，请自行百度喽，这些也是代码君问的度娘</p>
 <ol>
@@ -184,21 +187,21 @@ var _hmt = _hmt || [];
 <li>inherit：继承父类</li>
 <li>flex：多栏多列</li>
 </ul>
-<ol>
+<ol start="2">
 <li>flex-direction:</li>
 </ol>
 <ul>
 <li>column 垂直分布</li>
 <li>row 水平分布</li>
 </ul>
-<ol>
+<ol start="3">
 <li>flex-wrap：</li>
 </ol>
 <ul>
 <li>nowrap item溢出不换行</li>
 <li>wrap 超出的item跳到下一行</li>
 </ul>
-<ol>
+<ol start="4">
 <li>justify-content属性</li>
 </ol>
 <ul>
@@ -208,21 +211,21 @@ var _hmt = _hmt || [];
 <li>space-between ：item中间留出等间距</li>
 <li>space-around：环绕item流程等间距</li>
 </ul>
-<ol>
+<ol start="5">
 <li>align-items item 边界线对齐方式  </li>
 </ol>
 </li>
 </ol>
 <ul>
-<li>flex-start | flex-end | center | baseline | stretch <ol>
+<li>flex-start | flex-end | center | baseline | stretch <ol start="6">
 <li>border-bottom 边界线</li>
 </ol>
 </li>
-<li>举个栗子 1px solid #ccc;<ol>
+<li>举个栗子 1px solid #ccc;<ol start="7">
 <li>align-items item 边界线对齐方式  </li>
 </ol>
 </li>
-<li>flex-start | flex-end | center | baseline | stretch <ol>
+<li>flex-start | flex-end | center | baseline | stretch <ol start="8">
 <li>overflow-x   内容超过边框处理方式<ul>
 <li>visible 显示超出的内容</li>
 <li>hidden 隐藏超出的内容</li>
@@ -248,15 +251,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2017/05/23/微信小程序入门篇（二）/" data-id="cjdxtwt9k000cjxqishwhog3g" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（二）">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" data-id="ck5nguq0y00080v9o36dz5mwf" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（二）">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2017/05/23/微信小程序入门篇（二）/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小程序/">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/电商/">电商</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li></ul>
 
     </footer>
   </div>
@@ -264,7 +267,7 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2017/05/31/微信小程序实战篇-电商（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/05/31/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E6%88%98%E7%AF%87-%E7%94%B5%E5%95%86%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">
         
@@ -274,7 +277,7 @@ var _hmt = _hmt || [];
     </a>
   
   
-    <a href="/2017/05/22/微信小程序入门篇（一）/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/05/22/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">微信小程序入门篇（一）</div>
     </a>
@@ -286,7 +289,7 @@ var _hmt = _hmt || [];
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2017/05/23/微信小程序入门篇（二）/" data-title="微信小程序入门篇（二）" data-url="http://jiangzepeng.cn/2017/05/23/微信小程序入门篇（二）/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/05/23/微信小程序入门篇（二）/" data-title="微信小程序入门篇（二）" data-url="http://jiangzepeng.cn/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/"></div>
   </section>
 </section>
       
@@ -321,7 +324,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D动画/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/个人简历/" style="font-size: 10px;">个人简历</a> <a href="/tags/内存泄漏/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/动画/" style="font-size: 10px;">动画</a> <a href="/tags/小程序/" style="font-size: 20px;">小程序</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/电商/" style="font-size: 20px;">电商</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a>
     </div>
   </div>
 
@@ -372,7 +375,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/内存泄漏/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/动画特效/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源项目/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/简历/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -395,7 +398,7 @@ var _hmt = _hmt || [];
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2012 - 2018 <a href="/" target="_blank">代码君</a>.
+      Copyright &copy; 2012 - 2020 <a href="/" target="_blank">代码君</a>.
       &nbsp;
       <span id="busuanzi_container_site_pv">
         总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
@@ -406,7 +409,7 @@ var _hmt = _hmt || [];
       
         &nbsp;
         <span>
-          <a href="http://www.miibeian.gov.cn" >粤ICP备15013245号-2</a>.
+          <a href="http://www.miibeian.gov.cn" target="_blank" rel="noopener" >粤ICP备15013245号-2</a>.
         </span>
       
     </div>
@@ -420,7 +423,7 @@ var _hmt = _hmt || [];
   
     <a href="/archives" class="mobile-nav-link">文章</a>
   
-    <a href="/2017/04/06/个人简历/" class="mobile-nav-link">个人简历</a>
+    <a href="/2017/04/06/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" class="mobile-nav-link">个人简历</a>
   
 </nav>
   <!-- totop start -->
@@ -478,7 +481,9 @@ var duoshuoQuery = {short_name:"shijiajie"};
 
 
 
+
 <script src="/js/script.js"></script>
+
 
 </div>
 </body>
