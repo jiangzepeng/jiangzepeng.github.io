@@ -100,14 +100,14 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main">
   
-    <article id="post- Android Studio 内存泄漏分析指南" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android Studio 资源id与资源名称互换，动态获取" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2017-09-06T16:00:00.000Z" itemprop="datePublished">2017-09-07</time>
+    <a href="/2018/03/21/Android%20Studio%20%E8%B5%84%E6%BA%90id%E4%B8%8E%E8%B5%84%E6%BA%90%E5%90%8D%E7%A7%B0%E4%BA%92%E6%8D%A2%EF%BC%8C%E5%8A%A8%E6%80%81%E8%8E%B7%E5%8F%96/" class="article-date">
+  <time datetime="2018-03-20T16:00:00.000Z" itemprop="datePublished">2018-03-21</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a>
+    <a class="article-category-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a>
   </div>
 
   </div>
@@ -118,7 +118,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/">Android Studio 内存泄漏分析指南</a>
+      <a class="article-title" href="/2018/03/21/Android%20Studio%20%E8%B5%84%E6%BA%90id%E4%B8%8E%E8%B5%84%E6%BA%90%E5%90%8D%E7%A7%B0%E4%BA%92%E6%8D%A2%EF%BC%8C%E5%8A%A8%E6%80%81%E8%8E%B7%E5%8F%96/">Android Studio 资源id与资源名称互换，动态获取</a>
     </h1>
   
 
@@ -128,105 +128,16 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>最近在优化公司的项目，想针对内存泄漏进行分析一下，查阅网上的一些资料，发现苦逼的是，资料一大堆，但是内容都差不多，至今未找到一篇实战的内存泄漏分析，全部停留在理论知识上，最后查阅了一些外文文献，才有了一点思路，好吧！既然没有实战分析，我就做第一人，把我学到的分享出来，希望对你们有帮助，当然有说的不对的，望各位指出来~</p>
-<h1 id="内存泄漏原因"><a href="#内存泄漏原因" class="headerlink" title="内存泄漏原因"></a>内存泄漏原因</h1><hr>
-<p>当应用不需要某对象时候，忘记释放分配的内存，该对象仍然保持被引用状态（当对象拥有强引用，GC无法回收），从而导致内存泄漏</p>
-<h1 id="泄漏的源头"><a href="#泄漏的源头" class="headerlink" title="泄漏的源头"></a>泄漏的源头</h1><hr>
-<p>泄漏的源头有很多，有开源的第三方框架引起的、android系统自身造成的如webview的内存泄漏，还有一个是我们可以控制的就是自身编码引起的内存泄漏，这也是我们可以避免的，一下情况容易出现内存泄漏</p>
-<h3 id="一、-Context-引起的内存泄漏"><a href="#一、-Context-引起的内存泄漏" class="headerlink" title="一、 Context 引起的内存泄漏"></a>一、 Context 引起的内存泄漏</h3><p><strong>常见问题：</strong></p>
-<p>这个是最常见的，因为Activity经常要用到上下文Context，很有可能Activity作为Context传递给某些类，Activity生命周期结束之后，某些类仍然存活并保持着该Activity的引用，保持引用就无法被回收。从而导致内存泄漏</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li>下次如果要传入context给某些类的时候，最好是用ApplicationContext，这样可以有效避免内存泄漏</li>
-<li>在界面销毁的时候，手动释放掉引用过activity的context</li>
+        <p>Android 资源名称（name）和id互相转换，动态获取</p>
+<h3 id="一、通过传递图片名称，获取对应的图片id"><a href="#一、通过传递图片名称，获取对应的图片id" class="headerlink" title="一、通过传递图片名称，获取对应的图片id"></a>一、通过传递图片名称，获取对应的图片id</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public int getId(String name)&#123;</span><br><span class="line">       Resources res&#x3D;getResources();</span><br><span class="line"> </span><br><span class="line">       &#x2F;&#x2F;return res.getIdentifier(name,null,null);&#x2F;&#x2F;带上地址 例如 包:type&#x2F;name           (org.anjoy.act:drawable&#x2F;ic)</span><br><span class="line"> </span><br><span class="line">       return res.getIdentifier(name,&quot;drawable&quot;,getPackageName());&#x2F;&#x2F;名称例如 ic</span><br><span class="line">       </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、通过图片id，获取图片名称"><a href="#二、通过图片id，获取图片名称" class="headerlink" title="二、通过图片id，获取图片名称"></a>二、通过图片id，获取图片名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public String getName(int id)&#123;</span><br><span class="line">  Resources res&#x3D;getResources();</span><br><span class="line">  return res.getResourceEntryName(id);&#x2F;&#x2F;得到的是 name</span><br><span class="line">  &#x2F;&#x2F;return res.getResourceName(id);&#x2F;&#x2F;得到的是 包&#x2F;type&#x2F;name</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><ol>
+<li><p>每个资源属性的定义, 由 packageName, TypeName, entryName 构成, 可以由getResourceName(resId)获得, “package/type/entry”, 也可分别获得 getResourcePackageName getResourceTypeName getResourceEntryName</p>
+</li>
+<li><p>Resources.getIdentifier 方法, 根据 entryName, typeName, package, 可获取对应资源在Resources对象中唯一的id;</p>
+</li>
 </ol>
-<h3 id="二、Static-静态变量"><a href="#二、Static-静态变量" class="headerlink" title="二、Static 静态变量"></a>二、Static 静态变量</h3><p><strong>常见问题：</strong></p>
-<p>我们有时候会为了方便，设置某个Activity或者View为静态变量，但是你要知道，static变量是要贯穿整个应该的生命周期，就是意味着即使Activity销毁，static变量也不会销毁，所以，如果你把View或者Activity设置为静态变量，这会导致当前的Activity会一直存在，从而导致内存泄漏</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li>尽量避免使用static变量</li>
-<li>如果非要使用的话，记得在界面销毁的时候，把静态变量也释放掉，简单说就是把静态变量置空，如staticView=null</li>
-</ol>
-<h3 id="三、非静态内部类、匿名内部类持有外部类的引用"><a href="#三、非静态内部类、匿名内部类持有外部类的引用" class="headerlink" title="三、非静态内部类、匿名内部类持有外部类的引用"></a>三、非静态内部类、匿名内部类持有外部类的引用</h3><p><strong>常见问题：</strong></p>
-<p>我们在使用AsyncTash、Handler、TimerTask、Thread的时候，为了方便，直接new一个匿名内部类对象，殊不知我们在new一个的时候，编译器在编译的时候会自动为内部类的构造方法加上外包类的引用，所以这些匿名内部类会持有Activity，当这些匿名内部类处理非常耗时的操作时候，就算Activity生命周期结束，也不会被销毁，这就会造成内存泄漏</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li>当Activity销毁的时候，对不需要的匿名内部类进行任务停止操作</li>
-<li>使用静态内部类，静态内部类内部使用弱引用来引外外部类，这样当Activity销毁的时候，弱引用是可以被回收的</li>
-</ol>
-<h3 id="四、其他引起的泄漏"><a href="#四、其他引起的泄漏" class="headerlink" title="四、其他引起的泄漏"></a>四、其他引起的泄漏</h3><ol>
-<li>我们在使用系统服务的时候，比如注册了一些广播监听，在使用完后，要释放掉</li>
-<li>我们在给View绘制动画的时候，View被动画持有，而Activity又被View持有引用，导致Activity也无法释放。所以在Activity销毁时，调用animator.cancel()来停止动画</li>
-</ol>
-<h1 id="内存泄漏分析-实战篇"><a href="#内存泄漏分析-实战篇" class="headerlink" title="内存泄漏分析-实战篇"></a>内存泄漏分析-实战篇</h1><hr>
-<p>这个才是尽头的重头戏，前面写的只是对网上文献的一些总结</p>
-<h3 id="分析工具"><a href="#分析工具" class="headerlink" title="分析工具"></a>分析工具</h3><ol>
-<li>MAT ：eclipse时代的分析工具，具体分析实战可以参考<a href="http://www.jianshu.com/p/c49f778e7acf" target="_blank" rel="noopener">这篇文章</a></li>
-<li>LeakCanary:  Square开源的内存泄漏探测器，具体使用参考<a href="http://www.jianshu.com/p/7db231163168" target="_blank" rel="noopener">这篇文章</a></li>
-<li>Android Monitor：Android Studio 自带的分析工具，今天的重头戏</li>
-</ol>
-<h3 id="Android-Monitor"><a href="#Android-Monitor" class="headerlink" title="Android Monitor"></a>Android Monitor</h3><p>1.生成HPROF文件，点击红框中有绿色下载箭头的按钮（Dump java Heap），这个会生成以hprof结尾的文件</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-7ba9dee242bdbd28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android Monitor.png"></p>
-<p>2.生成的效果如下图，简单介绍一下界面功能</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-34af0a88a0524d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HPROF.png"><br>    功能描述：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Total  Count</td>
-<td>该类的实例总数</td>
-</tr>
-<tr>
-<td>Heap Count</td>
-<td>所选择的堆中该类的实例的数量</td>
-</tr>
-<tr>
-<td>Sizeof</td>
-<td>单个实例所占空间大小（如果每个实例所占空间大小不一样则显示0）</td>
-</tr>
-<tr>
-<td>Shallow Size</td>
-<td>堆里所有实例大小总和（Heap Count * Sizeof）</td>
-</tr>
-<tr>
-<td>Retained Size</td>
-<td>该类所有实例所支配的内存大小</td>
-</tr>
-<tr>
-<td>Instance</td>
-<td>具体的实例</td>
-</tr>
-<tr>
-<td>Reference Tree</td>
-<td>所选实例的引用，以及指向该引用的引用。</td>
-</tr>
-<tr>
-<td>Depth</td>
-<td>GC根节点到所选实例的最短路径的深度</td>
-</tr>
-<tr>
-<td>Shallow Size</td>
-<td>所选实例的大小</td>
-</tr>
-<tr>
-<td>Dominating  Size</td>
-<td>所选实例所支配的内存大小</td>
-</tr>
-</tbody></table>
-<p>3.也许你看完这些也还是一头雾水，不知道怎么分析，没关系，我们不就是要找到内存泄漏的源头嘛，来看这里，要开始放大招啦，看到上图中最右边的   <strong>Analyzer Tasks</strong>，点击这个版块，这个版块就是主要的查找内存泄漏版块</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-6dfa350ce64c7aa5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Analyzer Tasks.png"></p>
-<p>4.启动页很简单，点击绿色运行按钮就好，之后会在下面列出可能存在内存泄漏的Activity，如果没显示，说明启动的Activity中没有内存泄漏</p>
-<p>5.查看引用树（Reference Tree），都是根据这个查找内存泄漏的具体地方的</p>
-<p>6.一般有类似三角形的，就是一直被引用这，导致内存泄漏，找到对应的地方也很简单，右键项目点击<strong>Jump to Source</strong>就会打开对应泄漏源码的地方啦，然后我们在根据上面说的泄漏原因，及解决办法修正就好啦<br><img src="http://upload-images.jianshu.io/upload_images/1750086-6204c91351d2f432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jump to Source.png"><br><img src="http://upload-images.jianshu.io/upload_images/1750086-74b0f22614c38553.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak Code.png"></p>
-<p>上面一共有五六处内存泄漏，都是我故意写出来的，目的就是为了练习排查分析内存泄漏，特地放上源码，demo中内存泄漏以及修复代码都有，欢迎下载学习，如果觉得不错，顺手给个star</p>
-<h3 id="下载地址：MemoryLeakSamples"><a href="#下载地址：MemoryLeakSamples" class="headerlink" title="下载地址：MemoryLeakSamples"></a>下载地址：<a href="https://github.com/jiangzepeng/MemoryLeakSamples" target="_blank" rel="noopener">MemoryLeakSamples</a></h3><p><img src="http://upload-images.jianshu.io/upload_images/1750086-43c165cdbef19e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MemoryLeakSamples.png"></p>
-<h5 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献 :"></a>参考文献 :</h5><p><a href="http://www.jianshu.com/p/fec129afab1b" target="_blank" rel="noopener">明白原理，轻松应对 Android 常见内存泄漏</a></p>
-<p><a href="http://www.jianshu.com/p/7d958959cf33" target="_blank" rel="noopener">HPROF文件查看和分析工具</a></p>
-<p><a href="https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570" target="_blank" rel="noopener">Memory Leak Patterns in Android</a></p>
 
       
       
@@ -234,15 +145,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/" data-id="ck5nguq0l00000v9ohgr00e4p" class="article-share-link" data-share="baidu" data-title="Android Studio 内存泄漏分析指南">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2018/03/21/Android%20Studio%20%E8%B5%84%E6%BA%90id%E4%B8%8E%E8%B5%84%E6%BA%90%E5%90%8D%E7%A7%B0%E4%BA%92%E6%8D%A2%EF%BC%8C%E5%8A%A8%E6%80%81%E8%8E%B7%E5%8F%96/" data-id="ck5nhqvv20000649o3xsg7d6v" class="article-share-link" data-share="baidu" data-title="Android Studio 资源id与资源名称互换，动态获取">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2017/09/07/%20Android%20Studio%20%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2018/03/21/Android%20Studio%20%E8%B5%84%E6%BA%90id%E4%B8%8E%E8%B5%84%E6%BA%90%E5%90%8D%E7%A7%B0%E4%BA%92%E6%8D%A2%EF%BC%8C%E5%8A%A8%E6%80%81%E8%8E%B7%E5%8F%96/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" rel="tag">内存泄漏</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Studio/" rel="tag">Android Studio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B5%84%E6%BA%90/" rel="tag">资源</a></li></ul>
 
     </footer>
   </div>
@@ -254,7 +165,7 @@ var _hmt = _hmt || [];
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/13/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/15/">下一页 &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/13/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/15/">下一页 &amp;raquo;</a>
   </nav>
 </section>
       
@@ -289,7 +200,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/Android-Studio/" style="font-size: 13.33px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 16.67px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 13.33px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 16.67px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
     </div>
   </div>
 
@@ -340,7 +251,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -349,7 +260,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
