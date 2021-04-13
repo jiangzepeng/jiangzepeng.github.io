@@ -98,14 +98,14 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main">
   
-    <article id="post-Google Play 上架的那些坑" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-微信小程序 npm 使用指南" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/" class="article-date">
-  <time datetime="2020-01-17T16:00:00.000Z" itemprop="datePublished">2020-01-18</time>
+    <a href="/2021/02/11/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%20npm%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2021-02-10T16:00:00.000Z" itemprop="datePublished">2021-02-11</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a>
+    <a class="article-category-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a>
   </div>
 
   </div>
@@ -116,7 +116,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">Google Play 上架的那些坑</a>
+      <a class="article-title" href="/2021/02/11/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%20npm%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">微信小程序 npm 使用指南</a>
     </h1>
   
 
@@ -126,60 +126,55 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>公司最近扩展业务到海外，因此，需要把App上架到Google Play市场，当时一脸茫然，不知道如何上架，后来网上查询了一些资料，以及实战后，遇到了一些坑，再次记录下来，供大家参考借鉴</p>
-<h4 id="一、前提条件"><a href="#一、前提条件" class="headerlink" title="一、前提条件"></a>一、前提条件</h4><ol>
-<li>具备科学上网</li>
-<li>申请一个Google Play 开发者账号，需要支付25美刀，账号注册地址： <a href="https://link.jianshu.com?t=https://accounts.google.com/SignUp" target="_blank" rel="noopener">https://link.jianshu.com?t=https://accounts.google.com/SignUp</a></li>
-</ol>
-<h4 id="二、创建上架App"><a href="#二、创建上架App" class="headerlink" title="二、创建上架App"></a>二、创建上架App</h4><ol>
-<li><p>根据注册的开发者账号，登入开发者平台 <a href="https://play.google.com/apps/publish，然后点击**创建应用" target="_blank" rel="noopener">https://play.google.com/apps/publish，然后点击**创建应用</a>**<br><img src="https://upload-images.jianshu.io/upload_images/1750086-96ed79dbae13be9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-<li><p>选择语言与App名称，语言最好选择英文，毕竟是给国外的人用，然后创建<br><img src="https://upload-images.jianshu.io/upload_images/1750086-b76d64d8962617b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-<li><p>资料的填写，上面写的很详细，星号必填，按照指示填写即可，需要注意的是，手机号的填写，光写手机号提交会提示”错误手机号码“，原因是海外需要+86，所以你需要填写+86XXXXXXXXXX，XXX为手机号码，即可<br><img src="https://upload-images.jianshu.io/upload_images/1750086-c42f2869dbb703ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/1750086-f420425ad2b19a6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</li>
-<li><p>隐私政策，刚开始一脸懵逼，其实就是一个静态Html页面，里面写一些保证书之类的，保证不会把用户隐私泄露出去，这个相当于国内注册的时候，都需要勾选的用户协议，并且必须同意的H5界面，我就是把我们App的用户协议放上去，没什么问题，都填写完，点击<strong>保存草稿</strong><br><img src="https://upload-images.jianshu.io/upload_images/1750086-742db313fc25e4d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-</ol>
-<h4 id="三、上传项目以及内容分级"><a href="#三、上传项目以及内容分级" class="headerlink" title="三、上传项目以及内容分级"></a>三、上传项目以及内容分级</h4><ol>
-<li><p>刚刚填写的资料都在<strong>商品详情</strong>栏目里，如果有需要修改的，还可以到此模块继续修改，之后要做的是Apk上传，点击应用版本，里面分为三种 正式报、Beta版、Alpha版，正式的App建议在内测阶段先上传Alpha和Beta版本<br><img src="https://upload-images.jianshu.io/upload_images/1750086-924e82d9c0fdec09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-<li><p>我先创建的是Beta版，点击管理，进入Beta版界面，然后<strong>创建版本</strong><br><img src="https://upload-images.jianshu.io/upload_images/1750086-bc70fe9af48cadbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</li>
-<li><p>会有个签名询问，点击继续，然后就到了我们熟悉的界面，上传Apk项目，这里有一个坑，就是google play 不允许上传相同版本号的Apk，比如，你上传了一个版本号为10的项目，后来发现一个bug，紧急修复后，版本号不想改动，想直接替换之前那个版本号为10的项目 ，提交后应用平台会提示，已提交过版本号为10的项目，就是该平台不提供删除之前包，和替换之前包的功能，只可以通过版本升级来提交Apk包，所以我只能将版本号改为11，如果有其他办法，欢迎留言向我拍砖<br><img src="https://upload-images.jianshu.io/upload_images/1750086-cdeb60812abecbe4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/1750086-4c18eba6a1fba413.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-<li><p>内容分析需要Apk上传成功才可以填写，其实就是一些问卷调查，按照流程走即可，没有什么坑，当执行完上面说的四个步骤，对应的那四个模块都会打绿色的钩，只有四个都变绿色了，点击商品详情才会出现可以发布字样，如果有未变绿的，把鼠标放到灰色钩上，会提示，什么信息未补全，按照提示操作即可<br><img src="https://upload-images.jianshu.io/upload_images/1750086-cb235a3f964a26e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/1750086-16cf8ee8a4cab645.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-</ol>
-<p>####四、发布项目</p>
-<ol>
-<li><p>点击应用版本，在正式版里选择修改版本<br><img src="https://upload-images.jianshu.io/upload_images/1750086-e1e0c7dd5b8481f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</li>
-<li><p>输入更新版本说明，记得用英文的说明，之后点击<strong>查看</strong><br><img src="https://upload-images.jianshu.io/upload_images/1750086-c80149786decace6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-</li>
-<li><p>核对信息后，点击开始发布正式版就可以了，一般审核在一小时左右，我写完这篇文章，刚好就审核过了，挺快的~<br><img src="https://upload-images.jianshu.io/upload_images/1750086-0656cbfa437b09b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-<li><p>补充一个，发布最好先发布测试版，等测试版审核通过，再发布正式的，原因就是，代码君之前闲麻烦直接上正式，但是遇到审核不通过，再修改，再提交，依然审核不通过，不通过原因是测试版的代码没更新过来，所以又要去测试环境改，很麻烦，与其这样，还不如按照流程，测试通过了，再上正式环境比较稳妥</p>
-</li>
-</ol>
-<h4 id="五、上架的一些坑总结"><a href="#五、上架的一些坑总结" class="headerlink" title="五、上架的一些坑总结"></a>五、上架的一些坑总结</h4><ol>
-<li>手机号码需要输入+86XXXXXX，XXX为手机号码</li>
-<li>修改过的Apk版本号需要升级，不可再用之前的版本号</li>
-<li>Google Play 会强制开发者适配最新包的SDK，代码君当时只适配了Android6.0，目前最新是8.0，平台要求App必须适配到8.0才可以上架</li>
-<li>审核中遇到了审核被拒的情况，被拒理由，违反了谷歌安全 WebView SSL Error Handler，大致原因就是，你在WebView里面重写了方法onReceivedSslError，此方法是当SSL证书验证失败会回调，Google Play 的意思就是，当验证SSL证书回调无效后，需要告诉用户，让用户有知情权，选择是否继续访问WebView里面的网页，这样如果用户选择继续的话，他们就不用背锅啦，哈哈哈，开玩笑啦，其实这样强制要求也是为了防止黑客的攻击，我们程序员是要大大的支持地！，不废话了，直接贴上代码，如果有遇到此问题的直接从把下面的代码，拷贝到你们WebView里面的onReceivedSslError方法里。修改后从新发布就可以了，好像即使发布修复后的版本，也那个违反我们的恶意行为或用户数据政策的提示框不会里面小时掉，需要几个小时的验证，莫慌哈~<br><img src="https://upload-images.jianshu.io/upload_images/1750086-fcd88fce7c7b45e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) &#123;</span><br><span class="line">                final SslErrorHandler mHandler ;</span><br><span class="line">                mHandler&#x3D; handler;</span><br><span class="line">                AlertDialog.Builder builder &#x3D; new AlertDialog.Builder(activity);</span><br><span class="line">                builder.setMessage(&quot;ssl证书验证失败&quot;);</span><br><span class="line">                builder.setPositiveButton(&quot;继续&quot;, new DialogInterface.OnClickListener() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void onClick(DialogInterface dialog, int which) &#123;</span><br><span class="line">                        mHandler.proceed();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                builder.setNegativeButton(&quot;取消&quot;, new DialogInterface.OnClickListener() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void onClick(DialogInterface dialog, int which) &#123;</span><br><span class="line">                        mHandler.cancel();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                builder.setOnKeyListener(new DialogInterface.OnKeyListener() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) &#123;</span><br><span class="line">                        if (event.getAction() &#x3D;&#x3D; KeyEvent.ACTION_UP &amp;&amp; keyCode &#x3D;&#x3D; KeyEvent.KEYCODE_BACK) &#123;</span><br><span class="line">                            mHandler.cancel();</span><br><span class="line">                            dialog.dismiss();</span><br><span class="line">                            return true;</span><br><span class="line">                        &#125;</span><br><span class="line">                        return false;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                AlertDialog dialog &#x3D; builder.create();</span><br><span class="line">                dialog.show();</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+        <p>最近又从新捡起小程序，发现小程序的发展很快，现在也支持npm下载第三方库啦，因此专门写一篇给新手小白入门</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文章首发公众号「代码集中营」</span><br></pre></td></tr></table></figure>
 
-</li>
+<h2 id="什么是npm"><a href="#什么是npm" class="headerlink" title="什么是npm"></a>什么是npm</h2><p>npm的全称是 node package management ，是node.js内置的软件包管理器。简单是就是用来管理第三方库的软件包。可能对于新手还是不懂他厉害的地方，比如某个大神开源了某个第三方库，并且支持npm，那么你只需要一行代码的事情，就可以直接站在巨人的肩膀开发啦</p>
+<h2 id="配置npm环境"><a href="#配置npm环境" class="headerlink" title="配置npm环境"></a>配置npm环境</h2><ol>
+<li>安装node，下载对应的包即可  官网下载地址:<a href="http://nodejs.cn/download/" target="_blank" rel="noopener">http://nodejs.cn/download/</a><br><img src="https://upload-images.jianshu.io/upload_images/1750086-0b81a52fc8bbee1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+<li>查看是否安装成功,输入下面的指令，有出现版本号，即安装成功，支持npm指令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;查看 node 版本</span><br><span class="line">node -v</span><br><span class="line">&#x2F;&#x2F;查看 npm 版本</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<img src="https://upload-images.jianshu.io/upload_images/1750086-53c0241e3124bbcd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
 </ol>
-<h4 id="Google-Play-上架总结"><a href="#Google-Play-上架总结" class="headerlink" title="Google Play 上架总结"></a>Google Play 上架总结</h4><p>这此上架Google Play 一个很深的感受是，别人家的应用平台做的怎么那么好，比起国内各大应用市场都好，说几点是国内应用市场平台无法比的，</p>
+<h2 id="微信小程序使用npm"><a href="#微信小程序使用npm" class="headerlink" title="微信小程序使用npm"></a>微信小程序使用npm</h2><p>小程序在2.2.1 版本后增加了对 npm 包加载的支持，使得小程序支持使用 npm 安装第三方包。这样会使我们开发一款小程序异常简单，这里我就拿比较出名的有赞组件库（Vant）作为例子</p>
+<h5 id="Vant-项目地址：https-github-com-youzan-vant-weapp"><a href="#Vant-项目地址：https-github-com-youzan-vant-weapp" class="headerlink" title="Vant 项目地址：https://github.com/youzan/vant-weapp"></a>Vant 项目地址：<a href="https://github.com/youzan/vant-weapp" target="_blank" rel="noopener">https://github.com/youzan/vant-weapp</a></h5><h5 id="API地址：https-vant-contrib-gitee-io-vant-weapp-home"><a href="#API地址：https-vant-contrib-gitee-io-vant-weapp-home" class="headerlink" title="API地址：https://vant-contrib.gitee.io/vant-weapp/#/home"></a>API地址：<a href="https://vant-contrib.gitee.io/vant-weapp/#/home" target="_blank" rel="noopener">https://vant-contrib.gitee.io/vant-weapp/#/home</a></h5><p>官方的使用教程不太好理解，建议看我的引入方式</p>
 <ol>
-<li><p>Google Play 自带崩溃日志、以及用户下载量、下载机型、日活统计等，这国内的其他平台是不具备的，一般还需要再集成友盟才可以做到这些<br><img src="https://upload-images.jianshu.io/upload_images/1750086-13b2e69911d907c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<li><p>创建一个新小程序项目，创建完成打开小程序里面的终端，新建一个终端<br><img src="https://upload-images.jianshu.io/upload_images/1750086-1be2fa2432b1ff76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 </li>
-<li><p>审核速度，Google Play 应该是机器审核，审核速度很快，相信里面的算法也很强大，目前华为好像也开始逐步机器审核了，这样的好处是审核效率高，减少大量的人工审核成本</p>
+<li><p>初始化npm<br>在终端输入下面的命令，需要输入一些基本信息，不想输入了直接按回车，系统会自动填写默认值，然后会自动生成一个 <strong>package.json</strong> 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/1750086-8513efbf87bb1e33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 </li>
-<li><p>审核标准规范，我之前提交小米应用市场，一般审核周期要七天，而且还会需要人工审核不通过，当我从新提交并未做任何修改，又审核通过了，这就是人工审核的缺点，审核慢，而且标准不统一</p>
+<li><p>生成package-lock.json 文件<br>输入下面的命令,会生成package-lock.json  文件，目的是记录使用的第三方插件，使用 –production 选项，可以减少安装一些业务无关的 npm 包，从而减少整个小程序包的大小。</p>
 </li>
 </ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/1750086-58e561db5db3a196.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --production</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/1750086-08d54c30fee7491d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ol start="4">
+<li><p>安装Vant 第三方库<br>安装指令如下，安装完成，会出现一个新的node_modules文件夹，用于记录项目用到的第三方库，只是记录还不能使用，要使用需要进行构建npm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vant-weapp -S --production</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/1750086-9dc3d3d71d69015f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>构建npm<br>构建的目的是生成一个 miniprogram_npm 目录，里面会存放构建打包后的 npm 包，也就是小程序真正使用的 npm 包。</p>
+</li>
+</ol>
+<ul>
+<li><p>构建之前先在设置里面打开使用npm模块<br><img src="https://upload-images.jianshu.io/upload_images/1750086-45ff7b3e366db429.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>在微信开发者工具中点击“工具–&gt;构建npm”<br><img src="https://upload-images.jianshu.io/upload_images/1750086-e61590b1528b2203.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>构建完成，会多一个miniprogram_npm 文件，用于引用第三方库<br><img src="https://upload-images.jianshu.io/upload_images/1750086-54436a94b25fd224.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+</ul>
+<h2 id="使用Vant库"><a href="#使用Vant库" class="headerlink" title="使用Vant库"></a>使用Vant库</h2><ol>
+<li><p>xxx.json 引入第三方库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;usingComponents&quot;: &#123;</span><br><span class="line">    &quot;van-button&quot;: &quot;vant-weapp&#x2F;button&#x2F;index&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/1750086-77218f63d33ee3e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>在xxx.wxml使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--index.wxml--&gt;</span><br><span class="line">&lt;view class&#x3D;&quot;container&quot;&gt;</span><br><span class="line">  &lt;van-button round icon&#x3D;&quot;https:&#x2F;&#x2F;img.yzcdn.cn&#x2F;vant&#x2F;logo.png&quot; type&#x3D;&quot;info&quot;&gt;</span><br><span class="line">    圆形按钮 带图标</span><br><span class="line">  &lt;&#x2F;van-button&gt;</span><br><span class="line">&lt;&#x2F;view&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/1750086-732381e0911347ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+</ol>
 
       
       
@@ -187,15 +182,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/" data-id="ck5nicz3g00079e9o7fg791q7" class="article-share-link" data-share="baidu" data-title="Google Play 上架的那些坑">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2021/02/11/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%20npm%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" data-id="cknfg84d40001yo2s05jb52hh" class="article-share-link" data-share="baidu" data-title="微信小程序 npm 使用指南">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2020/01/18/Google%20Play%20%E4%B8%8A%E6%9E%B6%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2021/02/11/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%20npm%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Google-Play/" rel="tag">Google Play</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" rel="tag">npm使用指南</a></li></ul>
 
     </footer>
   </div>
@@ -207,7 +202,7 @@ var _hmt = _hmt || [];
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/6/">下一页 &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/6/">下一页 &amp;raquo;</a>
   </nav>
 </section>
       
@@ -242,7 +237,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 12.5px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/IPTV/" style="font-size: 10px;">IPTV</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 17.5px;">电商</a> <a href="/tags/%E7%9B%B4%E6%92%AD%E6%BA%90/" style="font-size: 10px;">直播源</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 15px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 12.5px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/IPTV/" style="font-size: 10px;">IPTV</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/Pycharm/" style="font-size: 10px;">Pycharm</a> <a href="/tags/Python%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" style="font-size: 10px;">Python下载安装教程</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/npm%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" style="font-size: 10px;">npm使用指南</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E4%BA%91%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" style="font-size: 10px;">云开发入门指南</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E6%BF%80%E6%B4%BB%E7%A0%81-Pycharm/" style="font-size: 10px;">激活码 Pycharm</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 17.5px;">电商</a> <a href="/tags/%E7%9B%B4%E6%92%AD%E6%BA%90/" style="font-size: 10px;">直播源</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 15px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
     </div>
   </div>
 
@@ -293,7 +288,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9B%B4%E6%92%AD%E6%BA%90/">直播源</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/">资源分享</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">使用指南</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BB%E7%A0%81/">永久激活码</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9B%B4%E6%92%AD%E6%BA%90/">直播源</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/">资源分享</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -302,7 +297,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">2021年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">2020年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">2020年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">2021年 05月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">2021年 04月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">2021年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">2021年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">2021年 01月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">2020年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">2020年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
