@@ -98,14 +98,14 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main">
   
-    <article id="post-Android Studio debug断点 界面卡顿" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-AccessibilityService 从入门到出轨" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/12/Android%20Studio%20debug%E6%96%AD%E7%82%B9%20%E7%95%8C%E9%9D%A2%E5%8D%A1%E9%A1%BF/" class="article-date">
-  <time datetime="2020-01-11T16:00:00.000Z" itemprop="datePublished">2020-01-12</time>
+    <a href="/2020/08/11/AccessibilityService%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%87%BA%E8%BD%A8/" class="article-date">
+  <time datetime="2020-08-10T16:00:00.000Z" itemprop="datePublished">2020-08-11</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a>
+    <a class="article-category-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a>
   </div>
 
   </div>
@@ -116,7 +116,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/12/Android%20Studio%20debug%E6%96%AD%E7%82%B9%20%E7%95%8C%E9%9D%A2%E5%8D%A1%E9%A1%BF/">Android Studio debug断点 界面卡顿</a>
+      <a class="article-title" href="/2020/08/11/AccessibilityService%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%87%BA%E8%BD%A8/">AccessibilityService 从入门到出轨</a>
     </h1>
   
 
@@ -126,26 +126,177 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>出现此问题是因为您设置了太多断点，并且线程正在等待来自其他线程的数据，为了解决此问题，你可以取消一些断点即可，亲测有效</p>
-<p>由于断点太多，不知道断哪里了，可以参考我下面的截图，有一个统一断点的地方，所有断点的地方都在里面，你都取消即可</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1750086-026ede8127170a51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>参考文献：<br><a href="https://stackoverflow.com/questions/32863331/android-studio-frame-is-not-available" target="_blank" rel="noopener">https://stackoverflow.com/questions/32863331/android-studio-frame-is-not-available</a></p>
+        <h3 id="一、AccessibilityService"><a href="#一、AccessibilityService" class="headerlink" title="一、AccessibilityService"></a>一、AccessibilityService</h3><p>根据官方的介绍，是指开发者通过增加类似contentDescription的属性，从而在不修改代码的情况下，让残障人士能够获得使用体验的优化，大家可以打开AccessibilityService来试一下，点击区域，可以有语音或者触摸的提示，帮助残障人士更好的使用App</p>
+<p><a href="https://developer.android.com/reference/android/accessibilityservice/AccessibilityService.html|" target="_blank" rel="noopener">官方文档</a></p>
+<h3 id="二、AccessibilityService-开发流程"><a href="#二、AccessibilityService-开发流程" class="headerlink" title="二、AccessibilityService 开发流程"></a>二、AccessibilityService 开发流程</h3><ol>
+<li>确定执行脚本的APK安装包</li>
+<li>通过UIAutomator 获取包名及UI控件ID</li>
+<li>编写脚本代码</li>
+<li>调试、兼容性处理</li>
+</ol>
+<h3 id="三、开发一款服务助手"><a href="#三、开发一款服务助手" class="headerlink" title="三、开发一款服务助手"></a>三、开发一款服务助手</h3><h4 id="1、获取脚本事件ID"><a href="#1、获取脚本事件ID" class="headerlink" title="1、获取脚本事件ID"></a>1、获取脚本事件ID</h4><ol>
+<li><p><strong>UIAutomator</strong> 入口：Android-&gt;sdk-&gt;tools-&gt;bin-&gt; uiautomatorviewer</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1750086-f5a93ea25c0d094e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>按照下图指示，获取对应的包名与视图ID</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1750086-e2605a0fc1e8d4bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+</ol>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="2、实现服务助手"><a href="#2、实现服务助手" class="headerlink" title="2、实现服务助手"></a>2、实现服务助手</h4><h5 id="AccessibilityService主要是实现onAccessibilityEvent"><a href="#AccessibilityService主要是实现onAccessibilityEvent" class="headerlink" title="AccessibilityService主要是实现onAccessibilityEvent"></a>AccessibilityService主要是实现onAccessibilityEvent</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class AccessibilitySampleService extends AccessibilityService&#123;</span><br><span class="line"> </span><br><span class="line">    @Override </span><br><span class="line">    public void onAccessibilityEvent(AccessibilityEvent event)&#123;</span><br><span class="line">        &#x2F;&#x2F; 获取包名</span><br><span class="line">        String pkgName &#x3D; event.getPackageName().toString();</span><br><span class="line">        int eventType &#x3D; event.getEventType();</span><br><span class="line"></span><br><span class="line">        AccessibilityOperator.getInstance().updateEvent(this, event);</span><br><span class="line">        &#x2F;&#x2F;过滤出目标包，如果要检测所有包，可以去掉此判断</span><br><span class="line">        if (pkgName.equals(pageName)) &#123;</span><br><span class="line">            AccessibilityLog.printLog(&quot;eventType: &quot; + eventType + &quot; pkgName: &quot; + pkgName);</span><br><span class="line"></span><br><span class="line">            switch (eventType) &#123;</span><br><span class="line">                case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:</span><br><span class="line">                    &#x2F;&#x2F;执行具体的脚本</span><br><span class="line">                    toOperator();</span><br><span class="line">                    break;</span><br><span class="line">                case AccessibilityEvent.TYPE_VIEW_CLICKED:</span><br><span class="line">                    break;</span><br><span class="line">                case AccessibilityEvent.TYPE_VIEW_LONG_CLICKED:</span><br><span class="line">                    break;</span><br><span class="line">                case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:</span><br><span class="line">                    break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">   </span><br><span class="line">    @Override </span><br><span class="line">    public void onInterrupt()&#123;</span><br><span class="line">        &#x2F;&#x2F; TODO Auto-generated method stub </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h5 id="AccessibilityService"><a href="#AccessibilityService" class="headerlink" title="AccessibilityService"></a>AccessibilityService</h5><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>方法说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>disableSelf()</td>
+<td>禁用当前服务,也就是在服务可以通过该方法停止运行</td>
+</tr>
+<tr>
+<td>findFoucs(int falg)</td>
+<td>查找拥有特定焦点类型的控件</td>
+</tr>
+<tr>
+<td>getRootInActiveWindow()</td>
+<td>如果配置能够获取窗口内容,则会返回当前活动窗口的根结点</td>
+</tr>
+<tr>
+<td><strong>onAccessibilityEvent(AccessibilityEvent event)</strong></td>
+<td>有关AccessibilityEvent事件的回调函数.系统通过sendAccessibiliyEvent()不断的发送AccessibilityEvent到此处</td>
+</tr>
+<tr>
+<td>performGlobalAction(int action)</td>
+<td>执行全局操作,比如返回,回到主页,打开最近等操作，此方法可以模拟用户点击返回键和home键</td>
+</tr>
+<tr>
+<td>setServiceInfo(AccessibilityServiceInfo info)</td>
+<td>设置当前服务的配置信息</td>
+</tr>
+<tr>
+<td>getSystemService(String name)</td>
+<td>获取系统服务</td>
+</tr>
+<tr>
+<td>onKeyEvent(KeyEvent event)</td>
+<td>如果允许服务监听按键操作,该方法是按键事件的回调,需要注意,这个过程发生了系统处理按键事件之前</td>
+</tr>
+<tr>
+<td>onServiceConnected()</td>
+<td>系统成功绑定该服务时被触发,也就是当你在设置中开启相应的服务,系统成功的绑定了该服务时会触发,通常我们可以在这里做一些初始化操作</td>
+</tr>
+</tbody></table>
+<h5 id="AccessibilityEvent"><a href="#AccessibilityEvent" class="headerlink" title="AccessibilityEvent"></a>AccessibilityEvent</h5><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th align="left">字段说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TYPE_NOTIFICATION_STATE_CHANGED</td>
+<td align="left">通知栏状态变化</td>
+</tr>
+<tr>
+<td>TYPE_VIEW_CLICKED</td>
+<td align="left">视图被点击</td>
+</tr>
+<tr>
+<td>TYPE_WINDOW_CONTENT_CHANGED</td>
+<td align="left">窗口内容变化</td>
+</tr>
+<tr>
+<td>TYPE_WINDOW_STATE_CHANGED</td>
+<td align="left">窗口状态变化</td>
+</tr>
+</tbody></table>
+<h4 id="3、AndroidManifest-xml注册服务"><a href="#3、AndroidManifest-xml注册服务" class="headerlink" title="3、AndroidManifest.xml注册服务"></a>3、AndroidManifest.xml注册服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 注册辅助功能服务--&gt;</span><br><span class="line">        &lt;service</span><br><span class="line">            android:name&#x3D;&quot;.AccessibilitySampleService&quot;</span><br><span class="line">            android:exported&#x3D;&quot;true&quot;</span><br><span class="line">            android:label&#x3D;&quot;码君助手&quot;</span><br><span class="line">            android:permission&#x3D;&quot;android.permission.BIND_ACCESSIBILITY_SERVICE&quot;</span><br><span class="line">            android:process&#x3D;&quot;:BackgroundService&quot;&gt;</span><br><span class="line">            &lt;intent-filter&gt;</span><br><span class="line">                &lt;action android:name&#x3D;&quot;android.accessibilityservice.AccessibilityService&quot; &#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;intent-filter&gt;</span><br><span class="line">            &lt;!--        通过xml文件完成辅助功能相关配置，也可以在onServiceConnected中动态配置--&gt;</span><br><span class="line">            &lt;meta-data</span><br><span class="line">                android:name&#x3D;&quot;android.accessibilityservice&quot;</span><br><span class="line">                android:resource&#x3D;&quot;@xml&#x2F;accessibility_config&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;service&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="在资源文件夹新增xml文件夹，新建accessibility-config文件，代码如下"><a href="#在资源文件夹新增xml文件夹，新建accessibility-config文件，代码如下" class="headerlink" title="在资源文件夹新增xml文件夹，新建accessibility_config文件，代码如下"></a>在资源文件夹新增xml文件夹，新建accessibility_config文件，代码如下</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;accessibility-service xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;</span><br><span class="line">    android:accessibilityEventTypes&#x3D;&quot;typeAllMask&quot;</span><br><span class="line">    android:accessibilityFeedbackType&#x3D;&quot;feedbackGeneric&quot;</span><br><span class="line">    android:canRetrieveWindowContent&#x3D;&quot;true&quot;</span><br><span class="line">    android:description&#x3D;&quot;@string&#x2F;accessibility_desc&quot;</span><br><span class="line">    android:notificationTimeout&#x3D;&quot;100&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--accessibility_desc:码君助手，让你的手机更智能一点 --&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="accessibility-config说明"><a href="#accessibility-config说明" class="headerlink" title="accessibility_config说明"></a>accessibility_config说明</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>字段说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>accessibilityEventTypes</td>
+<td>表示该服务对界面中的哪些变化感兴趣,即哪些事件通知,比如窗口打开,滑动,焦点变化,长按等.具体的值可以在AccessibilityEvent类中查到,如typeAllMask表示接受所有的事件通知</td>
+</tr>
+<tr>
+<td>accessibilityFeedbackType</td>
+<td>表示反馈方式,比如是语音播放,还是震动。feedbackGeneric代表所有</td>
+</tr>
+<tr>
+<td>canRetrieveWindowContent</td>
+<td>表示该服务能否访问活动窗口中的内容.也就是如果你希望在服务中获取窗体内容的化,则需要设置其值为true</td>
+</tr>
+<tr>
+<td>notificationTimeout</td>
+<td>接受事件的时间间隔,通常将其设置为100即可</td>
+</tr>
+<tr>
+<td>packageNames</td>
+<td>表示对该服务是用来监听哪个包的产生的事件。如果不写代表监听所有的应用。中间可以用”;”来分割。</td>
+</tr>
+</tbody></table>
+<h4 id="4、编写执行脚本"><a href="#4、编写执行脚本" class="headerlink" title="4、编写执行脚本"></a>4、编写执行脚本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">            Thread.sleep(2000);</span><br><span class="line">            AccessibilityOperator.getInstance().clickById(&quot;com.xxxx.packagename:id&#x2F;btn_later&quot;);&#x2F;&#x2F; 关闭弹框</span><br><span class="line"></span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">            AccessibilityOperator.getInstance().clickById(&quot;com.xxxx.packagename:id&#x2F;tab_work&quot;);&#x2F;&#x2F;切换到工作tab</span><br><span class="line">            AccessibilityLog.printLog(&quot;切换到工作tab: &quot;);</span><br><span class="line"></span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="AccessibilityNodeInfo"><a href="#AccessibilityNodeInfo" class="headerlink" title="AccessibilityNodeInfo"></a>AccessibilityNodeInfo</h4><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>方法说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>findAccessibilityNodeInfosByText（）</td>
+<td>通过字符串查找节点元素</td>
+</tr>
+<tr>
+<td>findAccessibilityNodeInfosByViewId（）</td>
+<td>通过视图id查找节点元素</td>
+</tr>
+<tr>
+<td>performAction（）</td>
+<td>在节点上执行一个动作</td>
+</tr>
+<tr>
+<td>getParent（）</td>
+<td>获取父节点</td>
+</tr>
+<tr>
+<td>getChild（）</td>
+<td>获取子节点</td>
+</tr>
+</tbody></table>
+<h4 id="5、应用场景"><a href="#5、应用场景" class="headerlink" title="5、应用场景"></a>5、应用场景</h4><ol>
+<li>微信抢红包助手</li>
+<li>微信自动回复助手、支付助手、听歌助手</li>
+<li>自动化测试</li>
+<li>浏览器拦截（一旦打开自动输入自定义网址）</li>
+<li>刷点赞评论阅读量</li>
+</ol>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>
       
       
     </div>
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2020/01/12/Android%20Studio%20debug%E6%96%AD%E7%82%B9%20%E7%95%8C%E9%9D%A2%E5%8D%A1%E9%A1%BF/" data-id="ck5nicz3900009e9o193760vk" class="article-share-link" data-share="baidu" data-title="Android Studio debug断点 界面卡顿">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2020/08/11/AccessibilityService%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%87%BA%E8%BD%A8/" data-id="ckdpon0ny0000549o2rufc73t" class="article-share-link" data-share="baidu" data-title="AccessibilityService 从入门到出轨">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2020/01/12/Android%20Studio%20debug%E6%96%AD%E7%82%B9%20%E7%95%8C%E9%9D%A2%E5%8D%A1%E9%A1%BF/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2020/08/11/AccessibilityService%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%87%BA%E8%BD%A8/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/debug%E6%96%AD%E7%82%B9/" rel="tag">debug断点</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AccessibilityService/" rel="tag">AccessibilityService</a></li></ul>
 
     </footer>
   </div>
@@ -157,7 +308,7 @@ var _hmt = _hmt || [];
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/4/">下一页 &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/4/">下一页 &amp;raquo;</a>
   </nav>
 </section>
       
@@ -192,7 +343,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 13.33px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 16.67px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 12.5px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/IPTV/" style="font-size: 10px;">IPTV</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 17.5px;">电商</a> <a href="/tags/%E7%9B%B4%E6%92%AD%E6%BA%90/" style="font-size: 10px;">直播源</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 15px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
     </div>
   </div>
 
@@ -243,7 +394,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9B%B4%E6%92%AD%E6%BA%90/">直播源</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/">资源分享</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -252,7 +403,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">2021年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">2020年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">2020年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -266,7 +417,7 @@ var _hmt = _hmt || [];
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2012 - 2020 <a href="/" target="_blank">代码君</a>.
+      Copyright &copy; 2012 - 2021 <a href="/" target="_blank">代码君</a>.
       &nbsp;
       <span id="busuanzi_container_site_pv">
         总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次

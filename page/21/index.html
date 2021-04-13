@@ -98,14 +98,14 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main">
   
-    <article id="post-微信小程序实战篇-商品详情页（二）" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-开源项目汇总" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E6%88%98%E7%AF%87-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85%E9%A1%B5%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
-  <time datetime="2017-07-06T16:00:00.000Z" itemprop="datePublished">2017-07-07</time>
+    <a href="/2017/08/21/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%B1%87%E6%80%BB/" class="article-date">
+  <time datetime="2017-08-20T16:00:00.000Z" itemprop="datePublished">2017-08-21</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a>
+    <a class="article-category-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a>
   </div>
 
   </div>
@@ -116,7 +116,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E6%88%98%E7%AF%87-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85%E9%A1%B5%EF%BC%88%E4%BA%8C%EF%BC%89/">微信小程序实战篇-商品详情页（二）</a>
+      <a class="article-title" href="/2017/08/21/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%B1%87%E6%80%BB/">Android 开源项目-源码汇总</a>
     </h1>
   
 
@@ -126,78 +126,75 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>今天要讲解商品详情页中sku的弹出选着框，这个涉及css动画样式，css动画是新的知识点，我们之前并没有接触过，请大家做好笔记，我们要做的效果是酱紫的~</p>
-<center>
-![sku选着.png](http://upload-images.jianshu.io/upload_images/1750086-b95548b9486020a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-</center>
-
-<p>这个布局难点是需要绘制一个阴影背景、弹出的动画、购买数量加减的逻辑以及图片如何高于弹出框</p>
-<h2 id="代码的实现"><a href="#代码的实现" class="headerlink" title="代码的实现"></a>代码的实现</h2><hr>
-<ol>
-<li><p><strong>detail.wxml</strong></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;import src&#x3D;&quot;&#x2F;template&#x2F;quantity&#x2F;index.wxml&quot; &#x2F;&gt;</span><br><span class="line">  &lt;!-- sku选择 --&gt;</span><br><span class="line">  &lt;text bindtap&#x3D;&quot;toggleDialog&quot;&gt;请选择购买数量&lt;&#x2F;text&gt;</span><br><span class="line">  &lt;view class&#x3D;&quot;dialog &#123;&#123; showDialog ? &#39;dialog--show&#39; : &#39;&#39; &#125;&#125;&quot;&gt;</span><br><span class="line">    &lt;view class&#x3D;&quot;dialog__mask&quot; bindtap&#x3D;&quot;toggleDialog&quot; &#x2F;&gt;</span><br><span class="line">    &lt;view class&#x3D;&quot;dialog__container&quot;&gt;</span><br><span class="line">      &lt;view class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">         &lt;image bindtap&#x3D;&quot;closeDialog&quot; class&#x3D;&quot;image-close&quot; src&#x3D;&quot;..&#x2F;..&#x2F;images&#x2F;detail&#x2F;close.png&quot;&gt;&lt;&#x2F;image&gt;</span><br><span class="line">        &lt;image class&#x3D;&quot;image-sku&quot; src&#x3D;&quot;http:&#x2F;&#x2F;mz.djmall.xmisp.cn&#x2F;files&#x2F;product&#x2F;20161201&#x2F;148057921620_middle.jpg&quot;&gt;&lt;&#x2F;image&gt;</span><br><span class="line">        &lt;view class&#x3D;&quot;column&quot;&gt;</span><br><span class="line">          &lt;text class&#x3D;&quot;sku-price&quot;&gt;￥500&lt;&#x2F;text&gt;</span><br><span class="line">          &lt;text class&#x3D;&quot;sku-title&quot;&gt;库存20件&lt;&#x2F;text&gt;</span><br><span class="line">           &lt;text class&#x3D;&quot;sku-title&quot;&gt;商品编码：1456778788&lt;&#x2F;text&gt;</span><br><span class="line">        &lt;&#x2F;view&gt;</span><br><span class="line">      &lt;&#x2F;view&gt;</span><br><span class="line">      &lt;text class&#x3D;&quot;border-line&quot;&gt;&lt;&#x2F;text&gt;</span><br><span class="line">      &lt;view class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">        &lt;text &gt;购买数量&lt;&#x2F;text&gt;</span><br><span class="line">        &lt;view class&#x3D;&quot;quantity-position&quot;&gt;</span><br><span class="line">          &lt;template is&#x3D;&quot;quantity&quot; data&#x3D;&quot;&#123;&#123; ...quantity1, componentId: &#39;quantity1&#39; &#125;&#125;&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;view&gt;</span><br><span class="line">      &lt;&#x2F;view&gt;</span><br><span class="line">      &lt;text class&#x3D;&quot;border-line&quot;&gt;&lt;&#x2F;text&gt;</span><br><span class="line"></span><br><span class="line">      &lt;button class&#x3D;&quot;button-green&quot; bindtap&#x3D;&quot;addCar&quot; formType&#x3D;&quot;submit&quot;&gt;加入购物车&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;button class&#x3D;&quot;button-red&quot; formType&#x3D;&quot;submit&quot;&gt;立即购买&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;view&gt;</span><br><span class="line">  &lt;&#x2F;view&gt;</span><br></pre></td></tr></table></figure>
-<p> 这里面要重点讲解的是<strong>template</strong>，微信小程序提供模板template，可以在模板中定义代码片段，然后在不同地方调用，这里面就引用了名为quantity的代码块，这样引用的好处和css样式引用一样，增加代码发复用率，引用方式如下，is后面是模板的名字，data放入模板中要用到的数据</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;自定义的模板</span><br><span class="line">&lt;template name&#x3D;&quot;msgItem&quot;&gt;</span><br><span class="line">  &lt;view&gt;</span><br><span class="line">    &lt;text&gt; &#123;&#123;index&#125;&#125;: &#123;&#123;msg&#125;&#125; &lt;&#x2F;text&gt;</span><br><span class="line">    &lt;text&gt; Time: &#123;&#123;time&#125;&#125; &lt;&#x2F;text&gt;</span><br><span class="line">  &lt;&#x2F;view&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;引用模板</span><br><span class="line">&lt;template is&#x3D;&quot;msgItem&quot; data&#x3D;&quot;&#123;&#123;...item&#125;&#125;&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;数据</span><br><span class="line">Page(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    item: &#123;</span><br><span class="line">      index: 0,</span><br><span class="line">      msg: &#39;this is a template&#39;,</span><br><span class="line">      time: &#39;2016-09-15&#39;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+        <p>读别人的源码，可以从中学到很多课本、视频中无法得到的东西，今天代码君就总结一下 github上比较好的开源项目APP，拿走不谢~</p>
+<h2 id="一、采用MVP架构实现的APP"><a href="#一、采用MVP架构实现的APP" class="headerlink" title="一、采用MVP架构实现的APP"></a>一、采用MVP架构实现的APP</h2><hr>
+<p>这里随便拿一个app去阅读一下源码，读者就可以体会MVP是如何运用到项目当中的，代码君当初学习MVP架构也是理论上理解，实战欠缺，所以读别人源码是促使自己进步的一个好方法</p>
+<ol start="0">
+<li><p><a href="https://github.com/googlesamples/android-architecture" target="_blank" rel="noopener">Google MVP</a> <strong>特点：</strong>官方出品 必是精品</p>
 </li>
-<li><p><strong>detail.wxss</strong></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* sku选择 *&#x2F;</span><br><span class="line">.dialog__mask &#123;</span><br><span class="line">  position: fixed;</span><br><span class="line">  top: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  right: 0;</span><br><span class="line">  bottom: 0;</span><br><span class="line">  z-index: 10;</span><br><span class="line">  background: rgba(0, 0, 0, 0.7);</span><br><span class="line">  display: none;</span><br><span class="line">&#125;</span><br><span class="line">.dialog__container &#123;</span><br><span class="line">  position: fixed;</span><br><span class="line">  bottom: 0;</span><br><span class="line">  width: 750rpx;</span><br><span class="line">  background: white;</span><br><span class="line">  transform: translateY(150%);</span><br><span class="line">  transition: all 0.4s ease;</span><br><span class="line">  z-index: 11;</span><br><span class="line">&#125;</span><br><span class="line">.dialog--show .dialog__container &#123;</span><br><span class="line">  transform: translateY(0);</span><br><span class="line">&#125;</span><br><span class="line">.dialog--show .dialog__mask &#123;</span><br><span class="line">  display: block;</span><br><span class="line">&#125;</span><br><span class="line">.image-sku &#123;</span><br><span class="line">  width: 200rpx;</span><br><span class="line">  height: 200rpx;</span><br><span class="line">  z-index: 12;</span><br><span class="line">  position: absolute;</span><br><span class="line">  left: 20px;</span><br><span class="line">  top: -30px;</span><br><span class="line">  border-radius: 20rpx;</span><br><span class="line">&#125;</span><br><span class="line">.image-close &#123;</span><br><span class="line">  width: 40rpx;</span><br><span class="line">  height: 40rpx;</span><br><span class="line">  position: fixed;</span><br><span class="line">  right: 10rpx;</span><br><span class="line">  top: 10rpx;</span><br><span class="line">&#125;</span><br><span class="line">.column &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: column;</span><br><span class="line">&#125;</span><br><span class="line">.row &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: row;</span><br><span class="line">  align-items: center;</span><br><span class="line">&#125;</span><br><span class="line">.border-line &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 2rpx;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  margin: 30rpx 0rpx;</span><br><span class="line">  background-color: gainsboro;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br><span class="line">.sku-title &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  left: 300rpx;</span><br><span class="line">  margin: 1rpx;</span><br><span class="line">&#125;</span><br><span class="line">.sku-price &#123;</span><br><span class="line">  color: red;</span><br><span class="line">  position: relative;</span><br><span class="line">  left: 300rpx;</span><br><span class="line">  margin: 1rpx;</span><br><span class="line">&#125;</span><br><span class="line">.row .quantity-position &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  right: 30rpx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 今天重点讲解wxss样式</p>
-<ol>
-<li><p><strong>position</strong> 位置属性</p>
-<ul>
-<li><p>absolute 生成绝对定位的元素，相对于父元素进行定位元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</p>
+<li><p><a href="https://github.com/yydcdut/PhotoNoter" target="_blank" rel="noopener">照片笔记APP</a> <strong>特点：</strong>Material Design风格  MVP+Dagger2+RxJava+AspectJ+Dex </p>
 </li>
-<li><p>fixed 生成绝对定位的元素，相对于浏览器窗口进行定位。<br>元素的位置通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</p>
+<li><p><a href="https://github.com/esoxjem/MovieGuide" target="_blank" rel="noopener">电影引导APP</a> <strong>特点：</strong>MVP, RxJava, Dagger</p>
 </li>
-<li><p>relative 生成相对定位的元素，相对于其正常位置进行定位。</p>
-<p>阴影部分要铺满屏幕所以用到了fixed属性，把上下左右的距离都设置为0，就可以使整个阴影铺满浏览器的窗口了</p>
+<li><p><a href="https://github.com/liuling07/SimpleNews" target="_blank" rel="noopener">新闻客户端APP</a> <strong>特点：</strong>MVP Material Design风格 </p>
 </li>
-</ul>
+<li><p><a href="https://github.com/jiangqqlmj/FastDev4Android" target="_blank" rel="noopener">菜鸟新闻APP</a> <strong>特点：</strong>MVP EventBus Volley</p>
 </li>
-<li><p><strong>transform</strong> 转换</p>
-<ul>
-<li><p>transform : scale(x,y); 缩放</p>
-</li>
-<li><p>transform : rotate(deg); 旋转 deg（度）</p>
-</li>
-<li><p>transform : skew( x ,y); 斜</p>
-</li>
-<li><p>transform : scale(x,y); 缩放</p>
-</li>
-<li><p>transform : translateY(y); 位置移动</p>
-<p>sku选着栏从底部出来就是用到translateY属性，代码中设置150%-&gt;0,就是从本身的1.5倍距离移动到本身的位置</p>
-</li>
-</ul>
-</li>
-<li><p><strong>transition</strong> 过度转变transition : property duration timing-function delay;</p>
-<ul>
-<li><p>property : 制定css属性的名字，all代表所有属性都获得过度效果</p>
-</li>
-<li><p>duration : 过度时间，必须有值，否则动画无效果</p>
-</li>
-<li><p>timing-function : 允许一个过渡效果，以改变其持续时间的速度 ease规定慢速开始，然后变快，然后慢速结束的过渡效果</p>
-</li>
-<li><p>delay :推迟动画的时间</p>
-<p> transition: all 0.4s ease;意思是全部属性执行动画在0.4s之内，开始慢速然后变快，最后慢速结束</p>
-</li>
-</ul>
+<li><p><a href="https://github.com/Naoki2015/CircleDemo" target="_blank" rel="noopener">仿微信朋友圈APP</a> <strong>特点：</strong>MVP 实现了点赞、评论、删除等功能</p>
 </li>
 </ol>
-</li>
-<li><p><strong>detail.js</strong></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var Temp &#x3D; require(&#39;..&#x2F;..&#x2F;template&#x2F;contract.js&#39;);</span><br><span class="line">Page(Object.assign(&#123;&#125;, Temp.Quantity,&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    quantity1: &#123;</span><br><span class="line">      quantity: 10,</span><br><span class="line">      min: 1,</span><br><span class="line">      max: 20</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;,</span><br><span class="line">  &#x2F;&#x2F;数量变化处理</span><br><span class="line">  handleQuantityChange(e) &#123;</span><br><span class="line">    var componentId &#x3D; e.componentId;</span><br><span class="line">    var quantity &#x3D; e.quantity;</span><br><span class="line">  this.setData(&#123;</span><br><span class="line">      &#123;componentId&#125;.quantity: quantity</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>这里我们要掌握以下几点</p>
+<h2 id="二、视频音频类开源项目"><a href="#二、视频音频类开源项目" class="headerlink" title="二、视频音频类开源项目"></a>二、视频音频类开源项目</h2><hr>
+<p>视频和音频处理难度也是不小的，把这类APP开源做一个总结</p>
 <ol>
-<li>require（）是引用别的地方的js代码，这里就是引用contract.js里的js代码</li>
-<li><strong>Object.assign</strong>，这个是js的属性，定义是：从一个对象复制所有的属性到另一个对象是一个常见的操作，这里就是把Temp.Quantity的数据和detail.js的数据合并到一起</li>
-<li>handleQuantityChange 加减按钮触发的事件监听，每点击加减按钮，都会回调此方法</li>
-</ol>
+<li><p><a href="https://github.com/aa112901/remusic" target="_blank" rel="noopener">仿网易播放器</a> <strong>特点：</strong> 音频处理范例</p>
+</li>
+<li><p><a href="https://github.com/TeamNewPipe/NewPipe" target="_blank" rel="noopener">仿Youtube视频播放</a> <strong>特点：</strong> Youtube</p>
+</li>
+<li><p><a href="https://github.com/HotBitmapGG/bilibili-android-client" target="_blank" rel="noopener">仿B站</a> <strong>特点：</strong> bilibili</p>
 </li>
 </ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
-<p>今天的知识点难度有点大，大家可能需要点时间去消化，尤其是为了复用代码，js、wxml、wxss都有对应的引入语法，大家一定要区分开，好了，今天就到这，祝大家周末愉快~</p>
+<h2 id="三、Android-APP-成品项目源码"><a href="#三、Android-APP-成品项目源码" class="headerlink" title="三、Android APP 成品项目源码"></a>三、Android APP 成品项目源码</h2><hr>
+<ol>
+<li><p><a href="https://github.com/zzhoujay/DailyGank" target="_blank" rel="noopener">仿知乎阅读APP</a> <strong>特点：</strong> 知乎</p>
+</li>
+<li><p><a href="https://github.com/wenmingvs/WeiBo" target="_blank" rel="noopener">仿新浪微博APP</a> <strong>特点：</strong>新浪微博</p>
+</li>
+<li><p><a href="https://github.com/SandroMachado/openalpr-android" target="_blank" rel="noopener">自动识别车牌APP</a> <strong>特点：</strong>自动识别</p>
+</li>
+<li><p><a href="https://github.com/xcc3641/SeeWeather" target="_blank" rel="noopener">天气查询APP</a> <strong>特点：</strong> Kotlin语言实现</p>
+</li>
+<li><p><a href="https://github.com/drakeet/Meizhi" target="_blank" rel="noopener">干货集中营APP</a> <strong>特点：</strong>好多妹子</p>
+</li>
+<li><p><a href="https://github.com/TonnyL/Espresso" target="_blank" rel="noopener">快递查询APP</a> <strong>特点：</strong> 查询快递</p>
+</li>
+<li><p><a href="https://github.com/GitLqr/LQRWeChat" target="_blank" rel="noopener">仿微信聊天APP</a> <strong>特点：</strong>微信</p>
+</li>
+<li><p><a href="https://github.com/xhzengAIB/MessageDisplayKit" target="_blank" rel="noopener">仿微信通讯APP</a> <strong>特点：</strong>最早的demo，现已经停止维护</p>
+</li>
+<li><p><a href="https://github.com/ittianyu/MobileGuard" target="_blank" rel="noopener">安全管理APP</a> <strong>特点：</strong> 软件管家</p>
+</li>
+<li><p><a href="https://github.com/SwiftyWang/FingerColoring-Android" target="_blank" rel="noopener">图片上色APP</a> <strong>特点：</strong> 图片处理</p>
+</li>
+<li><p><a href="https://github.com/xfmax/BasePedo" target="_blank" rel="noopener">计步器APP</a> <strong>特点：</strong> 计步</p>
+</li>
+<li><p><a href="https://github.com/Nightonke/CoCoin" target="_blank" rel="noopener">记账APP</a> <strong>特点：</strong> 视图效果特别好</p>
+</li>
+<li><p><a href="https://github.com/zhoubowen-sky/LingDong" target="_blank" rel="noopener">蓝牙传数据APP</a> <strong>特点：</strong> 蓝牙处理</p>
+</li>
+<li><p><a href="https://github.com/JustWayward/BookReader" target="_blank" rel="noopener">小说阅读器APP</a> <strong>特点：</strong> 实现追书推荐收藏、书籍/标签检索、模拟翻书的翻页效果、缓存书籍、日夜间模式、书签、txt/pdf/epub书籍阅读、字体/主题/亮度设置、Wifi传书等功能</p>
+</li>
+</ol>
+<h2 id="四、Kotlin语言开发的APP"><a href="#四、Kotlin语言开发的APP" class="headerlink" title="四、Kotlin语言开发的APP"></a>四、Kotlin语言开发的APP</h2><hr>
+<p>要学习Kotlin语言的可以参考这些APP</p>
+<ol>
+<li><a href="https://github.com/zzhoujay/DailyGank" target="_blank" rel="noopener">干货集中营</a> <strong>特点：</strong> Kotlin语言实现</li>
+<li><a href="https://github.com/LRH1993/Eyepetizer-in-Kotlin" target="_blank" rel="noopener">搞笑段子APP</a> <strong>特点：</strong> Kotlin语言实现</li>
+</ol>
+<h2 id="五、React语言开发的APP"><a href="#五、React语言开发的APP" class="headerlink" title="五、React语言开发的APP"></a>五、React语言开发的APP</h2><hr>
+<p>要学习React语言的可以参考这些APP</p>
+<ol>
+<li><a href="https://github.com/chvin/react-tetris" target="_blank" rel="noopener">俄罗斯方块</a> <strong>特点：</strong> React语言实现</li>
+</ol>
 
       
       
@@ -205,15 +202,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2017/07/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E6%88%98%E7%AF%87-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85%E9%A1%B5%EF%BC%88%E4%BA%8C%EF%BC%89/" data-id="ck5nguq13000f0v9ogf4i8gm2" class="article-share-link" data-share="baidu" data-title="微信小程序实战篇-商品详情页（二）">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2017/08/21/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%B1%87%E6%80%BB/" data-id="ck5nguq0t00020v9o8busblte" class="article-share-link" data-share="baidu" data-title="Android 开源项目-源码汇总">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2017/07/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E6%88%98%E7%AF%87-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85%E9%A1%B5%EF%BC%88%E4%BA%8C%EF%BC%89/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2017/08/21/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%B1%87%E6%80%BB/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github/" rel="tag">Github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" rel="tag">开源项目</a></li></ul>
 
     </footer>
   </div>
@@ -225,7 +222,7 @@ var _hmt = _hmt || [];
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/20/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/22/">下一页 &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/20/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/22/">下一页 &amp;raquo;</a>
   </nav>
 </section>
       
@@ -260,7 +257,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 13.33px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 16.67px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 12.5px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/IPTV/" style="font-size: 10px;">IPTV</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 17.5px;">电商</a> <a href="/tags/%E7%9B%B4%E6%92%AD%E6%BA%90/" style="font-size: 10px;">直播源</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 15px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
     </div>
   </div>
 
@@ -311,7 +308,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9B%B4%E6%92%AD%E6%BA%90/">直播源</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/">资源分享</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -320,7 +317,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">2021年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">2020年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">2020年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -334,7 +331,7 @@ var _hmt = _hmt || [];
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2012 - 2020 <a href="/" target="_blank">代码君</a>.
+      Copyright &copy; 2012 - 2021 <a href="/" target="_blank">代码君</a>.
       &nbsp;
       <span id="busuanzi_container_site_pv">
         总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次

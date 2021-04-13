@@ -98,14 +98,14 @@ var _hmt = _hmt || [];
     <div class="outer">
       <section id="main">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-微信小程序入门篇（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/01/hello-world/" class="article-date">
-  <time datetime="2017-02-28T16:00:00.000Z" itemprop="datePublished">2017-03-01</time>
+    <a href="/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
+  <time datetime="2017-05-22T16:00:00.000Z" itemprop="datePublished">2017-05-23</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+    <a class="article-category-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a>
   </div>
 
   </div>
@@ -116,7 +116,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/01/hello-world/">Hexo Start</a>
+      <a class="article-title" href="/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/">微信小程序入门篇（二）</a>
     </h1>
   
 
@@ -126,19 +126,112 @@ var _hmt = _hmt || [];
       
         <!-- Table of Contents -->
         
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <p>上篇<a href="http://www.jianshu.com/p/e63be70e3ab9" target="_blank" rel="noopener"> 微信小程序入门篇（一）</a>我们讲解了一下小程序的整体架构，今天来讲一下，一个页面的具体实现原理，好注意听，下面要开始画重点啦~哈哈</p>
+<h2 id="页面的构成"><a href="#页面的构成" class="headerlink" title="页面的构成"></a>页面的构成</h2><hr>
+<ol>
+<li>还记得我们在上篇文章中讲解如何加入一个界面吗？在app.json中的pages加入要加的文件路径就可以啦，文件路径可以随便起，系统会自动创建出来的，那么我就接着之前的讲，我们之前创建了一个页面叫addPage，addPage里面包含四个文件<strong>addPage.js、addPage.json、addPage.wxml、addPage.wxss</strong>这四个对应的作用是什么呐？<ul>
+<li><strong>addPage.js</strong> 页面数据的存储，网络请求的加载都是在这里</li>
+<li><strong>addPage.json</strong> 用于设置导航栏样式，和app.json性质一样，如果没设置样式，默认用app.json中的样式</li>
+<li><strong>addPage.wxml</strong> 页面的效果都在这里面，就是展现给用户的界面</li>
+<li><strong>addPage.wxss</strong> 页面样式设计，页面的一些样式属性都写在这里</li>
+</ul>
+</li>
+</ol>
+<center>
+![1-1.png](http://upload-images.jianshu.io/upload_images/1750086-f4a28e737f424802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+</center>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="页面的解析"><a href="#页面的解析" class="headerlink" title="页面的解析"></a>页面的解析</h2><hr>
+<ol>
+<li><p>addPage.js解析</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">// pages/addPage/addPage.js</span><br><span class="line">Page(&#123;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 页面的初始数据</span><br><span class="line">   */</span><br><span class="line">  data: &#123;</span><br><span class="line">  </span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面加载</span><br><span class="line">   */</span><br><span class="line">  onLoad: <span class="keyword">function</span> (options) &#123;</span><br><span class="line">    console.debug(<span class="string">"onLoad--监听页面加载"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面初次渲染完成</span><br><span class="line">   */</span><br><span class="line">  onReady: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onReady--监听页面初次渲染完成"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面显示</span><br><span class="line">   */</span><br><span class="line">  onShow: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onShow--监听页面显示"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面隐藏</span><br><span class="line">   */</span><br><span class="line">  onHide: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onHide--监听页面隐藏"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 生命周期函数--监听页面卸载</span><br><span class="line">   */</span><br><span class="line">  onUnload: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onUnload--监听页面卸载"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 页面相关事件处理函数--监听用户下拉动作</span><br><span class="line">   */</span><br><span class="line">  onPullDownRefresh: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onPullDownRefresh--监听用户下拉动作"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 页面上拉触底事件的处理函数</span><br><span class="line">   */</span><br><span class="line">  onReachBottom: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onReachBottom--页面上拉触底事件的处理函数"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 用户点击右上角分享</span><br><span class="line">   */</span><br><span class="line">  onShareAppMessage: <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.debug(<span class="string">"onShareAppMessage--用户点击右上角分享"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这里面注释都是系统自动创建的，我没动，注释写的很清楚，我没什么要多说的啦，差别是我在每个方法里加入了<strong>console.debug（）</strong>这个是以后调试bug会用到的，输出日志，就是以后程序出现的问题就靠他输出来，我加入的目的就是要展示一下，系统启动小程序都执行了那些方法,怎么测试系统执行了那些方法呐？ </p>
+<ul>
+<li><p>第一步，改动跳转的代码，首先找到pages/index/index.js,修改bindViewTap方法里的url,路径改为addPage的路径，这样页面跳转的时候就会跳到addPage界面啦，修改过的代码记得保存，否者效果无效！</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bindViewTap: <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">   wx.navigateTo(&#123;</span><br><span class="line">     //url: <span class="string">'../logs/logs'</span></span><br><span class="line">     url: <span class="string">'../addPage/addPage'</span></span><br><span class="line">   &#125;)</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure></li>
+<li><p>第二步，找到菜单栏的调试按钮，切换到调试模式，找到Console控制台，选着All或者Debug模式，Console会输出日志信息，接下来点击一下helloWord上面的用户头像，看看会出现上面效果，如果操作没错的话会出现下面的效果，<br><br><img src="http://upload-images.jianshu.io/upload_images/1750086-019d649c928f4417.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-1.png"><br>看控制台输出的信息，理论上是会出现三行蓝色字，第四行是因为我还执行了一个返回键的操作由此可判断，当点击返回键时执行<strong>onUnload</strong>方法，还有当页面加载的时候方法执行的先后顺序为onLoad-&gt;onShow-&gt;onReady，我们只要知道页面的生命周期就好，至于具体的调用，我们在后面实战的时候讲解，还有如果你点击界面三个小点，然后执行转发操作，就会执行<strong>onShareAppMessage</strong>方法，具体我就不演示啦，addPage.js中还有的方法是<strong>onHide、onPullDownRefresh、onReachBottom</strong>，当A跳转到B时候，A就会执行onHide的方法啦，onPullDownRefresh下拉刷新数据会用到，onReachBottom用于底部加载更多，这些都放在后面在讲解电商开发的时候一起讲。好，关于addPage.js就讲解到这里</p>
+</li>
+</ul>
+</li>
+<li><p>addPage.wxml与addPage.wxss<br></p>
+</li>
+</ol>
+<p><strong>.wxml与.wxss</strong>构成了整个界面，我们自己新建的addPage文件没什么样式，所以我就拿index.wxml和index.wxss来讲解</p>
+<ul>
+<li><p><strong>index.wxml</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--index.wxml--&gt;</span><br><span class="line">&lt;view class&#x3D;&quot;container&quot;&gt;</span><br><span class="line">  &lt;view  bindtap&#x3D;&quot;bindViewTap&quot; class&#x3D;&quot;userinfo&quot;&gt;</span><br><span class="line">    &lt;image class&#x3D;&quot;userinfo-avatar&quot; src&#x3D;&quot;&#123;&#123;userInfo.avatarUrl&#125;&#125;&quot; background-size&#x3D;&quot;cover&quot;&gt;&lt;&#x2F;image&gt;</span><br><span class="line">    &lt;text class&#x3D;&quot;userinfo-nickname&quot;&gt;&#123;&#123;userInfo.nickName&#125;&#125;&lt;&#x2F;text&gt;</span><br><span class="line">  &lt;&#x2F;view&gt;</span><br><span class="line">  &lt;view class&#x3D;&quot;usermotto&quot;&gt;</span><br><span class="line">    &lt;text class&#x3D;&quot;user-motto&quot;&gt;&#123;&#123;motto&#125;&#125;&lt;&#x2F;text&gt;</span><br><span class="line">  &lt;&#x2F;view&gt;</span><br><span class="line">&lt;&#x2F;view&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1750086-2590b822f203ca4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2-2.png">看代码对应的视图，从代码看过去黑色框（view）包含两个黄色框（view），第一个黄色框又包含两个image和text，界面布局大致就是这样，看里面具体代码，黑色框view里有一个属性class，这个class可以理解为ID这个class是用来关联index.wxss,可以理解为黑色框的view设置为”container”的样式，继续看第一个黄色框View，同理可以知道第二个黄色框View的样式设为”userinfo”,咦，<strong>bindtap</strong>是什么意思呐？<strong>bindtap</strong>你可以理解为事件监听，系统定义的固定字段，写事件一定会用到这个，还记得上面我们做的测试系统执行的方法时，不是有修改过index.js中”bindViewTap”的方法嘛，这个”bindViewTap”是自定义的方法名，可以随意修改，但是<strong>bindtap</strong>字段是不可修改的否则代码无效，再说说绿色框中的text，有没有注意到<strong></strong>，这个就是给视图赋值，就是界面上你看到的HelloWord就是这么设置的，”motto、userInfo.nickName”字段是在index.js中的data里面，这里要强调的是我们在调用index.js里data数据时，赋值的时候要记得加入<strong></strong>两个中括号，这样系统才能识别数据。</p>
+</li>
+<li><p><strong>index.wxss</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**index.wxss**&#x2F;</span><br><span class="line">.userinfo &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: column;</span><br><span class="line">  align-items: center;</span><br><span class="line">&#125;</span><br><span class="line">.userinfo-avatar &#123;</span><br><span class="line">  width: 128rpx;</span><br><span class="line">  height: 128rpx;</span><br><span class="line">  margin: 20rpx;</span><br><span class="line">  border-radius: 50%;</span><br><span class="line">&#125;</span><br><span class="line">.userinfo-nickname &#123;</span><br><span class="line">  color: #aaa;</span><br><span class="line">&#125;</span><br><span class="line">.usermotto &#123;</span><br><span class="line">  margin-top: 200px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**app.wxss**&#x2F;</span><br><span class="line">.container &#123;</span><br><span class="line">  height: 100%;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: column;</span><br><span class="line">  align-items: center;</span><br><span class="line">  justify-content: space-between;</span><br><span class="line">  padding: 200rpx 0;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<center>
+![2-3.png](http://upload-images.jianshu.io/upload_images/1750086-13a7439527e75866.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+</center>
+结合效果图一起看样式代码，看到"userinfo"和"container"是不是眼熟，就是之前在index.wxml中class的样式，我们在wxss定义好样式，就是通过这些字段把index.wxml和index.wxss关联起来，才有的上面的界面效果
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+</li>
+</ul>
+<h3 id="wxss样式积累"><a href="#wxss样式积累" class="headerlink" title="wxss样式积累"></a>wxss样式积累</h3><hr>
+<p>wxss样式里代码看不懂可以查阅这里，如果没找到对应样式，请自行百度喽，这些也是代码君问的度娘</p>
+<ol>
+<li>display属性<ul>
+<li>none:此元素不会被显示</li>
+<li>block：两个元素自动换行</li>
+<li>inline：两个元素靠在一起</li>
+<li>inherit：继承父类</li>
+<li>flex：多栏多列</li>
+</ul>
+<ol start="2">
+<li>flex-direction:</li>
+</ol>
+<ul>
+<li>column 垂直分布</li>
+<li>row 水平分布</li>
+</ul>
+<ol start="3">
+<li>flex-wrap：</li>
+</ol>
+<ul>
+<li>nowrap item溢出不换行</li>
+<li>wrap 超出的item跳到下一行</li>
+</ul>
+<ol start="4">
+<li>justify-content属性</li>
+</ol>
+<ul>
+<li>flex-start：左对齐</li>
+<li>flex-end：右对齐</li>
+<li>center：居中</li>
+<li>space-between ：item中间留出等间距</li>
+<li>space-around：环绕item流程等间距</li>
+</ul>
+<ol start="5">
+<li>align-items item 边界线对齐方式  </li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>flex-start | flex-end | center | baseline | stretch <ol start="6">
+<li>border-bottom 边界线</li>
+</ol>
+</li>
+<li>举个栗子 1px solid #ccc;<ol start="7">
+<li>align-items item 边界线对齐方式  </li>
+</ol>
+</li>
+<li>flex-start | flex-end | center | baseline | stretch <ol start="8">
+<li>overflow-x   内容超过边框处理方式<ul>
+<li>visible 显示超出的内容</li>
+<li>hidden 隐藏超出的内容</li>
+<li>auto 自动加入滚动条</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<p>今天我们讲解了页面的所有内容，知识点很多，尤其是wxss的样式，其实wxss样式和css样式的属性是差不多的，所以可以多去参考css样式属性，今天就说这么多，两篇的小程序入门文章，应该可以帮助大家跨进小程序的大门啦，接下来，我们将进入实战篇《电商》，很多朋友都问怎么做一个电商小程序，所以我将在后面的文章中，一步步教大家开发一个电商小程序，敬请期待！原创不易，觉得不错就点个赞吧！</p>
 
       
       
@@ -146,15 +239,15 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
       
-        <a data-url="http://jiangzepeng.cn/2017/03/01/hello-world/" data-id="ck5nguq0s00010v9o4xsq8v5i" class="article-share-link" data-share="baidu" data-title="Hexo Start">分享到</a>
+        <a data-url="http://jiangzepeng.cn/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" data-id="ck5nguq0y00080v9o36dz5mwf" class="article-share-link" data-share="baidu" data-title="微信小程序入门篇（二）">分享到</a>
       
 
       
-        <a href="http://jiangzepeng.cn/2017/03/01/hello-world/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://jiangzepeng.cn/2017/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/#ds-thread" class="article-comment-link">评论</a>
       
 
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li></ul>
 
     </footer>
   </div>
@@ -166,7 +259,7 @@ var _hmt = _hmt || [];
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/29/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span>
+    <a class="extend prev" rel="prev" href="/page/29/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/31/">下一页 &amp;raquo;</a>
   </nav>
 </section>
       
@@ -201,7 +294,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 13.33px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 20px;">电商</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 16.67px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
+      <a href="/tags/3D%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">3D动画</a> <a href="/tags/AccessibilityService/" style="font-size: 10px;">AccessibilityService</a> <a href="/tags/Android-Studio/" style="font-size: 12.5px;">Android Studio</a> <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Google-Play/" style="font-size: 10px;">Google Play</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IM/" style="font-size: 10px;">IM</a> <a href="/tags/IPTV/" style="font-size: 10px;">IPTV</a> <a href="/tags/MIME/" style="font-size: 10px;">MIME</a> <a href="/tags/Manifest/" style="font-size: 10px;">Manifest</a> <a href="/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/tags/arm64-v8a/" style="font-size: 10px;">arm64-v8a</a> <a href="/tags/debug%E6%96%AD%E7%82%B9/" style="font-size: 10px;">debug断点</a> <a href="/tags/multiple/" style="font-size: 10px;">multiple</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/" style="font-size: 10px;">个人简历</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" style="font-size: 10px;">内存泄漏</a> <a href="/tags/%E5%8A%A8%E7%94%BB/" style="font-size: 10px;">动画</a> <a href="/tags/%E5%8D%87%E7%BA%A7/" style="font-size: 10px;">升级</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 20px;">小程序</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%93/" style="font-size: 10px;">开源库</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">开源项目</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 17.5px;">电商</a> <a href="/tags/%E7%9B%B4%E6%92%AD%E6%BA%90/" style="font-size: 10px;">直播源</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 10px;">腾讯云</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 15px;">资源</a> <a href="/tags/%E9%80%82%E9%85%8D/" style="font-size: 10px;">适配</a> <a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/" style="font-size: 10px;">重定向</a> <a href="/tags/%E9%A1%B6%E9%83%A8%E6%BB%91%E5%8A%A8/" style="font-size: 10px;">顶部滑动</a>
     </div>
   </div>
 
@@ -252,7 +345,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android%E6%80%BB%E7%BB%93/">Android总结</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">内存泄漏</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB/">动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E7%94%BB%E7%89%B9%E6%95%88/">动画特效</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%8A%A9%E6%89%8B/">服务助手</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9B%B4%E6%92%AD%E6%BA%90/">直播源</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%80%E5%8E%86/">简历</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/">资源分享</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -261,7 +354,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">2021年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">2020年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">2020年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">2020年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">2020年 01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">2019年 12月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">2019年 11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">2019年 08月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">2019年 07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">2019年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">2019年 02月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">2018年 09月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">2018年 06月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年 03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年 09月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">2017年 08月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">2017年 07月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">2017年 06月</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">2017年 05月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">2017年 04月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">2017年 03月</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -275,7 +368,7 @@ var _hmt = _hmt || [];
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2012 - 2020 <a href="/" target="_blank">代码君</a>.
+      Copyright &copy; 2012 - 2021 <a href="/" target="_blank">代码君</a>.
       &nbsp;
       <span id="busuanzi_container_site_pv">
         总访问量 <a href="http://service.ibruce.info/" target="_blank"><span id="busuanzi_value_site_pv"></span></a> 次
